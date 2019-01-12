@@ -14,7 +14,7 @@ import './app.less'
 //   require('nerv-devtools')
 // }
 
-const store = configStore()
+const store = configStore
 
 class App extends Component {
 
