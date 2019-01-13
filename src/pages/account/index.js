@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
+import { AtAvatar } from 'taro-ui'
 import userAction from '../../actions/user'
 
 import './index.less'
@@ -8,7 +9,9 @@ import './index.less'
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: 'ME'
+    navigationBarTitleText: 'ME',
+    navigationBarBackgroundColor: '#2d8cf0',
+    navigationBarTextStyle: 'white'
   }
 
   constructor(props) {
@@ -31,8 +34,12 @@ class Index extends Component {
 
   render () {
     return (
-      <View className='index'>
-        {this.props.userInfo.name}
+      <View className='content'>
+        <Image className='account_bg' src={require('../../assets/account_bg.png')}/>
+        <View className='user_info'>
+          <AtAvatar className='avatar' circle image={this.props.userInfo.avatar_url} />
+          <Text className='username'>{this.props.userInfo.name}</Text>
+        </View>
       </View>
     )
   }

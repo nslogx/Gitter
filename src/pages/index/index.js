@@ -45,6 +45,10 @@ class Index extends Component {
 
   componentDidHide () { }
 
+  onPullDownRefresh() {
+    this.loadItemList()
+  }
+
   handleClick (value) {
     this.setState({
       current: value
@@ -67,8 +71,12 @@ class Index extends Component {
       'since': this.state.category.value,
     }
     trendingAction.getReposTrendingList(params)
+      .then(()=> {
+      console.log('end1')
+    })
     trendingAction.getDevelopersTrendingList(params)
-    trendingAction.getLanguageList()
+      .then(()=>{console.log('end2')})
+    trendingAction.getLanguageList().then(()=>{console.log('end3')})
   }
 
   render () {
