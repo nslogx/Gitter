@@ -1,14 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import trendingAction from '../../actions/trending'
+import userAction from '../../actions/user'
 
 import './index.less'
 
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: 'TRENDING'
+    navigationBarTitleText: 'SEARCH'
   }
 
   constructor(props) {
@@ -20,7 +20,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    trendingAction.getReposTrendingList()
+    userAction.getUserInfo()
   }
 
   componentWillUnmount () { }
@@ -31,12 +31,8 @@ class Index extends Component {
 
   render () {
     return (
-      <View className='content'>
-        {
-          this.props.repos.map((item, index) => {
-            return <Text key={index}>{item.description}</Text>
-          })
-        }
+      <View className='index'>
+        {this.props.userInfo.name}
       </View>
     )
   }
@@ -44,8 +40,7 @@ class Index extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    repos: state.trending.repos,
-    developers: state.trending.developers
+    userInfo: state.user.userInfo
   }
 }
 export default connect(mapStateToProps)(Index)

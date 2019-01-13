@@ -1,1 +1,1 @@
-export const base = 'https://api.github.com/'
+export const base = 'https://api.github.com'

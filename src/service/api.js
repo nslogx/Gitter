@@ -16,7 +16,7 @@ export default {
     const option = {
       isShowLoading: false,
       loadingText: '正在加载',
-      url: base + url,
+      url: url.indexOf('http') !== -1 ? url : base + url,
       data: data,
       method: method,
       header: { 'content-type': contentType, 'Authorization': token },

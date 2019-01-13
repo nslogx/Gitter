@@ -20,13 +20,37 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/search/index',
+      'pages/account/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      list: [{
+        pagePath: 'pages/index/index',
+        text: 'Trending',
+        iconPath: './assets/tab_extract.png',
+        selectedIconPath: './assets/tab_extract_s.png'
+      }, {
+        pagePath: 'pages/search/index',
+        text: 'Search',
+        iconPath: './assets/tab_library.png',
+        selectedIconPath: './assets/tab_library_s.png'
+      }, {
+        pagePath: 'pages/account/index',
+        text: 'Me',
+        iconPath: './assets/tab_author.png',
+        selectedIconPath: './assets/tab_author_s.png'
+      }],
+      color: '#8a8a8a',
+      selectedColor: '#2d8cf0',
+      backgroundColor: '#ffffff',
+      borderStyle: 'black'
     }
   }
 

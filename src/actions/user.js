@@ -7,7 +7,7 @@ import { createApiAction } from './index'
 import api from '../service/api'
 
 // 请求api
-export const getUserInfo = createApiAction(USERINFO, params => api.get('user', params))
+export const getUserInfo = createApiAction(USERINFO, params => api.get('/user', params))
 
 export default bindActionCreators({
   getUserInfo
