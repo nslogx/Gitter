@@ -8,14 +8,10 @@ const token = 'token b70267ebe467fa7fc31fde9dd35fb9aa9ee9f44c'
 export default {
   baseOptions(params, method = 'GET') {
     let { url, data } = params
-    // let token = getApp().globalData.token
-    // if (!token) login()
     console.log('params', params)
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType
     const option = {
-      isShowLoading: false,
-      loadingText: '正在加载',
       url: url.indexOf('http') !== -1 ? url : base + url,
       data: data,
       method: method,

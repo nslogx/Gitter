@@ -25,9 +25,9 @@ class App extends Component {
       'pages/account/index'
     ],
     window: {
-      backgroundTextStyle: 'light',
+      backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: 'Gitter',
       navigationBarTextStyle: 'black'
     },
     tabBar: {

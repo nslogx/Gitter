@@ -1,11 +1,13 @@
 import {
   REPOSTRENDING,
-  DEVELOPERSTRENDING
+  DEVELOPERSTRENDING,
+  LANGUAGE
 } from '../constants/trending'
 
 const INITIAL_STATE = {
   repos: [],
-  developers: []
+  developers: [],
+  languages: {},
 }
 
 export default function trending (state = INITIAL_STATE, action) {
@@ -19,6 +21,11 @@ export default function trending (state = INITIAL_STATE, action) {
       return {
         ...state,
         developers: action.payload.data
+      }
+    case LANGUAGE:
+      return {
+        ...state,
+        languages: action.payload.data
       }
     default:
       return state
