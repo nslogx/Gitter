@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtAvatar, AtIcon } from 'taro-ui'
+import { NAVIGATE_TYPE } from '../../const/navigateType'
 import userAction from '../../actions/user'
 
 import './index.less'
@@ -35,6 +36,16 @@ class Index extends Component {
   componentDidHide() {
   }
 
+  handleNavigate(type) {
+    switch (type) {
+      case NAVIGATE_TYPE.REPOS: {
+        Taro.navigateTo({
+          url: '/pages/account/repos'
+        })
+      }
+    }
+  }
+
   render() {
     const {userInfo} = this.props
     if (!userInfo) return <View/>
@@ -49,7 +60,7 @@ class Index extends Component {
         <View className='info_view'>
           {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
           <View className='item_view'>
-            <View className='item'>
+            <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
               <View className='title'>{userInfo.public_repos}/{userInfo.owned_private_repos}</View>
               <View className='desc'>Repos</View>
             </View>
@@ -68,19 +79,19 @@ class Index extends Component {
         <View className='list_view'>
           <View className='list'>
             <View className='list_title'>Starred Repos</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3'/>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
           </View>
           <View className='list'>
             <View className='list_title'>Events</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3'/>
-          </View>
-          <View className='list'>
-            <View className='list_title'>Gists</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3'/>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
           </View>
           <View className='list'>
             <View className='list_title'>Issues</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3'/>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
+          </View>
+          <View className='list'>
+            <View className='list_title'>Gists</View>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
           </View>
           <View className='list'>
             <View className='list_title'>Company</View>

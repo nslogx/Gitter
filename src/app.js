@@ -23,7 +23,8 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/search/index',
-      'pages/account/index'
+      'pages/account/index',
+      'pages/account/repos'
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -51,7 +52,7 @@ class App extends Component {
       color: '#8a8a8a',
       selectedColor: '#2d8cf0',
       backgroundColor: '#ffffff',
-      borderStyle: 'black'
+      borderStyle: 'white'
     }
   }
 

@@ -1,16 +1,21 @@
 import Taro, { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types';
-import { View, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 
-export default class itemList extends Component {
+import TrendingRepoItem from './trendingRepoItem'
+import TrendingDeveloperItem from './trendingDeveloperItem'
+
+export default class ItemList extends Component {
 
   static propTypes = {
     type: PropTypes.number,
-    itemList: PropTypes.array
+    itemList: PropTypes.array,
+    categoryType: PropTypes.number
   }
 
   static defaultProps = {
     type: 0,
+    categoryType: 0,
     itemList: []
   }
 
@@ -18,14 +23,14 @@ export default class itemList extends Component {
   }
 
   render() {
-    const { itemList, type } = this.props
+    const { itemList, type, categoryType } = this.props
     let list
     switch (type) {
       case 0: {
         list = itemList.map((item, index) => {
           return (
             <View key={index}>
-              {item.description}
+              <TrendingRepoItem item={item} categoryType={categoryType} />
             </View>
           )
         })
@@ -34,7 +39,7 @@ export default class itemList extends Component {
         list = itemList.map((item, index) => {
           return (
             <View key={index}>
-              {item.repo.description}
+              <TrendingDeveloperItem item={item} />
             </View>
           )
         })

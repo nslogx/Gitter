@@ -27,7 +27,10 @@ class Index extends Component {
       language: {
         'name': 'All',
         'urlParam': ''
-      }
+      },
+      animation: null,
+      scrollTop: null,
+      isHidden: false
     }
   }
 
@@ -47,6 +50,40 @@ class Index extends Component {
 
   onPullDownRefresh() {
     this.loadItemList()
+  }
+
+  onPageScroll(e) {
+    if (e.scrollTop > this.state.scrollTop) {
+      // 向下滚动
+      if (!this.state.isHidden) {
+        let animation = Taro.createAnimation({
+          duration: 400,
+          timingFunction: 'ease',
+        }).bottom(-95).step().export()
+        this.setState({
+          isHidden: true,
+          animation: animation
+        })
+      }
+    }else {
+      // 向上滚动
+      if (this.state.isHidden) {
+        let animation = Taro.createAnimation({
+          duration: 400,
+          timingFunction: 'ease',
+        }).bottom(25).step().export()
+        this.setState({
+          isHidden: false,
+          animation: animation
+        })
+      }
+    }
+
+    console.log(e.scrollTop)
+
+    this.setState({
+      scrollTop: e.scrollTop,
+    })
   }
 
   handleClick (value) {
@@ -82,6 +119,13 @@ class Index extends Component {
   }
 
   render () {
+    let categoryType = 0
+    let category = this.state.category.value
+    if (category === 'weekly') {
+      categoryType = 1
+    } else if (category === 'monthly') {
+      categoryType = 2
+    }
     return (
       <View className='content'>
         <AtTabs
@@ -94,10 +138,10 @@ class Index extends Component {
           ]}
           onClick={this.handleClick.bind(this)}>
           <AtTabsPane current={this.state.current} index={0} >
-            <ItemList itemList={this.props.repos} type={0} />
+            <ItemList itemList={this.props.repos} type={0} categoryType={categoryType} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <ItemList itemList={this.props.developers} type={1} />
+            <ItemList itemList={this.props.developers} type={1} categoryType={categoryType} />
           </AtTabsPane>
         </AtTabs>
 
@@ -109,7 +153,7 @@ class Index extends Component {
                     rangeKey={'name'}
                     onChange={this.onChange}
             >
-              <View className='filter'>
+              <View className='filter' animation={this.state.animation}>
                 <Text className='category'>{this.state.category.name}</Text>
                 &
                 <Text className='language'>{this.state.language.name}</Text>
