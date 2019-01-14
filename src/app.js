@@ -7,6 +7,7 @@ import Index from './pages/index'
 import configStore from './store'
 
 import './app.less'
+import './assets/ionicons/css/ionicons.min.css'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -34,18 +35,18 @@ class App extends Component {
       list: [{
         pagePath: 'pages/index/index',
         text: 'Trending',
-        iconPath: './assets/tab_extract.png',
-        selectedIconPath: './assets/tab_extract_s.png'
+        iconPath: './assets/images/tab_extract.png',
+        selectedIconPath: './assets/images/tab_extract_s.png'
       }, {
         pagePath: 'pages/search/index',
         text: 'Search',
-        iconPath: './assets/tab_library.png',
-        selectedIconPath: './assets/tab_library_s.png'
+        iconPath: './assets/images/tab_library.png',
+        selectedIconPath: './assets/images/tab_library_s.png'
       }, {
         pagePath: 'pages/account/index',
         text: 'Me',
-        iconPath: './assets/tab_author.png',
-        selectedIconPath: './assets/tab_author_s.png'
+        iconPath: './assets/images/tab_author.png',
+        selectedIconPath: './assets/images/tab_author_s.png'
       }],
       color: '#8a8a8a',
       selectedColor: '#2d8cf0',

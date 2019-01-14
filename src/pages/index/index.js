@@ -71,11 +71,13 @@ class Index extends Component {
       'since': this.state.category.value,
     }
     trendingAction.getReposTrendingList(params)
-      .then(()=> {
-      console.log('end1')
+      .then(() => {
+        Taro.stopPullDownRefresh()
     })
     trendingAction.getDevelopersTrendingList(params)
-      .then(()=>{console.log('end2')})
+      .then(() => {
+        Taro.stopPullDownRefresh()
+      })
     trendingAction.getLanguageList().then(()=>{console.log('end3')})
   }
 

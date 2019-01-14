@@ -12,5 +12,6 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
+	"libVersion": "2.5.0",
 	"condition": {}
 }
