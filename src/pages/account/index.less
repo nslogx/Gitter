@@ -14,15 +14,112 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .username {
+    color: #fff;
+    font-size: 36px;
+    margin-top: 20px;
+  }
+
+  .location {
+    color: #fff;
+    font-size: 28px;
+    margin-top: 15px;
+  }
 }
 
-.avatar {
-  width: 100px;
-  height: 100px;
+.info_view {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 85%;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+
+  .bio {
+    color: #9ca0b3;
+    font-size: 30px;
+    margin: 30px 30px;
+    text-align: center;
+  }
+
+  .item_view {
+    background-color: #fff;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .line {
+      background-color: #9ca0b3;
+      width: 1px;
+      height: 40px;
+    }
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+      width: 30%;
+
+      .title {
+        text-align: center;
+        color: #333;
+        font-size: 32px;
+      }
+
+      .desc {
+        text-align: center;
+        color: #9ca0b3;
+        font-size: 26px;
+      }
+    }
+  }
 }
 
-.username {
-  color: #fff;
-  font-size: 32px;
-  margin-top: 20px;
+.list_view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 85%;
+  margin-top: 50px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  margin-bottom: 50px;
+
+  .list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    width: 90%;
+    height: 90px;
+
+    .list_title {
+      text-align: center;
+      color: #333;
+      font-size: 32px;
+    }
+
+    .list_content {
+      text-align: right;
+      color: #9ca0b3;
+      font-size: 28px;
+    }
+  }
+
 }
