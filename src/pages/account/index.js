@@ -2,7 +2,8 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { AtAvatar, AtIcon } from 'taro-ui'
-import { NAVIGATE_TYPE } from '../../const/navigateType'
+import { NAVIGATE_TYPE } from '../../constants/navigateType'
+import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import userAction from '../../actions/user'
 
 import './index.less'
@@ -24,7 +25,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    userAction.getUserInfo()
+    this.getUserInfo()
   }
 
   componentWillUnmount() {
@@ -36,11 +37,20 @@ class Index extends Component {
   componentDidHide() {
   }
 
+  getUserInfo() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    userAction.getUserInfo().then(()=>{
+      Taro.hideLoading()
+    })
+  }
+
   handleNavigate(type) {
+    const { userInfo } = this.props
     switch (type) {
       case NAVIGATE_TYPE.REPOS: {
+        let url = encodeURI(userInfo.repos_url)
         Taro.navigateTo({
-          url: '/pages/account/repos'
+          url: '/pages/account/repos?url=' + url
         })
       }
     }
@@ -61,7 +71,7 @@ class Index extends Component {
           {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
           <View className='item_view'>
             <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
-              <View className='title'>{userInfo.public_repos}/{userInfo.owned_private_repos}</View>
+              <View className='title'>{userInfo.public_repos}+{userInfo.owned_private_repos}</View>
               <View className='desc'>Repos</View>
             </View>
             <View className='line'/>

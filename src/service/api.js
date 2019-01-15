@@ -1,5 +1,5 @@
 import Taro from '@tarojs/taro'
-import { HTTP_STATUS } from '../const/status'
+import { HTTP_STATUS } from '../constants/status'
 import { base } from './config'
 import { logError } from '../utils'
 
