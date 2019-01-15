@@ -34,27 +34,30 @@ export default class RepoItem extends Component {
           {
             item.language.length > 0 &&
             <View className='repo_number_item'>
-              <AtIcon prefixClass='ion' value='ios-radio-button-on' size='15' color='#9ca0b3'/>
+              <AtIcon prefixClass='ion' value='ios-radio-button-on' size='16' color='#9ca0b3'/>
               <View className='repo_number_title'>{item.language}</View>
             </View>
           }
           {
             item.stargazers_count > 0 &&
             <View className='repo_number_item'>
-              <AtIcon prefixClass='ion' value='ios-star' size='15' color='#9ca0b3'/>
+              <AtIcon prefixClass='ion' value='ios-star' size='16' color='#9ca0b3'/>
               <View className='repo_number_title'>{item.stargazers_count}</View>
             </View>
           }
           {
             item.forks_count > 0 &&
             <View className='repo_number_item'>
-              <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#9ca0b3'/>
+              <AtIcon prefixClass='ion' value='ios-git-network' size='16' color='#9ca0b3'/>
               <View className='repo_number_title'>{item.forks_count}</View>
             </View>
           }
         </View>
         }
-        <View className='update_date'>updated on{update_time}</View>
+        <View className='update_view'>
+          <AtIcon prefixClass='ion' value='ios-trending-up' size='16' color='#ff4949'/>
+          <View className='update_date'>updated on{update_time}</View>
+        </View>
       </View>
     )
   }

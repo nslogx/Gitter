@@ -40,11 +40,15 @@ class Repos extends Component {
     this.setState({
       page: 1
     }, () => {
-      let params = {
+      let data = {
         per_page: GLOBAL_CONFIG.PER_PAGE,
-        page: this.state
+        page: this.state.page
       }
-      repos.reposListRefresh(this.state.url, params)
+      let params = {
+        data: data,
+        url: this.state.url
+      }
+      repos.reposListRefresh(params)
         .then(()=>{
         Taro.stopPullDownRefresh()
       })
@@ -57,11 +61,15 @@ class Repos extends Component {
       page: page + 1
     }, () => {
       Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-      let params = {
+      let data = {
         per_page: GLOBAL_CONFIG.PER_PAGE,
-        page: this.state
+        page: this.state.page
       }
-      repos.reposListLoadMore(this.state.url, params)
+      let params = {
+        data: data,
+        url: this.state.url
+      }
+      repos.reposListLoadMore(params)
         .then(()=>{
           Taro.stopPullDownRefresh()
           Taro.hideLoading()

@@ -30,6 +30,7 @@ class Index extends Component {
       },
       animation: null,
       scrollTop: null,
+      scrollHeight: 0,
       isHidden: false
     }
   }
@@ -53,8 +54,15 @@ class Index extends Component {
   }
 
   onPageScroll(e) {
-    if (e.scrollTop > this.state.scrollTop) {
-      // 向下滚动
+    if (e.scrollTop <= 0) {
+      // 滚动到最顶部
+      e.scrollTop = 0;
+    } else if (e.scrollTop > this.state.scrollHeight) {
+      // 滚动到最底部
+      e.scrollTop = this.state.scrollHeight;
+    }
+    if (e.scrollTop > this.state.scrollTop || e.scrollTop >= this.state.scrollHeight) {
+      //向下滚动
       if (!this.state.isHidden) {
         let animation = Taro.createAnimation({
           duration: 400,
@@ -65,8 +73,8 @@ class Index extends Component {
           animation: animation
         })
       }
-    }else {
-      // 向上滚动
+    } else {
+      //向上滚动
       if (this.state.isHidden) {
         let animation = Taro.createAnimation({
           duration: 400,
@@ -78,17 +86,28 @@ class Index extends Component {
         })
       }
     }
-
-    console.log(e.scrollTop)
-
+    //给scrollTop重新赋值
     this.setState({
       scrollTop: e.scrollTop,
     })
   }
 
+  getScrollHeight() {
+    let that = this
+    Taro.createSelectorQuery().select('#list').boundingClientRect((rect)=>{
+      console.log('height', rect.height)
+      that.setState({
+        scrollHeight: rect.height - 456
+      })
+    }).exec()
+  }
+
   handleClick (value) {
+    let that = this
     this.setState({
       current: value
+    }, ()=>{
+      that.getScrollHeight()
     })
   }
 
@@ -103,12 +122,14 @@ class Index extends Component {
   }
 
   loadItemList () {
+    let that = this
     let params = {
       'language': this.state.language.urlParam,
       'since': this.state.category.value,
     }
     trendingAction.getReposTrendingList(params)
       .then(() => {
+        that.getScrollHeight()
         Taro.stopPullDownRefresh()
     })
     trendingAction.getDevelopersTrendingList(params)
@@ -127,8 +148,9 @@ class Index extends Component {
       categoryType = 2
     }
     return (
-      <View className='content'>
+      <View className='content' id='list'>
         <AtTabs
+          className='tabs'
           swipeable={false}
           animated={true}
           current={this.state.current}
@@ -137,14 +159,13 @@ class Index extends Component {
             { title: 'Developers' }
           ]}
           onClick={this.handleClick.bind(this)}>
-          <AtTabsPane current={this.state.current} index={0} >
+          <AtTabsPane current={this.state.current} index={0}>
             <ItemList itemList={this.props.repos} type={0} categoryType={categoryType} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <ItemList itemList={this.props.developers} type={1} categoryType={categoryType} />
           </AtTabsPane>
         </AtTabs>
-
         {
           this.props.range[1].length > 0 &&
           <View>
@@ -161,7 +182,6 @@ class Index extends Component {
             </Picker>
           </View>
         }
-
       </View>
     )
   }
