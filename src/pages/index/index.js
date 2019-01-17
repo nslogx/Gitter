@@ -168,10 +168,10 @@ class Index extends Component {
 
   render () {
     let categoryType = 0
-    let category = this.state.category.value
-    if (category === 'weekly') {
+    let categoryValue = this.state.category.value
+    if (categoryValue === 'weekly') {
       categoryType = 1
-    } else if (category === 'monthly') {
+    } else if (categoryValue === 'monthly') {
       categoryType = 2
     }
     return (
