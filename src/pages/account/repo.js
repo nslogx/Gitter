@@ -20,9 +20,7 @@ class Repo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      owner: '',
-      repo: '',
-      name: ''
+      url: ''
     }
   }
 
@@ -33,17 +31,16 @@ class Repo extends Component {
     let params = this.$router.params
     console.log(params)
     this.setState({
-      name: params.name
+      url: params.url
     })
   }
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    let url = '/repos/' + this.state.name + '/readme'
     let params = {
-      url: url
+      url: this.state.url
     }
-    reposAction.getRepoReadMe(params).then(()=>{
+    reposAction.getRepo(params).then(()=>{
       Taro.hideLoading()
     })
   }
@@ -67,9 +64,9 @@ class Repo extends Component {
     }
     return (
       <View className='content'>
-        <View className='markdown'>
-          <wemark md={md} link highlight type='wemark' />
-        </View>
+        {/*<View className='markdown'>*/}
+          {/*<wemark md={md} link highlight type='wemark' />*/}
+        {/*</View>*/}
       </View>
     )
   }

@@ -26,7 +26,10 @@ class App extends Component {
       'pages/account/index',
       'pages/account/repoList',
       'pages/account/repo',
-      'pages/account/follow'
+      'pages/account/follow',
+      'pages/account/starredRepo',
+      'pages/account/login',
+      'pages/account/issueList',
     ],
     window: {
       backgroundTextStyle: 'dark',

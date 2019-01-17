@@ -22,6 +22,17 @@ export default class ItemList extends Component {
   componentWillMount() {
   }
 
+  handleRepoClicked(item) {
+    let url = 'https://api.github.com/repos/' + item.author + '/' + item.name
+    Taro.navigateTo({
+      url: '/pages/account/repo?url=' + url
+    })
+  }
+
+  handleDeveloperClicked(item) {
+
+  }
+
   render() {
     const { itemList, type, categoryType } = this.props
     let list
@@ -29,7 +40,7 @@ export default class ItemList extends Component {
       case 0: {
         list = itemList.map((item, index) => {
           return (
-            <View key={index}>
+            <View key={index} onClick={this.handleRepoClicked.bind(this, item)}>
               <TrendingRepoItem item={item} categoryType={categoryType} />
             </View>
           )
@@ -38,7 +49,7 @@ export default class ItemList extends Component {
       case 1: {
         list = itemList.map((item, index) => {
           return (
-            <View key={index}>
+            <View key={index} onClick={this.handleDeveloperClicked.bind(this, item)}>
               <TrendingDeveloperItem item={item} />
             </View>
           )

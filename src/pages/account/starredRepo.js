@@ -1,15 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import userAction from '../../actions/user'
+import reposAction  from '../../actions/repos'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import FollowItem from '../../components/account/followItem'
+import RepoItem from '../../components/account/repoItem'
 
 import './index.less'
 
-class Follow extends Component {
+class StarredRepo extends Component {
 
   config = {
+    navigationBarTitleText: 'Starred Repo',
     enablePullDownRefresh: true
   }
 
@@ -26,23 +27,10 @@ class Follow extends Component {
 
   componentWillMount() {
     let params = this.$router.params
-    let type = params.type
-    let url = ''
-    let title = ''
-    if (type === 'followers') {
-      // Followers
-      url = '/user/followers'
-      title = 'Followers'
-    } else if (type === 'following') {
-      // Following
-      url = '/user/following'
-      title = 'Following'
+    let url = '/user/starred'
+    if (params.username) {
+      url = '/user/' + params.username + '/starred'
     }
-
-    Taro.setNavigationBarTitle({
-      title: title
-    })
-
     this.setState({
       url: url
     })
@@ -53,7 +41,7 @@ class Follow extends Component {
     let params = {
       url: this.state.url
     }
-    userAction.followListRefresh(params).then(()=>{
+    reposAction.starredRepoRefresh(params).then(()=>{
       Taro.hideLoading()
     })
   }
@@ -65,7 +53,9 @@ class Follow extends Component {
   componentDidHide () { }
 
   handleClickedItem(item) {
-
+    Taro.navigateTo({
+      url: '/pages/account/repo?url=' + item.url
+    })
   }
 
   render () {
@@ -73,7 +63,7 @@ class Follow extends Component {
     const itemList = followList.map((item, index) => {
       return (
         <View onClick={this.handleClickedItem.bind(this, item)} key={index}>
-          <FollowItem item={item} />
+          <RepoItem item={item} />
         </View>
       )
     })
@@ -90,4 +80,4 @@ const mapStateToProps = (state, ownProps) => {
     followList: state.user.followList
   }
 }
-export default connect(mapStateToProps)(Follow)
+export default connect(mapStateToProps)(StarredRepo)

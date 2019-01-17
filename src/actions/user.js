@@ -8,7 +8,7 @@ import store from '../store'
 import { createApiAction } from './index'
 import api from '../service/api'
 
-// 获取个人信息 API
+// 获取个人信息
 export const getUserInfo = createApiAction(USERINFO, (params) => api.get('/user', params))
 
 // 获取 Followers/Following 列表

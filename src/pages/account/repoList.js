@@ -53,6 +53,7 @@ class RepoList extends Component {
         data: data,
         url: this.state.url
       }
+      console.log('params', params)
       reposAction.reposListRefresh(params)
         .then(()=>{
           Taro.stopPullDownRefresh()
@@ -84,9 +85,8 @@ class RepoList extends Component {
   }
 
   handleClickedItem(item) {
-    console.log('full_name', item.full_name)
     Taro.navigateTo({
-      url: '/pages/account/repo?name=' + item.full_name
+      url: '/pages/account/repo?url=' + item.url
     })
   }
 

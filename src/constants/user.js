@@ -1,3 +1,4 @@
 export const USERINFO = 'USERINFO'
+
 export const FOLLOW_REFRESH = 'FOLLOW_REFRESH'
 export const FOLLOW_LOADMORE = 'FOLLOW_LOADMORE'

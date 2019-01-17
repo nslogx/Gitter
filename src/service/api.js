@@ -34,7 +34,6 @@ export default {
     return Taro.request(option)
   },
   get(url, data = '') {
-    console.log('url, data', url, data)
     let option = { url, data }
     return this.baseOptions(option)
   },
