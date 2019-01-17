@@ -20,7 +20,7 @@ export default class TrendingDeveloperItem extends Component {
     if (!item) return <View />
     return (
       <View className='content'>
-        <AtAvatar size='large' image={item.avatar} />
+        <AtAvatar circle size='large' image={item.avatar} />
         <View className='user_info'>
           <View className='user_name'>{item.username}</View>
           <View className='repo'>

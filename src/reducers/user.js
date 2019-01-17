@@ -1,7 +1,12 @@
-import { USERINFO } from '../constants/user'
+import {
+  USERINFO,
+  FOLLOW_REFRESH,
+  FOLLOW_LOADMORE
+} from '../constants/user'
 
 const INITIAL_STATE = {
-  userInfo: null
+  userInfo: null,
+  followList: []
 }
 
 export default function user (state = INITIAL_STATE, action) {
@@ -10,6 +15,16 @@ export default function user (state = INITIAL_STATE, action) {
       return {
         ...state,
         userInfo: action.payload.data
+      }
+    case FOLLOW_REFRESH:
+      return {
+        ...state,
+        followList: action.payload.data
+      }
+    case FOLLOW_LOADMORE:
+      return {
+        ...state,
+        followList: state.followList.concat(action.payload.data)
       }
     default:
       return state

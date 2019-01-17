@@ -24,7 +24,9 @@ class App extends Component {
       'pages/index/index',
       'pages/search/index',
       'pages/account/index',
-      'pages/account/repos'
+      'pages/account/repoList',
+      'pages/account/repo',
+      'pages/account/follow'
     ],
     window: {
       backgroundTextStyle: 'dark',

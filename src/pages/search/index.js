@@ -8,7 +8,7 @@ import './index.less'
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: 'SEARCH'
+    navigationBarTitleText: 'Search'
   }
 
   constructor(props) {

@@ -46,11 +46,11 @@ export default class TrendingRepoItem extends Component {
            </View>
          }
          <View className='number_item'>
-           <AtIcon prefixClass='ion' value='ios-star' size='15' color='#9ca0b3' />
+           <AtIcon prefixClass='ion' value='ios-star' size='15' color='#7f7f7f' />
            <View className='number_title'>{item.stars}</View>
          </View>
          <View className='number_item'>
-           <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#9ca0b3' />
+           <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#7f7f7f' />
            <View className='number_title'>{item.forks}</View>
          </View>
        </View>

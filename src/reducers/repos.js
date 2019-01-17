@@ -1,10 +1,12 @@
 import {
   REPOS_LIST_REFRESH,
-  REPOS_LIST_LOADMORE
+  REPOS_LIST_LOADMORE,
+  REPO_README
 } from '../constants/repos'
 
 const INITIAL_STATE = {
-  repos: []
+  repos: [],
+  readme: {}
 }
 
 export default function repos (state = INITIAL_STATE, action) {
@@ -18,6 +20,11 @@ export default function repos (state = INITIAL_STATE, action) {
       return {
         ...state,
         repos: state.repos.concat(action.payload.data)
+      }
+    case REPO_README:
+      return {
+        ...state,
+        readme: action.payload.data
       }
     default:
       return state

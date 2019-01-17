@@ -5,6 +5,11 @@ module.exports = {
   defineConstants: {
   },
   weapp: {
+    compile: {
+      exclude: [
+        'src/components/wemark/remarkable.js'
+      ]
+    },
     module: {
       postcss: {
         autoprefixer: {

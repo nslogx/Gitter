@@ -4,6 +4,7 @@ import { connect } from '@tarojs/redux'
 import { AtAvatar, AtIcon } from 'taro-ui'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
+import { baseUrl } from '../../service/config'
 import userAction from '../../actions/user'
 
 import './index.less'
@@ -11,9 +12,10 @@ import './index.less'
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: 'ME',
+    navigationBarTitleText: 'Me',
     navigationBarBackgroundColor: '#2d8cf0',
-    navigationBarTextStyle: 'white'
+    navigationBarTextStyle: 'white',
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
@@ -25,6 +27,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getUserInfo()
   }
 
@@ -37,10 +40,14 @@ class Index extends Component {
   componentDidHide() {
   }
 
+  onPullDownRefresh() {
+    this.getUserInfo()
+  }
+
   getUserInfo() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     userAction.getUserInfo().then(()=>{
       Taro.hideLoading()
+      Taro.stopPullDownRefresh()
     })
   }
 
@@ -48,10 +55,26 @@ class Index extends Component {
     const { userInfo } = this.props
     switch (type) {
       case NAVIGATE_TYPE.REPOS: {
-        let url = encodeURI(userInfo.repos_url)
+        let url = encodeURI(baseUrl + '/user/repos')
         Taro.navigateTo({
-          url: '/pages/account/repos?url=' + url
+          url: '/pages/account/repoList?url=' + url
         })
+      }
+      break
+      case NAVIGATE_TYPE.FOLLOWERS: {
+        Taro.navigateTo({
+          url: '/pages/account/follow?type=followers'
+        })
+      }
+      break
+      case NAVIGATE_TYPE.FOLLOWING: {
+        Taro.navigateTo({
+          url: '/pages/account/follow?type=following'
+        })
+      }
+      break
+      default: {
+
       }
     }
   }
@@ -65,7 +88,7 @@ class Index extends Component {
         <View className='user_info'>
           <AtAvatar className='avatar' circle image={userInfo.avatar_url}/>
           <Text className='username'>{userInfo.name}</Text>
-          {userInfo.location.length > 0 && <View className='location'>{userInfo.location}</View>}
+          <View className='login_name'>@{userInfo.login}</View>
         </View>
         <View className='info_view'>
           {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
@@ -75,12 +98,12 @@ class Index extends Component {
               <View className='desc'>Repos</View>
             </View>
             <View className='line'/>
-            <View className='item'>
+            <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWERS)}>
               <View className='title'>{userInfo.followers}</View>
               <View className='desc'>Followers</View>
             </View>
             <View className='line'/>
-            <View className='item'>
+            <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWING)}>
               <View className='title'>{userInfo.following}</View>
               <View className='desc'>Following</View>
             </View>
@@ -89,24 +112,22 @@ class Index extends Component {
         <View className='list_view'>
           <View className='list'>
             <View className='list_title'>Starred Repos</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
           <View className='list'>
             <View className='list_title'>Events</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
           <View className='list'>
             <View className='list_title'>Issues</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
           <View className='list'>
             <View className='list_title'>Gists</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#9ca0b3' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
-          <View className='list'>
-            <View className='list_title'>Company</View>
-            <View className='list_content'>{userInfo.company.length > 0 ? userInfo.company : '--'}</View>
-          </View>
+        </View>
+        <View className='list_view'>
           <View className='list'>
             <View className='list_title'>Email</View>
             <View className='list_content'>{userInfo.email.length > 0 ? userInfo.email : '--'}</View>
@@ -115,7 +136,16 @@ class Index extends Component {
             <View className='list_title'>Blog</View>
             <View className='list_content'>{userInfo.blog.length > 0 ? userInfo.blog : '--'}</View>
           </View>
+          <View className='list'>
+            <View className='list_title'>Company</View>
+            <View className='list_content'>{userInfo.company.length > 0 ? userInfo.company : '--'}</View>
+          </View>
+          <View className='list'>
+            <View className='list_title'>Location</View>
+            <View className='list_content'>{userInfo.location.length > 0 ? userInfo.location : '--'}</View>
+          </View>
         </View>
+        <View className='bottom_view' />
       </View>
     )
   }

@@ -1,17 +1,17 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import repos from '../../actions/repos'
+import reposAction from '../../actions/repos'
 
 import RepoItem from '../../components/account/repoItem'
 
 import './repos.less'
 
-class Repos extends Component {
+class RepoList extends Component {
 
   config = {
-    navigationBarTitleText: 'REPOS',
+    navigationBarTitleText: 'Repos',
     enablePullDownRefresh: true,
   }
 
@@ -33,10 +33,15 @@ class Repos extends Component {
   }
 
   componentDidMount() {
-    Taro.startPullDownRefresh()
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    this.refresh()
   }
 
   onPullDownRefresh() {
+    this.refresh()
+  }
+
+  refresh() {
     this.setState({
       page: 1
     }, () => {
@@ -48,10 +53,11 @@ class Repos extends Component {
         data: data,
         url: this.state.url
       }
-      repos.reposListRefresh(params)
+      reposAction.reposListRefresh(params)
         .then(()=>{
-        Taro.stopPullDownRefresh()
-      })
+          Taro.stopPullDownRefresh()
+          Taro.hideLoading()
+        })
     })
   }
 
@@ -69,11 +75,18 @@ class Repos extends Component {
         data: data,
         url: this.state.url
       }
-      repos.reposListLoadMore(params)
+      reposAction.reposListLoadMore(params)
         .then(()=>{
           Taro.stopPullDownRefresh()
           Taro.hideLoading()
         })
+    })
+  }
+
+  handleClickedItem(item) {
+    console.log('full_name', item.full_name)
+    Taro.navigateTo({
+      url: '/pages/account/repo?name=' + item.full_name
     })
   }
 
@@ -86,7 +99,11 @@ class Repos extends Component {
   render () {
     const { repos } = this.props
     const repoList = repos.map((item, index) => {
-      return <RepoItem item={item} key={index} />
+      return (
+        <View onClick={this.handleClickedItem.bind(this, item)} key={index}>
+          <RepoItem item={item} />
+          </View>
+      )
     })
     return (
       <View className='content'>
@@ -101,4 +118,4 @@ const mapStateToProps = (state, ownProps) => {
     repos: state.repos.repos
   }
 }
-export default connect(mapStateToProps)(Repos)
+export default connect(mapStateToProps)(RepoList)

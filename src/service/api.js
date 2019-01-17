@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { HTTP_STATUS } from '../constants/status'
-import { base } from './config'
+import { baseUrl } from './config'
 import { logError } from '../utils'
 
 const token = 'token b70267ebe467fa7fc31fde9dd35fb9aa9ee9f44c'
@@ -12,7 +12,7 @@ export default {
     let contentType = 'application/x-www-form-urlencoded'
     contentType = params.contentType || contentType
     const option = {
-      url: url.indexOf('http') !== -1 ? url : base + url,
+      url: url.indexOf('http') !== -1 ? url : baseUrl + url,
       data: data,
       method: method,
       header: { 'content-type': contentType, 'Authorization': token },
@@ -34,6 +34,7 @@ export default {
     return Taro.request(option)
   },
   get(url, data = '') {
+    console.log('url, data', url, data)
     let option = { url, data }
     return this.baseOptions(option)
   },

@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtTabs, AtTabsPane, AtActivityIndicator } from 'taro-ui'
+import { GLOBAL_CONFIG } from '../../constants/globalConfig'
+import { AtTabs, AtTabsPane } from 'taro-ui'
 
 import ItemList from '../../components/index/itemList'
 
@@ -12,7 +13,7 @@ import './index.less'
 class Index extends Component {
 
   config = {
-    navigationBarTitleText: 'TRENDING',
+    navigationBarTitleText: 'Trending',
     enablePullDownRefresh: true
   }
 
@@ -31,7 +32,9 @@ class Index extends Component {
       animation: null,
       scrollTop: null,
       scrollHeight: 0,
-      isHidden: false
+      isHidden: false,
+      apiCount: 0,
+      fixed: false
     }
   }
 
@@ -86,9 +89,13 @@ class Index extends Component {
         })
       }
     }
+
+    console.log('e.scrollTop', e.scrollTop)
+
     //给scrollTop重新赋值
     this.setState({
-      scrollTop: e.scrollTop,
+      fixed: e.scrollTop > 0,
+      scrollTop: e.scrollTop
     })
   }
 
@@ -122,19 +129,39 @@ class Index extends Component {
   }
 
   loadItemList () {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    this.setState({
+      apiCount: 0
+    })
     let that = this
     let params = {
       'language': this.state.language.urlParam,
       'since': this.state.category.value,
     }
+
     trendingAction.getReposTrendingList(params)
       .then(() => {
         that.getScrollHeight()
         Taro.stopPullDownRefresh()
+        that.setState({
+          apiCount: that.state.apiCount + 1
+        }, ()=>{
+          if (that.state.apiCount === 2) {
+            Taro.hideLoading()
+          }
+        })
     })
     trendingAction.getDevelopersTrendingList(params)
       .then(() => {
+        that.getScrollHeight()
         Taro.stopPullDownRefresh()
+        that.setState({
+          apiCount: that.state.apiCount + 1
+        }, ()=>{
+          if (that.state.apiCount === 2) {
+            Taro.hideLoading()
+          }
+        })
       })
     trendingAction.getLanguageList().then(()=>{console.log('end3')})
   }
@@ -150,7 +177,6 @@ class Index extends Component {
     return (
       <View className='content' id='list'>
         <AtTabs
-          className='tabs'
           swipeable={false}
           animated={true}
           current={this.state.current}
@@ -158,13 +184,14 @@ class Index extends Component {
             { title: 'Repositories' },
             { title: 'Developers' }
           ]}
-          onClick={this.handleClick.bind(this)}>
+          onClick={this.handleClick.bind(this)} >
           <AtTabsPane current={this.state.current} index={0}>
             <ItemList itemList={this.props.repos} type={0} categoryType={categoryType} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
             <ItemList itemList={this.props.developers} type={1} categoryType={categoryType} />
           </AtTabsPane>
+
         </AtTabs>
         {
           this.props.range[1].length > 0 &&
