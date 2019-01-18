@@ -48,6 +48,11 @@ class DeveloperInfo extends Component {
 
   componentDidHide () { }
 
+  onPullDownRefresh() {
+    this.getDeveloperInfo()
+    this.checkFollowing()
+  }
+
   getDeveloperInfo() {
     let params = {
       url: '/users/' + this.state.username
@@ -68,7 +73,7 @@ class DeveloperInfo extends Component {
   onShareAppMessage(obj) {
     const { developerInfo } = this.props
     return {
-      title: developerInfo.name + ' - GitHub',
+      title: developerInfo.name || developerInfo.login + ' - GitHub',
       path: '/pages/account/developerInfo?username=' + developerInfo.login
     }
   }
@@ -81,14 +86,16 @@ class DeveloperInfo extends Component {
         <Image className='account_bg' src={require('../../assets/images/account_bg.png')}/>
         <View className='user_info'>
           <AtAvatar className='avatar' circle image={developerInfo.avatar_url}/>
-          <Text className='username'>{developerInfo.name}</Text>
+          <Text className='username'>
+            {developerInfo.name || developerInfo.login}
+          </Text>
           <View className='login_name'>@{developerInfo.login}</View>
         </View>
         <View className='info_view'>
           {developerInfo.bio.length > 0 && <View className='bio'>{developerInfo.bio}</View>}
           <View className='item_view'>
             <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
-              <View className='title'>{developerInfo.public_repos}+{developerInfo.owned_private_repos}</View>
+              <View className='title'>{developerInfo.public_repos}</View>
               <View className='desc'>Repos</View>
             </View>
             <View className='line'/>
@@ -103,9 +110,12 @@ class DeveloperInfo extends Component {
             </View>
           </View>
           <View className='button_view'>
-            <Button className='button'>
-              {isFollowed ? 'Unfollow' : 'Follow'}
-            </Button>
+            {
+              developerInfo.type === 'User' &&
+              <Button className='button'>
+                {isFollowed ? 'Unfollow' : 'Follow'}
+              </Button>
+            }
             <Button className='button' openType='share'>Share</Button>
           </View>
         </View>

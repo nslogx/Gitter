@@ -2,12 +2,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtIcon } from 'taro-ui'
+import { AtIcon, AtTag } from 'taro-ui'
 import reposAction from '../../actions/repos'
 import { base64_decode } from '../../utils/base64'
+import { NAVIGATE_TYPE } from '../../constants/navigateType'
 
 import './repo.less'
-import {NAVIGATE_TYPE} from "../../constants/navigateType";
 
 class Repo extends Component {
 
@@ -38,12 +38,13 @@ class Repo extends Component {
   }
 
   componentDidMount() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getRepo()
   }
 
 
   onPullDownRefresh() {
-
+    this.getRepo()
   }
 
   componentWillUnmount () { }
@@ -53,13 +54,13 @@ class Repo extends Component {
   componentDidHide () { }
 
   getRepo() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     let params = {
       url: this.state.url
     }
     let that = this
     reposAction.getRepo(params).then(()=>{
       Taro.hideLoading()
+      Taro.stopPullDownRefresh()
       that.getReadme()
     })
   }
@@ -73,6 +74,28 @@ class Repo extends Component {
     reposAction.getRepoReadMe(params).then(()=>{
       Taro.hideLoading()
     })
+  }
+
+
+  handleNavigate(type) {
+    const { repo } = this.props
+    switch (type) {
+      case NAVIGATE_TYPE.USER: {
+        Taro.navigateTo({
+          url: '/pages/account/developerInfo?username=' + repo.data.owner.login
+        })
+      }
+        break
+      case NAVIGATE_TYPE.REPO_CONTENT_LIST: {
+        Taro.navigateTo({
+          url: '/pages/account/contentList?repo=' + repo.data.full_name
+        })
+      }
+        break
+      default: {
+
+      }
+    }
   }
 
   render () {
@@ -92,31 +115,43 @@ class Repo extends Component {
           <Text className='repo_info_desc'>{repo.data.description}</Text>
         </View>
         <View className='repo_info_list_view'>
-          <View className='repo_info_list'>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.USER)}>
             <View className='list_title'>Author</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <View className='list_content'>
+              <Text className='list_content_title'>{repo.data.owner.login}</Text>
+              <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+            </View>
           </View>
           <View className='repo_info_list'>
             <View className='list_title'>Branch</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <View className='list_content'>
+              <Text className='list_content_title'>{repo.data.default_branch}</Text>
+              <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+            </View>
           </View>
-          <View className='repo_info_list'>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTENT_LIST)}>
             <View className='list_title'>View Code</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
         </View>
         <View className='repo_info_list_view'>
           <View className='repo_info_list'>
             <View className='list_title'>Issues</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <View className='list_content'>
+              {
+                repo.data.open_issues_count > 0 &&
+                <View className='tag'>{repo.data.open_issues_count}</View>
+              }
+              <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+            </View>
           </View>
           <View className='repo_info_list'>
             <View className='list_title'>Pull Requests</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
           <View className='repo_info_list'>
             <View className='list_title'>Contributors</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
         </View>
         {

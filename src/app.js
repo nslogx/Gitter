@@ -30,7 +30,8 @@ class App extends Component {
       'pages/account/starredRepo',
       'pages/account/login',
       'pages/account/issueList',
-      'pages/account/developerInfo'
+      'pages/account/developerInfo',
+      'pages/account/contentList'
     ],
     window: {
       backgroundTextStyle: 'dark',

@@ -6,4 +6,6 @@ export const NAVIGATE_TYPE = {
   EVENTS: 104,
   GISTS: 105,
   ISSUES: 106,
+  USER: 107,
+  REPO_CONTENT_LIST: 108
 }

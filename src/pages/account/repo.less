@@ -32,6 +32,7 @@
   font-size: 30px;
   margin-left: 75px;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .repo_info_list_view {
@@ -60,9 +61,27 @@
     }
 
     .list_content {
-      text-align: right;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      background-color: #fff;
+    }
+
+    .list_content_title {
       color: #7f7f7f;
-      font-size: 28px;
+      font-size: 30px;
+      background-color: #fff;
+      padding: 0 20px;
+    }
+
+    .tag {
+      margin-right: 20px;
+      background-color: #ff4949;
+      font-size: 30px;
+      height: 40px;
+      border-radius: 20px;
+      color: #fff;
+      padding: 0 20px;
     }
   }
 }
@@ -72,6 +91,7 @@
   flex-direction: column;
   width: 710px;
   margin-top: 20px;
+  margin-bottom: 80px;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
   background-color: #fff;
