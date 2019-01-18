@@ -53,8 +53,9 @@ class StarredRepo extends Component {
   componentDidHide () { }
 
   handleClickedItem(item) {
+    let url = decodeURI('/pages/account/repo?url=' + item.url)
     Taro.navigateTo({
-      url: '/pages/account/repo?url=' + item.url
+      url: url
     })
   }
 

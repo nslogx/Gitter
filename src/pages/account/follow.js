@@ -65,7 +65,9 @@ class Follow extends Component {
   componentDidHide () { }
 
   handleClickedItem(item) {
-
+    Taro.navigateTo({
+      url: '/pages/account/developerInfo?username=' + item.login
+    })
   }
 
   render () {

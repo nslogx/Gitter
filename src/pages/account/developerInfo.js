@@ -1,15 +1,14 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
+import {Image, Text, View, Button} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtAvatar, AtIcon } from 'taro-ui'
-import { NAVIGATE_TYPE } from '../../constants/navigateType'
-import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { baseUrl } from '../../service/config'
 import userAction from '../../actions/user'
+import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 
-import './index.less'
+import './developerInfo.less'
+import {AtAvatar, AtIcon} from "taro-ui";
+import {NAVIGATE_TYPE} from "../../constants/navigateType";
 
-class Index extends Component {
+class DeveloperInfo extends Component {
 
   config = {
     navigationBarTitleText: '',
@@ -20,99 +19,94 @@ class Index extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      username: ''
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
+  }
+
+  componentWillMount() {
+    let params = this.$router.params
+    console.log(params)
+    this.setState({
+      username: params.username
+    })
   }
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    this.getUserInfo()
+    this.getDeveloperInfo()
+    this.checkFollowing()
   }
 
-  componentWillUnmount() {
-  }
+  componentWillUnmount () { }
 
-  componentDidShow() {
-  }
+  componentDidShow () { }
 
-  componentDidHide() {
-  }
+  componentDidHide () { }
 
-  onPullDownRefresh() {
-    this.getUserInfo()
-  }
-
-  getUserInfo() {
-    userAction.getUserInfo().then(()=>{
+  getDeveloperInfo() {
+    let params = {
+      url: '/users/' + this.state.username
+    }
+    userAction.getDeveloperInfo(params).then(()=>{
       Taro.hideLoading()
       Taro.stopPullDownRefresh()
     })
   }
 
-  handleNavigate(type) {
-    const { userInfo } = this.props
-    switch (type) {
-      case NAVIGATE_TYPE.REPOS: {
-        let url = encodeURI(baseUrl + '/user/repos')
-        Taro.navigateTo({
-          url: '/pages/account/repoList?url=' + url
-        })
-      }
-      break
-      case NAVIGATE_TYPE.FOLLOWERS: {
-        Taro.navigateTo({
-          url: '/pages/account/follow?type=followers'
-        })
-      }
-      break
-      case NAVIGATE_TYPE.FOLLOWING: {
-        Taro.navigateTo({
-          url: '/pages/account/follow?type=following'
-        })
-      }
-      break
-      case NAVIGATE_TYPE.STARRED_REPOS: {
-        Taro.navigateTo({
-          url: '/pages/account/starredRepo'
-        })
-      }
-      break
-      default: {
+  checkFollowing() {
+    let params = {
+      url: '/user/following/' + this.state.username
+    }
+    userAction.checkFollowing(params)
+  }
 
-      }
+  onShareAppMessage(obj) {
+    const { developerInfo } = this.props
+    return {
+      title: developerInfo.name + ' - GitHub',
+      path: '/pages/account/developerInfo?username=' + developerInfo.login
     }
   }
 
   render() {
-    const {userInfo} = this.props
-    if (!userInfo) return <View/>
+    const { developerInfo, isFollowed } = this.props
+    if (!developerInfo) return <View />
     return (
       <View className='content'>
         <Image className='account_bg' src={require('../../assets/images/account_bg.png')}/>
         <View className='user_info'>
-          <AtAvatar className='avatar' circle image={userInfo.avatar_url}/>
-          <Text className='username'>{userInfo.name}</Text>
-          <View className='login_name'>@{userInfo.login}</View>
+          <AtAvatar className='avatar' circle image={developerInfo.avatar_url}/>
+          <Text className='username'>{developerInfo.name}</Text>
+          <View className='login_name'>@{developerInfo.login}</View>
         </View>
         <View className='info_view'>
-          {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
+          {developerInfo.bio.length > 0 && <View className='bio'>{developerInfo.bio}</View>}
           <View className='item_view'>
             <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
-              <View className='title'>{userInfo.public_repos}+{userInfo.owned_private_repos}</View>
+              <View className='title'>{developerInfo.public_repos}+{developerInfo.owned_private_repos}</View>
               <View className='desc'>Repos</View>
             </View>
             <View className='line'/>
             <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWERS)}>
-              <View className='title'>{userInfo.followers}</View>
+              <View className='title'>{developerInfo.followers}</View>
               <View className='desc'>Followers</View>
             </View>
             <View className='line'/>
             <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWING)}>
-              <View className='title'>{userInfo.following}</View>
+              <View className='title'>{developerInfo.following}</View>
               <View className='desc'>Following</View>
             </View>
+          </View>
+          <View className='button_view'>
+            <Button className='button'>
+              {isFollowed ? 'Unfollow' : 'Follow'}
+            </Button>
+            <Button className='button' openType='share'>Share</Button>
           </View>
         </View>
         <View className='list_view'>
@@ -136,19 +130,19 @@ class Index extends Component {
         <View className='list_view'>
           <View className='list'>
             <View className='list_title'>Email</View>
-            <View className='list_content'>{userInfo.email.length > 0 ? userInfo.email : '--'}</View>
+            <View className='list_content'>{developerInfo.email.length > 0 ? developerInfo.email : '--'}</View>
           </View>
           <View className='list'>
             <View className='list_title'>Blog</View>
-            <View className='list_content'>{userInfo.blog.length > 0 ? userInfo.blog : '--'}</View>
+            <View className='list_content'>{developerInfo.blog.length > 0 ? developerInfo.blog : '--'}</View>
           </View>
           <View className='list'>
             <View className='list_title'>Company</View>
-            <View className='list_content'>{userInfo.company.length > 0 ? userInfo.company : '--'}</View>
+            <View className='list_content'>{developerInfo.company.length > 0 ? developerInfo.company : '--'}</View>
           </View>
           <View className='list'>
             <View className='list_title'>Location</View>
-            <View className='list_content'>{userInfo.location.length > 0 ? userInfo.location : '--'}</View>
+            <View className='list_content'>{developerInfo.location.length > 0 ? developerInfo.location : '--'}</View>
           </View>
         </View>
         <View className='bottom_view' />
@@ -159,7 +153,8 @@ class Index extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    userInfo: state.user.userInfo
+    developerInfo: state.user.developerInfo,
+    isFollowed: state.user.isFollowed
   }
 }
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(DeveloperInfo)
