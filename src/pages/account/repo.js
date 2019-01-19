@@ -1,8 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import {View, Text, Button} from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtIcon, AtTag } from 'taro-ui'
+import { AtIcon } from 'taro-ui'
 import reposAction from '../../actions/repos'
 import { base64_decode } from '../../utils/base64'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
@@ -12,8 +12,10 @@ import './repo.less'
 class Repo extends Component {
 
   config = {
-    navigationBarTitleText: 'Repo',
+    navigationBarTitleText: '',
     enablePullDownRefresh: true,
+    navigationBarBackgroundColor: '#2d8cf0',
+    navigationBarTextStyle: 'white',
     usingComponents: {
       wemark: '../../components/wemark/wemark'
     }
@@ -52,6 +54,27 @@ class Repo extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+
+  onPageScroll(e) {
+    let title = ''
+    const { repo } = this.props
+    if (e.scrollTop > 0) {
+      title = repo.data.name
+    }
+    Taro.setNavigationBarTitle({
+      title: title
+    })
+  }
+
+  onShareAppMessage(obj) {
+    const { repo } = this.props
+    const { url } = this.state
+    let path = '/pages/account/repo?url=' + decodeURI(url)
+    return {
+      title: repo.data.name + '-' +repo.data.description,
+      path: path
+    }
+  }
 
   getRepo() {
     let params = {
@@ -108,11 +131,25 @@ class Repo extends Component {
     return (
       <View className='content'>
         <View className='repo_bg_view'>
-          <View className='repo_info_title_view'>
-            <AtIcon prefixClass='ion' value='md-bookmarks' size='25' color='#333' />
-            <Text className='repo_info_title'>{repo.data.name}</Text>
-          </View>
+          <Text className='repo_info_title'>{repo.data.name}</Text>
           <Text className='repo_info_desc'>{repo.data.description}</Text>
+        </View>
+        <View className='repo_number_view'>
+          <View className='repo_number_item_view'>
+            <View className='repo_number_item'>
+              <AtIcon prefixClass='ion' value='ios-eye' size='25' color='#333' />
+              <Text className='repo_number_title'>{repo.data.watchers_count}</Text>
+            </View>
+            <View className='repo_number_item'>
+              <AtIcon prefixClass='ion' value='ios-star-outline' size='25' color='#333' />
+              <Text className='repo_number_title'>{repo.data.stargazers_count}</Text>
+            </View>
+            <View className='repo_number_item'>
+              <AtIcon prefixClass='ion' value='ios-git-network' size='25' color='#333' />
+              <Text className='repo_number_title'>{repo.data.forks_count}</Text>
+            </View>
+          </View>
+          <Button className='share_button' openType='share'>Share</Button>
         </View>
         <View className='repo_info_list_view'>
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.USER)}>

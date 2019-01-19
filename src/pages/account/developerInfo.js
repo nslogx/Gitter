@@ -73,7 +73,7 @@ class DeveloperInfo extends Component {
   onShareAppMessage(obj) {
     const { developerInfo } = this.props
     return {
-      title: developerInfo.name || developerInfo.login + ' - GitHub',
+      title: (developerInfo.name || developerInfo.login) + ' - GitHub',
       path: '/pages/account/developerInfo?username=' + developerInfo.login
     }
   }

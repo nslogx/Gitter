@@ -5,7 +5,7 @@ import reposAction  from '../../actions/repos'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import RepoItem from '../../components/account/repoItem'
 
-import './index.less'
+import './starredRepo.less'
 
 class StarredRepo extends Component {
 
@@ -53,7 +53,7 @@ class StarredRepo extends Component {
   componentDidHide () { }
 
   handleClickedItem(item) {
-    let url = decodeURI('/pages/account/repo?url=' + item.url)
+    let url = '/pages/account/repo?url=' + decodeURI(item.url)
     Taro.navigateTo({
       url: url
     })
@@ -69,7 +69,7 @@ class StarredRepo extends Component {
       )
     })
     return (
-      <View className='index'>
+      <View className='content'>
         {itemList}
       </View>
     )

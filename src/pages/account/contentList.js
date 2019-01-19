@@ -19,6 +19,7 @@ class ContentList extends Component {
     this.state = {
       repo: null,
       path: null,
+      name: null,
       dataList: []
     }
   }
@@ -30,13 +31,19 @@ class ContentList extends Component {
   componentWillMount() {
     let params = this.$router.params
     let path = params.path || null
+    let name = params.name || null
     this.setState({
       repo: params.repo,
-      path: path
+      path: path,
+      name: name
     })
   }
 
   componentDidMount() {
+    const { repo, name } = this.state
+    Taro.setNavigationBarTitle({
+      title: name || repo.split('/')[1]
+    })
     this.getContents()
   }
 
@@ -66,7 +73,7 @@ class ContentList extends Component {
     if (item.type === 'dir') {
       // 文件夹
       Taro.navigateTo({
-        url: '/pages/account/contentList?repo=' + this.state.repo + '&path=' + item.path
+        url: '/pages/account/contentList?repo=' + this.state.repo + '&path=' + item.path + '&name=' + item.name
       })
     }
   }
@@ -75,7 +82,7 @@ class ContentList extends Component {
     const { dataList } = this.state
     console.log('dataList', dataList)
     return (
-      <View className='index'>
+      <View className='content'>
         {
           dataList.map((item, index) => {
             return (

@@ -5,7 +5,7 @@ import userAction from '../../actions/user'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import FollowItem from '../../components/account/followItem'
 
-import './index.less'
+import './follow.less'
 
 class Follow extends Component {
 
@@ -80,7 +80,7 @@ class Follow extends Component {
       )
     })
     return (
-      <View className='index'>
+      <View className='content'>
         {itemList}
       </View>
     )

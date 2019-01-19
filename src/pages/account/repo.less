@@ -2,37 +2,72 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .repo_bg_view {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
-  border-radius: 10px;
-  width: 710px;
-  background-color: #fff;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
-}
-
-.repo_info_title_view {
-  display: flex;
-  flex-direction: row;
-  padding: 0 20px;
-  margin-top: 20px;
+  align-items: center;
+  width: 100%;
+  background-color: #2d8cf0;
 
   .repo_info_title {
-    margin-left: 20px;
-    color: #333333;
-    font-size: 32px;
+    color: #ffffff;
+    font-size: 50px;
+    margin: 5px 25px;
+  }
+
+  .repo_info_desc {
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+    margin: 5px 25px 90px 25px;
   }
 }
 
-.repo_info_desc {
-  color: #7f7f7f;
-  font-size: 30px;
-  margin-left: 75px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+.repo_number_view {
+  display: flex;
+  flex-direction: column;
+  margin-top: -70px;
+  border-radius: 10px;
+  width: 700px;
+  height: 245px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+
+  .repo_number_item_view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 30px;
+
+    .repo_number_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .repo_number_title {
+      color: #333333;
+      font-size: 34px;
+    }
+  }
+
+  .share_button {
+    margin-top: 20px;
+    border-radius: 35px;
+    width: 200px;
+    height: 70px;
+    font-size: 34px;
+    color: #fff;
+    padding: 0 0;
+    line-height: 70px;
+    background-color: #2d8cf0;
+  }
 }
 
 .repo_info_list_view {
@@ -40,7 +75,7 @@
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  width: 710px;
+  width: 700px;
   margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
@@ -89,9 +124,8 @@
 .markdown {
   display: flex;
   flex-direction: column;
-  width: 710px;
+  width: 700px;
   margin-top: 20px;
-  margin-bottom: 80px;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
   background-color: #fff;

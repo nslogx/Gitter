@@ -6,7 +6,7 @@ import reposAction from '../../actions/repos'
 
 import RepoItem from '../../components/account/repoItem'
 
-import './repos.less'
+import './repoList.less'
 
 class RepoList extends Component {
 
@@ -85,7 +85,7 @@ class RepoList extends Component {
   }
 
   handleClickedItem(item) {
-    let url = decodeURI('/pages/account/repo?url=' + item.url)
+    let url = '/pages/account/repo?url=' + decodeURI(item.url)
     Taro.navigateTo({
       url: url
     })
