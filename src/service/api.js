@@ -9,7 +9,7 @@ export default {
   baseOptions(params, method = 'GET') {
     let { url, data } = params
     console.log('params', params)
-    let contentType = 'application/x-www-form-urlencoded'
+    let contentType = 'application/json'
     contentType = params.contentType || contentType
     const option = {
       url: url.indexOf('http') !== -1 ? url : baseUrl + url,

@@ -40,6 +40,12 @@ class Issues extends Component {
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getIssuesList()
+
+
+    // let params = {
+      // body: '**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
+    // }
+    // api.post('https://api.github.com/repos/huangjianke/Gitter/issues/1/comments', params)
   }
 
   componentWillUnmount () { }

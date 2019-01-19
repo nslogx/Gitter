@@ -128,14 +128,6 @@ class DeveloperInfo extends Component {
             <View className='list_title'>Events</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
-          <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ISSUES)}>
-            <View className='list_title'>Issues</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
-          </View>
-          <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.GISTS)}>
-            <View className='list_title'>Gists</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
-          </View>
         </View>
         <View className='list_view'>
           <View className='list'>
