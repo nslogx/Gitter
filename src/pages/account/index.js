@@ -79,6 +79,12 @@ class Index extends Component {
         })
       }
       break
+      case NAVIGATE_TYPE.ISSUES: {
+        Taro.navigateTo({
+          url: '/pages/account/issues?url=/issues'
+        })
+      }
+        break
       default: {
 
       }

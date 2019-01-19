@@ -115,6 +115,13 @@ class Repo extends Component {
         })
       }
         break
+      case NAVIGATE_TYPE.ISSUES: {
+        let url = '/pages/account/issues?url=/repos/' + repo.data.full_name + '/issues'
+        Taro.navigateTo({
+          url: url
+        })
+      }
+        break
       default: {
 
       }
@@ -172,7 +179,7 @@ class Repo extends Component {
           </View>
         </View>
         <View className='repo_info_list_view'>
-          <View className='repo_info_list'>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ISSUES)}>
             <View className='list_title'>Issues</View>
             <View className='list_content'>
               {

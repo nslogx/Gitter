@@ -29,7 +29,7 @@ class App extends Component {
       'pages/account/follow',
       'pages/account/starredRepo',
       'pages/account/login',
-      'pages/account/issueList',
+      'pages/account/issues',
       'pages/account/developerInfo',
       'pages/account/contentList'
     ],
