@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
 import IssueList from '../../components/account/issueList'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import api from '../../service/api'
@@ -22,7 +22,9 @@ class Issues extends Component {
       closedList: [],
       url: null,
       isRefresh: false,
-      page: 1
+      page: 1,
+      isUser: false,
+      repo: null
     }
   }
 
@@ -33,19 +35,15 @@ class Issues extends Component {
   componentWillMount() {
     let params = this.$router.params
     this.setState({
-      url: params.url
+      url: params.url,
+      isUser: params.url.indexOf('user') !== 1,
+      repo: params.repo
     })
   }
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getIssuesList()
-
-
-    // let params = {
-      // body: '**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
-    // }
-    // api.post('https://api.github.com/repos/huangjianke/Gitter/issues/1/comments', params)
   }
 
   componentWillUnmount () { }
@@ -137,8 +135,15 @@ class Issues extends Component {
     })
   }
 
+  addIssue() {
+    Taro.navigateTo({
+      url: '/pages/account/addIssue?repo=' + this.state.repo
+    })
+  }
+
   render () {
-    const { openList, closedList } = this.state
+    const { openList, closedList, isUser } = this.state
+    console.log(isUser, 'isUser')
     return (
       <View className='content'>
         <AtTabs
@@ -156,8 +161,16 @@ class Issues extends Component {
           <AtTabsPane current={this.state.current} index={1}>
             <IssueList itemList={closedList} />
           </AtTabsPane>
-
         </AtTabs>
+        {
+          isUser &&
+          <View className='add_issue' onClick={this.addIssue.bind(this)}>
+            <AtIcon prefixClass='ion'
+                    value='ios-add'
+                    size='35'
+                    color='#fff' />
+          </View>
+        }
       </View>
     )
   }

@@ -15,6 +15,10 @@ export default class IssueList extends Component {
     itemList: null
   }
 
+  handleClicked(item) {
+
+  }
+
   render() {
     const { itemList } = this.props
     if (!itemList) return <View />
@@ -23,12 +27,13 @@ export default class IssueList extends Component {
         {
           itemList.map((item, index) => {
             return (
-              <IssueItem item={item} key={index} />
+              <View onClick={this.handleClicked.bind(this, item)} key={index}>
+                <IssueItem item={item} />
+              </View>
             )
           })
         }
       </View>
     )
   }
-
 }

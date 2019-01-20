@@ -81,7 +81,7 @@ class Index extends Component {
       break
       case NAVIGATE_TYPE.ISSUES: {
         Taro.navigateTo({
-          url: '/pages/account/issues?url=/issues'
+          url: '/pages/account/issues?url=/user/issues'
         })
       }
         break
