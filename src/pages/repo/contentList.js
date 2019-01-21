@@ -1,6 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import ContentListItem from '../../components/account/contentListItem'
 
@@ -73,7 +72,7 @@ class ContentList extends Component {
     if (item.type === 'dir') {
       // 文件夹
       Taro.navigateTo({
-        url: '/pages/account/contentList?repo=' + this.state.repo + '&path=' + item.path + '&name=' + item.name
+        url: '/pages/repo/contentList?repo=' + this.state.repo + '&path=' + item.path + '&name=' + item.name
       })
     }
   }

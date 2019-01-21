@@ -1,3 +1,5 @@
+import Taro from '@tarojs/taro'
+
 export const promisify = (func, ctx) => {
   // 返回一个新的function
   return function () {
@@ -77,7 +79,7 @@ export const logError = (name, action, info) => {
     let deviceInfo = Taro.getSystemInfoSync()
     var device = JSON.stringify(deviceInfo)
   } catch (e) {
-    console.error('not support getSystemInfoSync api', err.message)
+    console.error('not support getSystemInfoSync api', e.message)
   }
   let time = formatTime(new Date())
   console.error(time, name, action, info, device)

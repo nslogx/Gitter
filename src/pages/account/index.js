@@ -57,7 +57,7 @@ class Index extends Component {
       case NAVIGATE_TYPE.REPOS: {
         let url = encodeURI(baseUrl + '/user/repos')
         Taro.navigateTo({
-          url: '/pages/account/repoList?url=' + url
+          url: '/pages/repo/repoList?url=' + url
         })
       }
       break
@@ -75,13 +75,13 @@ class Index extends Component {
       break
       case NAVIGATE_TYPE.STARRED_REPOS: {
         Taro.navigateTo({
-          url: '/pages/account/starredRepo'
+          url: '/pages/repo/starredRepo'
         })
       }
       break
       case NAVIGATE_TYPE.ISSUES: {
         Taro.navigateTo({
-          url: '/pages/account/issues?url=/user/issues'
+          url: '/pages/repo/issues?url=/user/issues'
         })
       }
         break

@@ -137,7 +137,7 @@ class Issues extends Component {
 
   addIssue() {
     Taro.navigateTo({
-      url: '/pages/account/addIssue?repo=' + this.state.repo
+      url: '/pages/repo/addIssue?repo=' + this.state.repo
     })
   }
 
@@ -167,7 +167,7 @@ class Issues extends Component {
           <View className='add_issue' onClick={this.addIssue.bind(this)}>
             <AtIcon prefixClass='ion'
                     value='ios-add'
-                    size='35'
+                    size='40'
                     color='#fff' />
           </View>
         }

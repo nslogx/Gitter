@@ -24,7 +24,7 @@ export default class ItemList extends Component {
 
   handleRepoClicked(item) {
     let api = 'https://api.github.com/repos/' + item.author + '/' + item.name
-    let url = '/pages/account/repo?url=' + decodeURI(api)
+    let url = '/pages/repo/repo?url=' + decodeURI(api)
     Taro.navigateTo({
       url: url
     })

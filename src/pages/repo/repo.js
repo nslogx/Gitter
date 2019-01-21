@@ -69,7 +69,7 @@ class Repo extends Component {
   onShareAppMessage(obj) {
     const { repo } = this.props
     const { url } = this.state
-    let path = '/pages/account/repo?url=' + decodeURI(url)
+    let path = '/pages/repo/repo?url=' + decodeURI(url)
     return {
       title: repo.data.name + '-' +repo.data.description,
       path: path
@@ -111,12 +111,12 @@ class Repo extends Component {
         break
       case NAVIGATE_TYPE.REPO_CONTENT_LIST: {
         Taro.navigateTo({
-          url: '/pages/account/contentList?repo=' + repo.data.full_name
+          url: '/pages/repo/contentList?repo=' + repo.data.full_name
         })
       }
         break
       case NAVIGATE_TYPE.ISSUES: {
-        let url = '/pages/account/issues?url=/repos/' + repo.data.full_name + '/issues&repo=' + repo.data.full_name
+        let url = '/pages/repo/issues?url=/repos/' + repo.data.full_name + '/issues&repo=' + repo.data.full_name
         Taro.navigateTo({
           url: url
         })
@@ -139,7 +139,7 @@ class Repo extends Component {
       <View className='content'>
         <View className='repo_bg_view'>
           <Text className='repo_info_title'>{repo.data.name}</Text>
-          <Text className='repo_info_desc'>{repo.data.description}</Text>
+          <Text className='repo_info_desc'>{repo.data.description || 'no description'}</Text>
         </View>
         <View className='repo_number_view'>
           <View className='repo_number_item_view'>

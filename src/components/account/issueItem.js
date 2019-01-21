@@ -36,7 +36,7 @@ export default class IssueList extends Component {
           </Text>
           {
             item.repository &&
-            <Navigator url={'/pages/account/repo?url=' + decodeURI(item.repository.url)}>
+            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repository.url)}>
               <Text className='issue_repo'>{item.repository.full_name}</Text>
             </Navigator>
           }

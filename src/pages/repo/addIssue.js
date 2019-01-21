@@ -16,8 +16,8 @@ class AddIssue extends Component {
     super(props)
     this.state = {
       repo: null,
-      title: null,
-      comment: null
+      title: '',
+      comment: ''
     }
   }
 
@@ -57,7 +57,8 @@ class AddIssue extends Component {
     const { title, comment } = this.state
     if (title.length === 0) {
       Taro.showToast({
-        title: 'Please input title'
+        title: 'Please input title',
+        icon: 'none'
       })
     } else {
       Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
