@@ -24,6 +24,7 @@ class App extends Component {
       'pages/index/index',
       'pages/search/index',
       'pages/account/index',
+      'pages/activity/index',
       'pages/account/follow',
       'pages/account/developerInfo',
       'pages/repo/contentList',
@@ -48,8 +49,8 @@ class App extends Component {
         iconPath: './assets/images/tab_extract.png',
         selectedIconPath: './assets/images/tab_extract_s.png'
       }, {
-        pagePath: 'pages/search/index',
-        text: 'Search',
+        pagePath: 'pages/activity/index',
+        text: 'Activity',
         iconPath: './assets/images/tab_library.png',
         selectedIconPath: './assets/images/tab_library_s.png'
       }, {

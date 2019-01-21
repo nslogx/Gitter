@@ -110,6 +110,8 @@ class Login extends Component {
           icon: 'none'
         })
       } else {
+        Taro.eventCenter.trigger('login_success')
+        Taro.setStorageSync('userInfo', res.data)
         Taro.navigateBack()
       }
     })

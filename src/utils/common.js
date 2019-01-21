@@ -1,3 +1,5 @@
+import Taro from '@tarojs/taro'
+
 export const promisify = (func, ctx) => {
   // 返回一个新的function
   return function () {
@@ -128,7 +130,7 @@ export const timeago = dateTimeStamp => {   //dateTimeStamp是一个时间毫秒
     let Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
     let Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
     let Nsecond = datetime.getSeconds() < 10 ? "0" + datetime.getSeconds() : datetime.getSeconds();
-    result = Nyear + "-" + Nmonth + "-" + Ndate + Nhour + ':' + Nminute + ':' + Nsecond
+    result = Nyear + "-" + Nmonth + "-" + Ndate + ' ' + Nhour + ':' + Nminute + ':' + Nsecond
   }
   return result;
 }
@@ -147,4 +149,8 @@ export const formatTime = date => {
 export const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
+}
+
+export const hasLogin = () => {
+  return Taro.getStorageSync('Authorization').length > 0
 }

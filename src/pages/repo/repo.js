@@ -1,11 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import {View, Text, Button} from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { AtIcon } from 'taro-ui'
-import reposAction from '../../actions/repos'
 import { base64_decode } from '../../utils/base64'
+import { hasLogin } from '../../utils/common'
+import { HTTP_STATUS } from '../../constants/status'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
+import api from '../../service/api'
 
 import './repo.less'
 
@@ -24,7 +25,10 @@ class Repo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      url: ''
+      url: '',
+      repo: null,
+      readme: null,
+      hasStar: false
     }
   }
 
@@ -57,9 +61,9 @@ class Repo extends Component {
 
   onPageScroll(e) {
     let title = ''
-    const { repo } = this.props
+    const { repo } = this.state
     if (e.scrollTop > 0) {
-      title = repo.data.name
+      title = repo.name
     }
     Taro.setNavigationBarTitle({
       title: title
@@ -67,56 +71,113 @@ class Repo extends Component {
   }
 
   onShareAppMessage(obj) {
-    const { repo } = this.props
+    const { repo } = this.state
     const { url } = this.state
     let path = '/pages/repo/repo?url=' + decodeURI(url)
     return {
-      title: repo.data.name + '-' +repo.data.description,
+      title: repo.name + '-' +repo.description,
       path: path
     }
   }
 
   getRepo() {
-    let params = {
-      url: this.state.url
-    }
     let that = this
-    reposAction.getRepo(params).then(()=>{
-      Taro.hideLoading()
-      Taro.stopPullDownRefresh()
-      that.getReadme()
+    api.get(this.state.url).then((res)=>{
+      that.setState({
+        repo: res.data
+      }, ()=>{
+        Taro.hideLoading()
+        Taro.stopPullDownRefresh()
+        that.getReadme()
+        that.checkStarring()
+      })
     })
   }
 
   getReadme() {
-    const { repo } = this.props
-    let url = '/repos/' + repo.data.full_name + '/readme'
-    let params = {
-      url: url
+    const { repo } = this.state
+    let url = '/repos/' + repo.full_name + '/readme'
+    let that = this
+    api.get(url).then((res)=>{
+      that.setState({
+        readme: res.data
+      })
+    })
+  }
+
+  checkStarring() {
+    if (hasLogin()) {
+      const { repo } = this.state
+      let that = this
+      let url = '/user/starred/' + repo.full_name
+      api.get(url).then((res)=>{
+        that.setState({
+          hasStar: res.statusCode === 204
+        })
+      })
     }
-    reposAction.getRepoReadMe(params).then(()=>{
+  }
+
+  handleStar() {
+    const { hasStar, repo } = this.state
+    let url = '/user/starred/' + repo.full_name
+    let that = this
+    if (hasStar) {
+      api.delete(url).then((res)=>{
+        if (res.statusCode === 204) {
+          that.setState({
+            hasStar: false
+          })
+        }
+      })
+    } else {
+      api.put(url).then((res)=>{
+        if (res.statusCode === 204) {
+          that.setState({
+            hasStar: true
+          })
+        }
+      })
+    }
+  }
+
+  handleFork() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    const { repo } = this.state
+    let that = this
+    let url = '/repos/' + repo.full_name + '/forks'
+    api.post(url).then((res)=>{
+      if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        Taro.showToast({
+          title: 'Success'
+        })
+      } else {
+        Taro.showToast({
+          title: res.data.message,
+          icon: 'none'
+        })
+      }
       Taro.hideLoading()
     })
   }
 
-
   handleNavigate(type) {
-    const { repo } = this.props
+    const { repo } = this.state
     switch (type) {
       case NAVIGATE_TYPE.USER: {
         Taro.navigateTo({
-          url: '/pages/account/developerInfo?username=' + repo.data.owner.login
+          url: '/pages/account/developerInfo?username=' + repo.owner.login
         })
       }
         break
       case NAVIGATE_TYPE.REPO_CONTENT_LIST: {
         Taro.navigateTo({
-          url: '/pages/repo/contentList?repo=' + repo.data.full_name
+          url: '/pages/repo/contentList?repo=' + repo.full_name
         })
       }
         break
       case NAVIGATE_TYPE.ISSUES: {
-        let url = '/pages/repo/issues?url=/repos/' + repo.data.full_name + '/issues&repo=' + repo.data.full_name
+        let url = '/pages/repo/issues?url=/repos/' + repo.full_name + '/issues&repo=' + repo.full_name
         Taro.navigateTo({
           url: url
         })
@@ -129,31 +190,34 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo } = this.props
-    if (!repo.data) return <View />
+    const { repo, readme, hasStar } = this.state
+    if (!repo) return <View />
     let md = ''
-    if (repo.readme && repo.readme.content.length > 0) {
-      md = base64_decode(repo.readme.content)
+    if (readme && readme.content.length > 0) {
+      md = base64_decode(readme.content)
     }
     return (
       <View className='content'>
         <View className='repo_bg_view'>
-          <Text className='repo_info_title'>{repo.data.name}</Text>
-          <Text className='repo_info_desc'>{repo.data.description || 'no description'}</Text>
+          <Text className='repo_info_title'>{repo.name}</Text>
+          <Text className='repo_info_desc'>{repo.description || 'no description'}</Text>
         </View>
         <View className='repo_number_view'>
           <View className='repo_number_item_view'>
             <View className='repo_number_item'>
               <AtIcon prefixClass='ion' value='ios-eye' size='25' color='#333' />
-              <Text className='repo_number_title'>{repo.data.watchers_count}</Text>
+              <Text className='repo_number_title'>{repo.watchers_count}</Text>
             </View>
-            <View className='repo_number_item'>
-              <AtIcon prefixClass='ion' value='ios-star-outline' size='25' color='#333' />
-              <Text className='repo_number_title'>{repo.data.stargazers_count}</Text>
+            <View className='repo_number_item' onClick={this.handleStar.bind(this)}>
+              <AtIcon prefixClass='ion'
+                      value={hasStar ? 'ios-star' : 'ios-star-outline'}
+                      size='25'
+                      color={hasStar ? '#ff4949' : '#333'} />
+              <Text className='repo_number_title'>{repo.stargazers_count}</Text>
             </View>
-            <View className='repo_number_item'>
+            <View className='repo_number_item' onClick={this.handleFork.bind(this)}>
               <AtIcon prefixClass='ion' value='ios-git-network' size='25' color='#333' />
-              <Text className='repo_number_title'>{repo.data.forks_count}</Text>
+              <Text className='repo_number_title'>{repo.forks_count}</Text>
             </View>
           </View>
           <Button className='share_button' openType='share'>Share</Button>
@@ -162,14 +226,14 @@ class Repo extends Component {
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.USER)}>
             <View className='list_title'>Author</View>
             <View className='list_content'>
-              <Text className='list_content_title'>{repo.data.owner.login}</Text>
+              <Text className='list_content_title'>{repo.owner.login}</Text>
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
           </View>
           <View className='repo_info_list'>
             <View className='list_title'>Branch</View>
             <View className='list_content'>
-              <Text className='list_content_title'>{repo.data.default_branch}</Text>
+              <Text className='list_content_title'>{repo.default_branch}</Text>
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
           </View>
@@ -183,8 +247,8 @@ class Repo extends Component {
             <View className='list_title'>Issues</View>
             <View className='list_content'>
               {
-                repo.data.open_issues_count > 0 &&
-                <View className='tag'>{repo.data.open_issues_count}</View>
+                repo.open_issues_count > 0 &&
+                <View className='tag'>{repo.open_issues_count}</View>
               }
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
@@ -212,10 +276,4 @@ class Repo extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    repo: state.repos.repo,
-
-  }
-}
-export default connect(mapStateToProps)(Repo)
+export default Repo

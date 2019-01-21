@@ -1,12 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import {Image, Text, View, Button} from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import userAction from '../../actions/user'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
+import { AtAvatar, AtIcon } from 'taro-ui'
+import { NAVIGATE_TYPE } from '../../constants/navigateType'
+import { hasLogin } from '../../utils/common'
+import api from '../../service/api'
 
 import './developerInfo.less'
-import {AtAvatar, AtIcon} from "taro-ui";
-import {NAVIGATE_TYPE} from "../../constants/navigateType";
 
 class DeveloperInfo extends Component {
 
@@ -20,7 +20,9 @@ class DeveloperInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: ''
+      username: '',
+      developerInfo: null,
+      isFollowed: false
     }
   }
 
@@ -39,7 +41,6 @@ class DeveloperInfo extends Component {
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getDeveloperInfo()
-    this.checkFollowing()
   }
 
   componentWillUnmount () { }
@@ -50,28 +51,60 @@ class DeveloperInfo extends Component {
 
   onPullDownRefresh() {
     this.getDeveloperInfo()
-    this.checkFollowing()
   }
 
   getDeveloperInfo() {
-    let params = {
-      url: '/users/' + this.state.username
-    }
-    userAction.getDeveloperInfo(params).then(()=>{
+    const { username } = this.state
+    let that = this
+    let url = '/users/' + username
+    api.get(url).then((res)=>{
+      that.setState({
+        developerInfo: res.data
+      }, ()=>{
+        that.checkFollowing()
+      })
       Taro.hideLoading()
-      Taro.stopPullDownRefresh()
     })
   }
 
   checkFollowing() {
-    let params = {
-      url: '/user/following/' + this.state.username
+    if (hasLogin()) {
+      let that = this
+      const { username } = this.state
+      let url = '/user/following/' + username
+      api.get(url).then((res)=>{
+        that.setState({
+          isFollowed: res.statusCode === 204
+        })
+      })
     }
-    userAction.checkFollowing(params)
+  }
+
+  handleFollow() {
+    const { isFollowed, username } = this.state
+    let url = '/user/following/' + username
+    let that = this
+    if (isFollowed) {
+      api.delete(url).then((res)=>{
+        if (res.statusCode === 204) {
+          that.setState({
+            isFollowed: false
+          })
+        }
+      })
+    } else {
+      api.put(url).then((res)=>{
+        if (res.statusCode === 204) {
+          that.setState({
+            isFollowed: true
+          })
+        }
+      })
+    }
   }
 
   onShareAppMessage(obj) {
-    const { developerInfo } = this.props
+    const { developerInfo } = this.state
     return {
       title: (developerInfo.name || developerInfo.login) + ' - GitHub',
       path: '/pages/account/developerInfo?username=' + developerInfo.login
@@ -79,7 +112,7 @@ class DeveloperInfo extends Component {
   }
 
   render() {
-    const { developerInfo, isFollowed } = this.props
+    const { developerInfo, isFollowed } = this.state
     if (!developerInfo) return <View />
     return (
       <View className='content'>
@@ -112,7 +145,7 @@ class DeveloperInfo extends Component {
           <View className='button_view'>
             {
               developerInfo.type === 'User' &&
-              <Button className='button'>
+              <Button className='button' onClick={this.handleFollow.bind(this)}>
                 {isFollowed ? 'Unfollow' : 'Follow'}
               </Button>
             }
@@ -152,11 +185,4 @@ class DeveloperInfo extends Component {
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    developerInfo: state.user.developerInfo,
-    isFollowed: state.user.isFollowed
-  }
-}
-export default connect(mapStateToProps)(DeveloperInfo)
+export default DeveloperInfo
