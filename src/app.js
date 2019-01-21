@@ -50,18 +50,18 @@ class App extends Component {
       list: [{
         pagePath: 'pages/index/index',
         text: 'Trending',
-        iconPath: './assets/images/tab_extract.png',
-        selectedIconPath: './assets/images/tab_extract_s.png'
+        iconPath: './assets/images/tab_trend.png',
+        selectedIconPath: './assets/images/tab_trend_s.png'
       }, {
         pagePath: 'pages/activity/index',
         text: 'Activity',
-        iconPath: './assets/images/tab_library.png',
-        selectedIconPath: './assets/images/tab_library_s.png'
+        iconPath: './assets/images/tab_news.png',
+        selectedIconPath: './assets/images/tab_news_s.png'
       }, {
         pagePath: 'pages/account/index',
         text: 'Me',
-        iconPath: './assets/images/tab_author.png',
-        selectedIconPath: './assets/images/tab_author_s.png'
+        iconPath: './assets/images/tab_me.png',
+        selectedIconPath: './assets/images/tab_me_s.png'
       }],
       color: '#8a8a8a',
       selectedColor: '#2d8cf0',
