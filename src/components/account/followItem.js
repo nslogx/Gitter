@@ -6,7 +6,7 @@ import { AtAvatar } from 'taro-ui'
 
 import './followItem.less'
 
-export default class FolloeItem extends Component {
+export default class FollowItem extends Component {
   static propTypes = {
     item: PropTypes.object,
   }

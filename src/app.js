@@ -33,6 +33,7 @@ class App extends Component {
       'pages/repo/addIssue',
       'pages/repo/repoList',
       'pages/repo/repo',
+      'pages/repo/contributors',
       'pages/repo/starredRepo',
       'pages/login/login'
     ],

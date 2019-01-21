@@ -183,6 +183,13 @@ class Repo extends Component {
         })
       }
         break
+      case NAVIGATE_TYPE.REPO_CONTRIBUTORS_LIST: {
+        let url = '/pages/repo/contributors?url=/repos/' + repo.full_name + '/contributors'
+        Taro.navigateTo({
+          url: url
+        })
+      }
+        break
       default: {
 
       }
@@ -257,7 +264,7 @@ class Repo extends Component {
             <View className='list_title'>Pull Requests</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
-          <View className='repo_info_list'>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTRIBUTORS_LIST)}>
             <View className='list_title'>Contributors</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
