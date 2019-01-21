@@ -1,8 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types'
-import { View } from '@tarojs/components'
+import { View, Navigator, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
-import { formatTime } from '../../utils/common'
+import { timeago } from '../../utils/common'
 
 
 import './repoItem.less'
@@ -19,8 +19,7 @@ export default class RepoItem extends Component {
   render() {
     const { item } = this.props
     if (!item) return <View/>
-    let update_date = new Date(item.updated_at)
-    let update_time = ' ' + formatTime(update_date)
+    let update_time = ' ' + timeago(Date.parse(new Date(item.updated_at)))
     let is_bottom_show = (item.language && item.language.length > 0 || item.stargazers_count > 0 || item.forks_count > 0)
     return (
       <View className='content'>
@@ -28,7 +27,7 @@ export default class RepoItem extends Component {
           <AtIcon prefixClass='ion' value='md-bookmarks' size='25' color='#333'/>
           <View className='repo_title'>{item.full_name}</View>
         </View>
-        <View className='repo_desc'>{item.description}</View>
+        <View className='repo_desc'>{item.description || 'no description'}</View>
         {is_bottom_show &&
         <View className='repo_bottom'>
           {
@@ -56,7 +55,7 @@ export default class RepoItem extends Component {
         }
         <View className='update_view'>
           <AtIcon prefixClass='ion' value='ios-trending-up' size='15' color='#ff4949'/>
-          <View className='update_date'>updated on{update_time}</View>
+          <View className='update_date'>updated{update_time}</View>
         </View>
       </View>
     )

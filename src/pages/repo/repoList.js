@@ -1,12 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import reposAction from '../../actions/repos'
 
 import RepoItem from '../../components/account/repoItem'
 
 import './repoList.less'
+import api from "../../service/api";
 
 class RepoList extends Component {
 
@@ -19,7 +18,8 @@ class RepoList extends Component {
     super(props)
     this.state = {
       url: '',
-      page: 1
+      page: 1,
+      repos: []
     }
   }
 
@@ -34,53 +34,49 @@ class RepoList extends Component {
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    this.refresh()
+    this.getRepoList()
   }
 
   onPullDownRefresh() {
-    this.refresh()
-  }
-
-  refresh() {
+    let that = this
     this.setState({
       page: 1
-    }, () => {
-      let data = {
-        per_page: GLOBAL_CONFIG.PER_PAGE,
-        page: this.state.page
-      }
-      let params = {
-        data: data,
-        url: this.state.url
-      }
-      console.log('params', params)
-      reposAction.reposListRefresh(params)
-        .then(()=>{
-          Taro.stopPullDownRefresh()
-          Taro.hideLoading()
-        })
+    }, ()=>{
+      that.getRepoList()
     })
   }
 
   onReachBottom() {
+    let that = this
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     const { page } = this.state
     this.setState({
       page: page + 1
-    }, () => {
-      Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-      let data = {
-        per_page: GLOBAL_CONFIG.PER_PAGE,
-        page: this.state.page
-      }
-      let params = {
-        data: data,
-        url: this.state.url
-      }
-      reposAction.reposListLoadMore(params)
-        .then(()=>{
-          Taro.stopPullDownRefresh()
-          Taro.hideLoading()
+    }, ()=>{
+      that.getRepoList()
+    })
+  }
+
+  getRepoList() {
+    let that = this
+    const { url, page, repos } = this.state
+    let params = {
+      page: page,
+      per_page: GLOBAL_CONFIG.PER_PAGE
+    }
+    api.get(url, params).then((res)=>{
+      console.log(res)
+      if (page === 1) {
+        that.setState({
+          repos: res.data
         })
+      } else {
+        that.setState({
+          repos: repos.concat(res.data)
+        })
+      }
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
     })
   }
 
@@ -98,7 +94,7 @@ class RepoList extends Component {
   componentDidHide () { }
 
   render () {
-    const { repos } = this.props
+    const { repos } = this.state
     const repoList = repos.map((item, index) => {
       return (
         <View onClick={this.handleClickedItem.bind(this, item)} key={index}>
@@ -114,9 +110,4 @@ class RepoList extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    repos: state.repos.repos
-  }
-}
-export default connect(mapStateToProps)(RepoList)
+export default RepoList

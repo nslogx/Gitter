@@ -22,19 +22,22 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/search/index',
       'pages/account/index',
       'pages/activity/index',
+      'pages/search/index',
       'pages/account/follow',
+      'pages/account/about',
       'pages/account/developerInfo',
       'pages/repo/contentList',
       'pages/repo/issues',
       'pages/repo/issueDetail',
       'pages/repo/addIssue',
+      'pages/repo/addComment',
       'pages/repo/repoList',
       'pages/repo/repo',
       'pages/repo/contributors',
       'pages/repo/starredRepo',
+      'pages/repo/file',
       'pages/login/login'
     ],
     window: {

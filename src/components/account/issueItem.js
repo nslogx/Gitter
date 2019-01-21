@@ -7,7 +7,7 @@ import { timeago } from '../../utils/common'
 
 import './issueItem.less'
 
-export default class IssueList extends Component {
+export default class IssueItem extends Component {
   static propTypes = {
     item: PropTypes.object
   }
@@ -31,6 +31,12 @@ export default class IssueList extends Component {
           <Text className='issue_title'>
             {item.title}
           </Text>
+          {
+            item.comments > 0 &&
+            <Text className='issue_desc'>
+              {item.comments + ' comments'}
+            </Text>
+          }
           <Text className='issue_desc'>
             {desc}
           </Text>

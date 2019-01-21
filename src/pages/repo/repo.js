@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import {View, Text, Button} from '@tarojs/components'
+import { View, Text, Button, Navigator } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { AtIcon } from 'taro-ui'
 import { base64_decode } from '../../utils/base64'
@@ -83,6 +83,7 @@ class Repo extends Component {
   getRepo() {
     let that = this
     api.get(this.state.url).then((res)=>{
+      console.log(res)
       that.setState({
         repo: res.data
       }, ()=>{
@@ -124,17 +125,21 @@ class Repo extends Component {
     let that = this
     if (hasStar) {
       api.delete(url).then((res)=>{
+        repo.stargazers_count -= 1
         if (res.statusCode === 204) {
           that.setState({
-            hasStar: false
+            hasStar: false,
+            repo: repo
           })
         }
       })
     } else {
       api.put(url).then((res)=>{
         if (res.statusCode === 204) {
+          repo.stargazers_count += 1
           that.setState({
-            hasStar: true
+            hasStar: true,
+            repo: repo
           })
         }
       })
@@ -207,6 +212,17 @@ class Repo extends Component {
       <View className='content'>
         <View className='repo_bg_view'>
           <Text className='repo_info_title'>{repo.name}</Text>
+          {
+            repo.fork &&
+            <View className='fork'>
+              <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#fff' />
+              <Navigator url={'/pages/repo/repo?url=' + decodeURI(repo.parent.url)}>
+                <Text className='fork_title'>
+                  {repo.parent.full_name}
+                </Text>
+              </Navigator>
+            </View>
+          }
           <Text className='repo_info_desc'>{repo.description || 'no description'}</Text>
         </View>
         <View className='repo_number_view'>
@@ -237,16 +253,23 @@ class Repo extends Component {
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
           </View>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTENT_LIST)}>
+            <View className='list_title'>View Code</View>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+          </View>
           <View className='repo_info_list'>
             <View className='list_title'>Branch</View>
             <View className='list_content'>
               <Text className='list_content_title'>{repo.default_branch}</Text>
-              <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+              {/*<AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />*/}
             </View>
           </View>
-          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTENT_LIST)}>
-            <View className='list_title'>View Code</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+          <View className='repo_info_list'>
+            <View className='list_title'>License</View>
+            <View className='list_content'>
+              <Text className='list_content_title'>{repo.license.spdx_id || '--'}</Text>
+              {/*<AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />*/}
+            </View>
           </View>
         </View>
         <View className='repo_info_list_view'>
@@ -260,10 +283,10 @@ class Repo extends Component {
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
           </View>
-          <View className='repo_info_list'>
-            <View className='list_title'>Pull Requests</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
-          </View>
+          {/*<View className='repo_info_list'>*/}
+            {/*<View className='list_title'>Pull Requests</View>*/}
+            {/*<AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />*/}
+          {/*</View>*/}
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTRIBUTORS_LIST)}>
             <View className='list_title'>Contributors</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />

@@ -1,11 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import reposAction  from '../../actions/repos'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import RepoItem from '../../components/account/repoItem'
 
 import './starredRepo.less'
+import api from "../../service/api";
 
 class StarredRepo extends Component {
 
@@ -17,7 +16,9 @@ class StarredRepo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      url: ''
+      url: '',
+      page: 1,
+      dataList: []
     }
   }
 
@@ -29,7 +30,7 @@ class StarredRepo extends Component {
     let params = this.$router.params
     let url = '/user/starred'
     if (params.username) {
-      url = '/user/' + params.username + '/starred'
+      url = '/users/' + params.username + '/starred'
     }
     this.setState({
       url: url
@@ -38,12 +39,7 @@ class StarredRepo extends Component {
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    let params = {
-      url: this.state.url
-    }
-    reposAction.starredRepoRefresh(params).then(()=>{
-      Taro.hideLoading()
-    })
+    this.getRepoList()
   }
 
   componentWillUnmount () { }
@@ -51,6 +47,48 @@ class StarredRepo extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+
+  onPullDownRefresh() {
+    let that = this
+    this.setState({
+      page: 1
+    }, ()=>{
+      that.getRepoList()
+    })
+  }
+
+  onReachBottom() {
+    let that = this
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    const { page } = this.state
+    this.setState({
+      page: page + 1
+    }, ()=>{
+      that.getRepoList()
+    })
+  }
+
+  getRepoList() {
+    let that = this
+    const { url, page, dataList } = this.state
+    let params = {
+      page: page,
+      per_page: GLOBAL_CONFIG.PER_PAGE
+    }
+    api.get(url, params).then((res)=>{
+      if (page === 1) {
+        that.setState({
+          dataList: res.data
+        })
+      } else {
+        that.setState({
+          dataList: dataList.concat(res.data)
+        })
+      }
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
+    })
+  }
 
   handleClickedItem(item) {
     let url = '/pages/repo/repo?url=' + decodeURI(item.url)
@@ -60,8 +98,8 @@ class StarredRepo extends Component {
   }
 
   render () {
-    const { followList } = this.props
-    const itemList = followList.map((item, index) => {
+    const { dataList } = this.state
+    const itemList = dataList.map((item, index) => {
       return (
         <View onClick={this.handleClickedItem.bind(this, item)} key={index}>
           <RepoItem item={item} />
@@ -76,9 +114,4 @@ class StarredRepo extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    followList: state.user.followList
-  }
-}
-export default connect(mapStateToProps)(StarredRepo)
+export default StarredRepo

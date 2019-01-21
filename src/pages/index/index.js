@@ -2,7 +2,8 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
+import { languages } from '../../utils/language'
 
 import ItemList from '../../components/index/itemList'
 
@@ -34,7 +35,15 @@ class Index extends Component {
       scrollHeight: 0,
       isHidden: false,
       apiCount: 0,
-      fixed: false
+      range: [
+        [{'name': 'Today',
+        'value': 'daily'},
+        {'name': 'Week',
+          'value': 'weekly'},
+        {'name': 'Month',
+          'value': 'monthly'}],
+        languages
+      ]
     }
   }
 
@@ -94,7 +103,6 @@ class Index extends Component {
 
     //给scrollTop重新赋值
     this.setState({
-      fixed: e.scrollTop > 0,
       scrollTop: e.scrollTop
     })
   }
@@ -121,8 +129,8 @@ class Index extends Component {
   onChange = e => {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setState({
-      category: this.props.range[0][e.detail.value[0]],
-      language: this.props.range[1][e.detail.value[1]]
+      category: this.state.range[0][e.detail.value[0]],
+      language: this.state.range[1][e.detail.value[1]]
     }, () => {
       this.loadItemList()
     })
@@ -163,7 +171,12 @@ class Index extends Component {
           }
         })
       })
-    trendingAction.getLanguageList().then(()=>{console.log('end3')})
+  }
+
+  onActionSearch () {
+    Taro.navigateTo({
+      url: '/pages/search/index'
+    })
   }
 
   render () {
@@ -176,6 +189,13 @@ class Index extends Component {
     }
     return (
       <View className='content' id='list'>
+        <View className='search_bg' onClick={this.onActionSearch.bind(this)}>
+          <AtSearchBar
+            disabled={true}
+            placeholder='Search'
+            actionName=''
+          />
+        </View>
         <AtTabs
           swipeable={false}
           animated={true}
@@ -194,10 +214,10 @@ class Index extends Component {
 
         </AtTabs>
         {
-          this.props.range[1].length > 0 &&
+          this.state.range[1].length > 0 &&
           <View>
             <Picker mode='multiSelector'
-                    range={this.props.range}
+                    range={this.state.range}
                     rangeKey={'name'}
                     onChange={this.onChange}
             >
@@ -217,15 +237,7 @@ class Index extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     repos: state.trending.repos,
-    developers: state.trending.developers,
-    range: [
-      [{'name': 'Today',
-        'value': 'daily'},
-        {'name': 'Week',
-          'value': 'weekly'},
-        {'name': 'Month',
-          'value': 'monthly'}],
-      state.trending.languages.all]
+    developers: state.trending.developers
   }
 }
 export default connect(mapStateToProps)(Index)

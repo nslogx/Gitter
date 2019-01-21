@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Text } from '@tarojs/components'
 import { AtInput, AtButton } from 'taro-ui'
 import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
@@ -100,20 +100,30 @@ class Login extends Component {
         authorization = 'Basic ' + base64_encode(username + ':' + password)
       }
     }
-    Taro.setStorageSync('Authorization', authorization)
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    userAction.getUserInfo().then((res)=>{
-      Taro.hideLoading()
-      if (res.statusCode !== HTTP_STATUS.SUCCESS) {
-        Taro.showToast({
-          title: res.data.message,
-          icon: 'none'
-        })
-      } else {
-        Taro.eventCenter.trigger('login_success')
-        Taro.setStorageSync('userInfo', res.data)
-        Taro.navigateBack()
-      }
+
+    if (authorization.length !== 0) {
+      Taro.setStorageSync('Authorization', authorization)
+      Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+      userAction.getUserInfo().then((res)=>{
+        Taro.hideLoading()
+        if (res.statusCode !== HTTP_STATUS.SUCCESS) {
+          Taro.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+          Taro.setStorageSync('Authorization', '')
+        } else {
+          Taro.eventCenter.trigger('login_success')
+          Taro.setStorageSync('userInfo', res.data)
+          Taro.navigateBack()
+        }
+      })
+    }
+  }
+
+  handleclickedTokenAddress() {
+    Taro.setClipboardData({
+      data: 'https://github.com/settings/tokens/new'
     })
   }
 
@@ -171,6 +181,20 @@ class Login extends Component {
           <View className='login_button'
                 onClick={this.getUserInfo.bind(this)}>
             Login
+          </View>
+        </View>
+        <View className='info_view'>
+          <Text className='info_text'>
+            1、由于小程序的限制，无法使用OAuth跳转认证，推荐使用Token认证方式；
+          </Text>
+          <Text className='info_text'>
+            2、Token及用户名密码仅用于GitHub Api权限校验，不会被上传服务器；
+          </Text>
+          <Text className='info_text'>
+            3、Token的生成方式请点击复制以下地址至浏览器打开，按照步骤即可生成Token
+          </Text>
+          <View onClick={this.handleclickedTokenAddress.bind(this)} className='token_address'>
+            https://github.com/settings/tokens/new
           </View>
         </View>
       </View>

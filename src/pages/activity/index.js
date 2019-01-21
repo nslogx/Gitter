@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View } from '@tarojs/components'
+import {Image, View} from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { hasLogin } from '../../utils/common'
 import { HTTP_STATUS } from '../../constants/status'
@@ -28,10 +28,12 @@ class Index extends Component {
   }
 
   componentWillMount() {
-    Taro.eventCenter.on('login_success', this.loginSuccess())
   }
 
   componentDidMount() {
+    Taro.eventCenter.on('login_success', (res)=>{
+      Taro.startPullDownRefresh()
+    })
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getActivityList()
 
@@ -40,6 +42,7 @@ class Index extends Component {
         content: 'Login to view yours activity?',
         showCancel: true,
         cancelText: 'No',
+        cancelColor: '#7f7f7f',
         confirmText: 'Yeah',
         confirmColor: '#2d8cf0',
         success(res) {
@@ -56,7 +59,6 @@ class Index extends Component {
   }
 
   componentWillUnmount () {
-    Taro.eventCenter.off('login_success')
   }
 
   componentDidShow () { }
@@ -116,10 +118,6 @@ class Index extends Component {
     Taro.stopPullDownRefresh()
     Taro.hideLoading()
     })
-  }
-
-  loginSuccess() {
-    Taro.startPullDownRefresh()
   }
 
   render () {

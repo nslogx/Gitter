@@ -7,6 +7,7 @@ import { hasLogin } from '../../utils/common'
 import api from '../../service/api'
 
 import './developerInfo.less'
+import {baseUrl} from "../../service/config";
 
 class DeveloperInfo extends Component {
 
@@ -58,6 +59,7 @@ class DeveloperInfo extends Component {
     let that = this
     let url = '/users/' + username
     api.get(url).then((res)=>{
+      console.log(res)
       that.setState({
         developerInfo: res.data
       }, ()=>{
@@ -73,6 +75,7 @@ class DeveloperInfo extends Component {
       const { username } = this.state
       let url = '/user/following/' + username
       api.get(url).then((res)=>{
+        Taro.stopPullDownRefresh()
         that.setState({
           isFollowed: res.statusCode === 204
         })
@@ -103,6 +106,44 @@ class DeveloperInfo extends Component {
     }
   }
 
+  handleNavigate(type) {
+    const { developerInfo } = this.state
+    switch (type) {
+      case NAVIGATE_TYPE.REPOS: {
+        Taro.navigateTo({
+          url: '/pages/repo/repoList?url=' + encodeURI(developerInfo.repos_url)
+        })
+      }
+        break
+      case NAVIGATE_TYPE.FOLLOWERS: {
+        Taro.navigateTo({
+          url: '/pages/account/follow?type=followers&username=' + developerInfo.login
+        })
+      }
+        break
+      case NAVIGATE_TYPE.FOLLOWING: {
+        Taro.navigateTo({
+          url: '/pages/account/follow?type=following&username=' + developerInfo.login
+        })
+      }
+        break
+      case NAVIGATE_TYPE.STARRED_REPOS: {
+        Taro.navigateTo({
+          url: '/pages/repo/starredRepo?username=' + developerInfo.login
+        })
+      }
+        break
+      case NAVIGATE_TYPE.ISSUES: {
+        Taro.navigateTo({
+          url: '/pages/repo/issues?url=/user/issues'
+        })
+      }
+        break
+      default: {
+
+      }
+    }
+  }
   onShareAppMessage(obj) {
     const { developerInfo } = this.state
     return {
@@ -157,10 +198,10 @@ class DeveloperInfo extends Component {
             <View className='list_title'>Starred Repos</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
           </View>
-          <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.EVENTS)}>
-            <View className='list_title'>Events</View>
-            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />
-          </View>
+          {/*<View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.EVENTS)}>*/}
+            {/*<View className='list_title'>Events</View>*/}
+            {/*<AtIcon prefixClass='ion' value='ios-arrow-forward' size='20' color='#7f7f7f' />*/}
+          {/*</View>*/}
         </View>
         <View className='list_view'>
           <View className='list'>

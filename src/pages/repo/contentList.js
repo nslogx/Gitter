@@ -74,6 +74,11 @@ class ContentList extends Component {
       Taro.navigateTo({
         url: '/pages/repo/contentList?repo=' + this.state.repo + '&path=' + item.path + '&name=' + item.name
       })
+    } else if (item.type === 'file') {
+      // 文件
+      Taro.navigateTo({
+        url: '/pages/repo/file?url=' + item.url
+      })
     }
   }
 
