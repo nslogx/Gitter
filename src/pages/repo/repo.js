@@ -28,7 +28,8 @@ class Repo extends Component {
       url: '',
       repo: null,
       readme: null,
-      hasStar: false
+      hasStar: false,
+      isShare: false
     }
   }
 
@@ -39,7 +40,8 @@ class Repo extends Component {
     let params = this.$router.params
     console.log(params)
     this.setState({
-      url: encodeURI(params.url)
+      url: encodeURI(params.url),
+      isShare: params.share
     })
   }
 
@@ -73,9 +75,9 @@ class Repo extends Component {
   onShareAppMessage(obj) {
     const { repo } = this.state
     const { url } = this.state
-    let path = '/pages/repo/repo?url=' + decodeURI(url)
+    let path = '/pages/repo/repo?url=' + decodeURI(url) + '&share=true'
     return {
-      title: repo.name + '-' +repo.description,
+      title: repo.name + ' -- ' +repo.description || 'no description',
       path: path
     }
   }
@@ -201,8 +203,14 @@ class Repo extends Component {
     }
   }
 
+  onClickedHome () {
+    Taro.reLaunch({
+      url: '/pages/index/index'
+    })
+  }
+
   render () {
-    const { repo, readme, hasStar } = this.state
+    const { repo, readme, hasStar, isShare } = this.state
     if (!repo) return <View />
     let md = ''
     if (readme && readme.content.length > 0) {
@@ -299,6 +307,15 @@ class Repo extends Component {
             <View className='md'>
               <wemark md={md} link highlight type='wemark' />
             </View>
+          </View>
+        }
+        {
+          isShare &&
+          <View className='home_view' onClick={this.onClickedHome.bind(this)}>
+            <AtIcon prefixClass='ion'
+                    value='ios-home'
+                    size='30'
+                    color='#fff' />
           </View>
         }
       </View>

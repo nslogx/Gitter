@@ -23,7 +23,8 @@ class DeveloperInfo extends Component {
     this.state = {
       username: '',
       developerInfo: null,
-      isFollowed: false
+      isFollowed: false,
+      isShare: false
     }
   }
 
@@ -35,7 +36,8 @@ class DeveloperInfo extends Component {
     let params = this.$router.params
     console.log(params)
     this.setState({
-      username: params.username
+      username: params.username,
+      isShare: params.share
     })
   }
 
@@ -148,12 +150,18 @@ class DeveloperInfo extends Component {
     const { developerInfo } = this.state
     return {
       title: (developerInfo.name || developerInfo.login) + ' - GitHub',
-      path: '/pages/account/developerInfo?username=' + developerInfo.login
+      path: '/pages/account/developerInfo?username=' + developerInfo.login + '&share=true'
     }
   }
 
+  onClickedHome () {
+    Taro.reLaunch({
+      url: '/pages/index/index'
+    })
+  }
+
   render() {
-    const { developerInfo, isFollowed } = this.state
+    const { developerInfo, isFollowed, isShare } = this.state
     if (!developerInfo) return <View />
     return (
       <View className='content'>
@@ -222,6 +230,15 @@ class DeveloperInfo extends Component {
           </View>
         </View>
         <View className='bottom_view' />
+        {
+          isShare &&
+          <View className='home_view' onClick={this.onClickedHome.bind(this)}>
+            <AtIcon prefixClass='ion'
+                    value='ios-home'
+                    size='30'
+                    color='#fff' />
+          </View>
+        }
       </View>
     )
   }
