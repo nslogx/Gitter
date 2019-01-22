@@ -29,6 +29,13 @@ export default {
         } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
           return logError('api', '服务端出现了问题')
         } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
+          Taro.setStorageSync('Authorization', '')
+          let path = getCurrentPageUrl()
+          if (path !== 'pages/login/login') {
+            Taro.navigateTo({
+              url: '/pages/login/login'
+            })
+          }
           return logError('api', '没有权限访问')
         } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
           Taro.setStorageSync('Authorization', '')
