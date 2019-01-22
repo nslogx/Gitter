@@ -1,5 +1,6 @@
 ### Gitter
 本仓库是Gitter小程序对应的开源仓库，旨在分享微信小程序的开发经验。
+初入前端，还望各位大佬多多指教。
 
 该项目采用 [Taro](https://taro.aotu.io/) 框架 + [Taro UI](https://taro-ui.aotu.io) 进行开发，小程序内数据均来自于 [GitHub Api v3](https://developer.github.com/v3/)
 
@@ -15,6 +16,10 @@
 
 ### 使用
 
+``` 
+git clone git@github.com:huangjianke/Gitter.git
+cd Gitter
+```
 使用方法请参考：
 [Taro 安装及使用](https://nervjs.github.io/taro/docs/GETTING-STARTED.html)
 
