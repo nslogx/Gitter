@@ -2,12 +2,7 @@ import Taro from '@tarojs/taro'
 import { HTTP_STATUS } from '../constants/status'
 import { baseUrl } from './config'
 import { logError } from '../utils'
-import { base64_encode } from '../utils/base64'
 import { getCurrentPageUrl } from '../utils/common'
-
-// const token = 'token 27ae876afead592ae19b3ed0dc6368cf47cbc767'
-let base64 = base64_encode('huangjianke:hjk19912019')
-const token = 'Basic ' + base64
 
 export default {
   baseOptions(params, method = 'GET') {
