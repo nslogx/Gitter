@@ -1,0 +1,76 @@
+/*音频播放器样式*/
+.h2w-light .audioForH2w {
+    background: #f1f1f1;
+}
+
+.h2w-light .audioForH2w__cover {
+    background: black;
+}
+
+.h2w-light .audioForH2w__schedule {
+    background: rgba(0, 255, 0, 0.1);
+}
+
+.h2w-light .audioForH2w__icon {
+    border-color: transparent transparent transparent #fff;
+}
+
+/*正文样式*/
+.h2w-light {
+  color:#333;
+  background-color:white;
+}
+
+/**标题**/
+.h2w-light .h2w__h1,
+.h2w-light .h2w__h2 {
+    border-color:#eee;
+}
+
+
+/**表格**/
+.h2w-light .h2w__thead .h2w__tr {
+    background-color:#f6f8fa;
+}
+.h2w-light .h2w__table .h2w__tr:nth-child(2n){
+    background-color:#fbfcfd;
+}
+.h2w-light .h2w__th,
+.h2w-light .h2w__td {
+    border-color:#dfe2e5;
+}
+
+
+/**代码块**/
+.h2w-light .h2w__pre {
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
+}
+
+.h2w-light .h2w__code {
+    background-color:#f6f8fa;
+    border-color:#eaedf0;
+}
+
+
+/**块元素**/
+.h2w-light .h2w__blockquote {
+    border-left-color:#dfe2e5;
+}
+
+/**内连元素**/
+.h2w-light .h2w__a {
+    color:#1aad16; border-color:#b9d9b8;
+}
+
+.h2w-light .h2w__hr {
+    background-color:#eee;
+}
+
+.h2w-light .h2w__mark {
+    background:yellow;
+    color:black;
+}
+
+/**代码高亮样式**/
+@import '../../plugins/hljs/style/github.wxss';

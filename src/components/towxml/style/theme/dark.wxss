@@ -1,0 +1,87 @@
+/*音频播放器样式*/
+.h2w-dark  .audioForH2w {
+    background: #1f1f1f;
+}
+
+.h2w-dark .audioForH2w__cover {
+    background: black;
+}
+
+.h2w-dark .audioForH2w__schedule {
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.h2w-dark .audioForH2w__icon {
+    border-color: transparent transparent transparent #fff;
+}
+
+/*正文样式*/
+.h2w-dark {
+  color:#ddd;
+  background-color:#000;
+}
+
+/**标题**/
+.h2w-dark .h2w__h1,
+.h2w-dark .h2w__h2 {
+    border-color:#3d3d3d;
+}
+
+
+/**表格**/
+.h2w-dark .h2w__thead .h2w__tr {
+    background-color:#1f1f1f;
+}
+.h2w-dark .h2w__table .h2w__tr:nth-child(2n){
+    background-color:#090909;
+}
+.h2w-dark .h2w__th,
+.h2w-dark .h2w__td {
+    border-color:#333;
+}
+
+
+/**代码块**/
+.h2w-dark .h2w__pre,
+.h2w-dark .h2w__pre .h2w__code {
+    background-color:#1b1b1b;
+    border-color:#262626;
+}
+
+.h2w-dark .h2w__code {
+    background-color:#272822;
+    border-color:#1b1c18;
+}
+
+
+/**块元素**/
+.h2w-dark .h2w__blockquote {
+    border-left-color:#10230f;
+}
+
+/**内连元素**/
+.h2w-dark .h2w__a {
+    color:#1aad16; border-color:#4d804b;
+}
+
+.h2w-dark .h2w__hr {
+    background-color:#242424;
+}
+
+.h2w-dark .h2w__mark {
+    background:yellow;
+    color:black;
+}
+
+.h2w-dark .h2w__todoCheckbox .wx-checkbox-input {
+    background:#2e2e2e; border-color:#494949;
+}
+.h2w-dark .h2w__todoCheckbox .wx-checkbox-input.wx-checkbox-input-checked {
+    background:green; border-color:#4d804b;
+}
+.h2w-dark .h2w__todoCheckbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+    color:white;
+}
+
+/**代码高亮样式**/
+@import '../../plugins/hljs/style/monokai.wxss';

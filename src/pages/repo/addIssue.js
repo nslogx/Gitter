@@ -1,7 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtInput, AtTextarea, AtButton } from 'taro-ui'
+import { AtInput, AtTextarea } from 'taro-ui'
+import { HTTP_STATUS } from '../../constants/status'
+
 import api from '../../service/api'
 
 import './addIssue.less'
@@ -74,7 +76,15 @@ class AddIssue extends Component {
         title: title,
         body: body
       }
-      api.post(url, params).then(()=>{
+      api.post(url, params).then((res)=>{
+        if (res.statusCode === HTTP_STATUS.CREATED) {
+          Taro.navigateBack()
+        } else {
+          Taro.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+        }
         Taro.hideLoading()
       })
     }

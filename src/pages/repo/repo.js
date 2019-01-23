@@ -6,7 +6,11 @@ import { base64_decode } from '../../utils/base64'
 import { hasLogin } from '../../utils/common'
 import { HTTP_STATUS } from '../../constants/status'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
+import Markdown from '../../components/repo/markdown'
 import api from '../../service/api'
+
+import Towxml from '../../components/towxml/main'
+const render = new Towxml()
 
 import './repo.less'
 
@@ -16,10 +20,7 @@ class Repo extends Component {
     navigationBarTitleText: '',
     enablePullDownRefresh: true,
     navigationBarBackgroundColor: '#2d8cf0',
-    navigationBarTextStyle: 'white',
-    usingComponents: {
-      wemark: '../../components/wemark/wemark'
-    }
+    navigationBarTextStyle: 'white'
   }
 
   constructor(props) {
@@ -29,7 +30,8 @@ class Repo extends Component {
       repo: null,
       readme: null,
       hasStar: false,
-      isShare: false
+      isShare: false,
+      md: null
     }
   }
 
@@ -104,8 +106,29 @@ class Repo extends Component {
     api.get(url).then((res)=>{
       that.setState({
         readme: res.data
+      }, ()=>{
+        that.parseReadme()
       })
     })
+  }
+
+  parseReadme() {
+    const { readme } = this.state
+    this.setState({
+      md: base64_decode(readme.content)
+    })
+
+    // let url = 'https://gitter-weapp.herokuapp.com/parse'
+    // let that = this
+    // let params = {
+    //   type: 'markdown',
+    //   content: base64_decode(readme.content)
+    // }
+    // api.post(url, params).then((res)=>{
+    //   that.setState({
+    //     md: res.data
+    //   })
+    // })
   }
 
   checkStarring() {
@@ -210,12 +233,8 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, readme, hasStar, isShare } = this.state
+    const { repo, hasStar, isShare, md } = this.state
     if (!repo) return <View />
-    let md = ''
-    if (readme && readme.content.length > 0) {
-      md = base64_decode(readme.content)
-    }
     return (
       <View className='content'>
         <View className='repo_bg_view'>
@@ -301,11 +320,11 @@ class Repo extends Component {
           </View>
         </View>
         {
-          md.length > 0 &&
+          md &&
           <View className='markdown'>
             <Text className='md_title'>README.md</Text>
-            <View className='md'>
-              <wemark md={md} link highlight type='wemark' />
+            <View className='repo_md'>
+              <Markdown md={md} />
             </View>
           </View>
         }
