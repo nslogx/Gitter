@@ -13,7 +13,7 @@
 - 推荐使用Token认证方式，Token及用户名密码仅用于GitHub Api权限校验，不会被上传服务器；
 - Token的生成方式请移步[New personal access token](https://github.com/settings/tokens/new)，按照步骤即可生成Token；
 - 由于目前个人能力有限，目前在小程序内关于Markdown的解析并不完美，欢迎有兴趣的大佬PR；
-- 此源码仅供交流学习，**严禁**以任何形式独立发布或用于商业用途；
+- **此源码仅供交流学习，严禁以任何形式独立发布或用于商业用途；**
 
 ### 使用
 
