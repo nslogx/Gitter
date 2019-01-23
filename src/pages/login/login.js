@@ -53,21 +53,18 @@ class Login extends Component {
   }
 
   handleTokenChange (value) {
-    console.log(value)
     this.setState({
       token: value
     })
   }
 
   handleUsernameChange (value) {
-    console.log(value)
     this.setState({
       username: value
     })
   }
 
   handlePasswordChange (value) {
-    console.log(value)
     this.setState({
       password: value
     })

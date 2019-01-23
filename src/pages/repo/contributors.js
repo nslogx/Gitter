@@ -94,7 +94,6 @@ class Contributors extends Component {
 
   render () {
     const { dataList } = this.state
-    console.log('dataList', dataList)
     return (
       <View className='content'>
         {

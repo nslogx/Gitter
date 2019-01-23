@@ -75,7 +75,6 @@ class IssueDetail extends Component {
       per_page: GLOBAL_CONFIG.PER_PAGE
     }
     api.get(comments_url, params).then((res)=>{
-      console.log(res)
       if (page === 1) {
         that.setState({
           comments: res.data

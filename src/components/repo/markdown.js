@@ -7,21 +7,26 @@ import { HTTP_STATUS } from '../../constants/status'
 
 import './markdown.less'
 
+import Towxml from '../towxml/main'
+
+const render = new Towxml()
+
 export default class Markdown extends Component {
   static propTypes = {
-    md: PropTypes.string
+    md: PropTypes.string,
+    base: PropTypes.string
   }
 
   static defaultProps = {
-    md: null
+    md: null,
+    base: null
   }
 
   constructor(props) {
     super(props)
     this.state = {
       data: null,
-      fail: false,
-      is_first_tap: true
+      fail: false
     }
   }
 
@@ -30,7 +35,7 @@ export default class Markdown extends Component {
   }
 
   parseReadme() {
-    const { md } = this.props
+    const { md, base } = this.props
     let url = 'https://gitter-weapp.herokuapp.com/parse'
     let that = this
     let params = {
@@ -38,11 +43,15 @@ export default class Markdown extends Component {
       content: md
     }
     api.post(url, params).then((res)=>{
-      console.log(res)
       if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        let data = res.data
+        if (base && base.length > 0) {
+          data = render.initData(res.data, {base: base, app: this.$scope})
+        }
+        console.log(data)
         that.setState({
           fail: false,
-          data: res.data
+          data: data
         })
       } else {
         that.setState({
@@ -53,20 +62,11 @@ export default class Markdown extends Component {
   }
 
   onTap (e) {
-    let that = this
-    const { is_first_tap } = that.state
-    if (is_first_tap) {
-      console.log(e, e.currentTarget.dataset._el.attr.src)
+    if (e.currentTarget.dataset._el.tag === 'image') {
+      Taro.previewImage({
+        urls: [e.currentTarget.dataset._el.attr.src]
+      })
     }
-    that.setState({
-      is_first_tap: false
-    }, ()=>{
-      setTimeout(()=>{
-        that.setState({
-          is_first_tap: true
-        })
-      }, 1000)
-    })
   }
 
   render() {
@@ -87,7 +87,7 @@ export default class Markdown extends Component {
             <template is='entry' data='{{...data}}' />
           </View>
         ) : (
-          <View className='loading' onClick={this.onTap}>
+          <View className='loading' onLongClick={this.onTap}>
             <AtActivityIndicator size={20} color='#2d8cf0' content='loading...' />
           </View>
         )

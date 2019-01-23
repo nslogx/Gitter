@@ -48,7 +48,6 @@ class File extends Component {
     const { url } = this.state
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     api.get(url).then((res)=>{
-      console.log(res)
       that.setState({
         file: res.data
       }, ()=>{

@@ -108,7 +108,6 @@ class Issues extends Component {
       }
     }
     api.get(url, params).then((res)=>{
-      console.log('res',res)
       if (current === 0) {
         if (isRefresh) {
           that.setState({
@@ -143,7 +142,6 @@ class Issues extends Component {
 
   render () {
     const { openList, closedList, isUser } = this.state
-    console.log(isUser, 'isUser')
     return (
       <View className='content'>
         <AtTabs

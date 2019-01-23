@@ -70,7 +70,6 @@ class Index extends Component {
       q: value
     }
     api.get(url, params).then((res)=>{
-      console.log(res)
       if (repo_page === 1) {
         that.setState({
           repos: res.data.items
@@ -94,7 +93,6 @@ class Index extends Component {
       q: value
     }
     api.get(url, params).then((res)=>{
-      console.log(res)
       if (user_page === 1) {
         that.setState({
           users: res.data.items

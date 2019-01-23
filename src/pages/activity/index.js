@@ -98,7 +98,6 @@ class Index extends Component {
       page: page
     }
     api.get(url, params).then((res)=>{
-      console.log('Activity', res)
       if (res.statusCode === HTTP_STATUS.SUCCESS) {
         if (page === 1) {
           that.setState({

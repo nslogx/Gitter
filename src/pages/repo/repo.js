@@ -31,6 +31,7 @@ class Repo extends Component {
       readme: null,
       hasStar: false,
       isShare: false,
+      baseUrl: null,
       md: null
     }
   }
@@ -40,7 +41,6 @@ class Repo extends Component {
 
   componentWillMount() {
     let params = this.$router.params
-    console.log(params)
     this.setState({
       url: encodeURI(params.url),
       isShare: params.share
@@ -87,15 +87,23 @@ class Repo extends Component {
   getRepo() {
     let that = this
     api.get(this.state.url).then((res)=>{
-      console.log(res)
-      that.setState({
-        repo: res.data
-      }, ()=>{
-        Taro.hideLoading()
-        Taro.stopPullDownRefresh()
-        that.getReadme()
-        that.checkStarring()
-      })
+      if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        let baseUrl = 'https://raw.githubusercontent.com/' + res.data.full_name + '/master/'
+        that.setState({
+          repo: res.data,
+          baseUrl: baseUrl
+        }, ()=>{
+          that.getReadme()
+          that.checkStarring()
+        })
+      } else {
+        Taro.showToast({
+          icon: 'none',
+          title: res.data.message
+        })
+      }
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
     })
   }
 
@@ -117,18 +125,6 @@ class Repo extends Component {
     this.setState({
       md: base64_decode(readme.content)
     })
-
-    // let url = 'https://gitter-weapp.herokuapp.com/parse'
-    // let that = this
-    // let params = {
-    //   type: 'markdown',
-    //   content: base64_decode(readme.content)
-    // }
-    // api.post(url, params).then((res)=>{
-    //   that.setState({
-    //     md: res.data
-    //   })
-    // })
   }
 
   checkStarring() {
@@ -233,7 +229,7 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, hasStar, isShare, md } = this.state
+    const { repo, hasStar, isShare, md, baseUrl } = this.state
     if (!repo) return <View />
     return (
       <View className='content'>
@@ -324,7 +320,7 @@ class Repo extends Component {
           <View className='markdown'>
             <Text className='md_title'>README.md</Text>
             <View className='repo_md'>
-              <Markdown md={md} />
+              <Markdown md={md} base={baseUrl} />
             </View>
           </View>
         }
