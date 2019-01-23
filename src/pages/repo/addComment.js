@@ -57,7 +57,7 @@ class AddComment extends Component {
       })
     } else {
       Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-      let source = '\n\n\n**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
+      let source = '\n\n\n\n\n\n**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
       let body =  comment + source
       let params = {
         body: body
