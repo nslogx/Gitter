@@ -34,7 +34,6 @@ class DeveloperInfo extends Component {
 
   componentWillMount() {
     let params = this.$router.params
-    console.log(params)
     this.setState({
       username: params.username,
       isShare: params.share
@@ -61,7 +60,6 @@ class DeveloperInfo extends Component {
     let that = this
     let url = '/users/' + username
     api.get(url).then((res)=>{
-      console.log(res)
       that.setState({
         developerInfo: res.data
       }, ()=>{

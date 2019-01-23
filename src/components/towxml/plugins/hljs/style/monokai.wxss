@@ -1,0 +1,70 @@
+/*
+Monokai style - ported by Luigi Maselli - http://grigio.org
+*/
+
+.h2w-dark .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #272822; color: #ddd;
+}
+
+.h2w-dark .hljs-tag,
+.h2w-dark .hljs-keyword,
+.h2w-dark .hljs-selector-tag,
+.h2w-dark .hljs-literal,
+.h2w-dark .hljs-strong,
+.h2w-dark .hljs-name {
+  color: #f92672;
+}
+
+.h2w-dark .hljs-code {
+  color: #66d9ef;
+}
+
+.h2w-dark .hljs-class .hljs-title {
+  color: white;
+}
+
+.h2w-dark .hljs-attribute,
+.h2w-dark .hljs-symbol,
+.h2w-dark .hljs-regexp,
+.h2w-dark .hljs-link {
+  color: #bf79db;
+}
+
+.h2w-dark .hljs-string,
+.h2w-dark .hljs-bullet,
+.h2w-dark .hljs-subst,
+.h2w-dark .hljs-title,
+.h2w-dark .hljs-section,
+.h2w-dark .hljs-emphasis,
+.h2w-dark .hljs-type,
+.h2w-dark .hljs-built_in,
+.h2w-dark .hljs-builtin-name,
+.h2w-dark .hljs-selector-attr,
+.h2w-dark .hljs-selector-pseudo,
+.h2w-dark .hljs-addition,
+.h2w-dark .hljs-variable,
+.h2w-dark .hljs-template-tag,
+.h2w-dark .hljs-template-variable {
+  color: #a6e22e;
+}
+
+.h2w-dark .hljs-comment,
+.h2w-dark .hljs-quote,
+.h2w-dark .hljs-deletion,
+.h2w-dark .hljs-meta {
+  color: #75715e;
+}
+
+.h2w-dark .hljs-keyword,
+.h2w-dark .hljs-selector-tag,
+.h2w-dark .hljs-literal,
+.h2w-dark .hljs-doctag,
+.h2w-dark .hljs-title,
+.h2w-dark .hljs-section,
+.h2w-dark .hljs-type,
+.h2w-dark .hljs-selector-id {
+  font-weight: bold;
+}

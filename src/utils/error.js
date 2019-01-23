@@ -24,5 +24,5 @@ export const logError = (name, action, info) => {
   if (typeof info === 'object') {
     info = JSON.stringify(info)
   }
-
+}
 

@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import {Text, View} from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { base64_decode } from '../../utils/base64'
+import Markdown from '../../components/repo/markdown'
 
 import api from '../../service/api'
 
@@ -10,10 +11,7 @@ import './file.less'
 class File extends Component {
 
   config = {
-    navigationBarTitleText: '',
-    usingComponents: {
-      wemark: '../../components/wemark/wemark'
-    }
+    navigationBarTitleText: ''
   }
 
   constructor(props) {
@@ -50,7 +48,6 @@ class File extends Component {
     const { url } = this.state
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     api.get(url).then((res)=>{
-      console.log(res)
       that.setState({
         file: res.data
       }, ()=>{
@@ -75,7 +72,7 @@ class File extends Component {
           md.length > 0 &&
           <View className='markdown'>
             <View className='md'>
-              <wemark md={md} link highlight type='wemark' />
+              <Markdown md={md} />
             </View>
           </View>
         }

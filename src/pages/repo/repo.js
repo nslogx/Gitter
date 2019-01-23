@@ -6,7 +6,11 @@ import { base64_decode } from '../../utils/base64'
 import { hasLogin } from '../../utils/common'
 import { HTTP_STATUS } from '../../constants/status'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
+import Markdown from '../../components/repo/markdown'
 import api from '../../service/api'
+
+import Towxml from '../../components/towxml/main'
+const render = new Towxml()
 
 import './repo.less'
 
@@ -16,10 +20,7 @@ class Repo extends Component {
     navigationBarTitleText: '',
     enablePullDownRefresh: true,
     navigationBarBackgroundColor: '#2d8cf0',
-    navigationBarTextStyle: 'white',
-    usingComponents: {
-      wemark: '../../components/wemark/wemark'
-    }
+    navigationBarTextStyle: 'white'
   }
 
   constructor(props) {
@@ -29,7 +30,9 @@ class Repo extends Component {
       repo: null,
       readme: null,
       hasStar: false,
-      isShare: false
+      isShare: false,
+      baseUrl: null,
+      md: null
     }
   }
 
@@ -38,7 +41,6 @@ class Repo extends Component {
 
   componentWillMount() {
     let params = this.$router.params
-    console.log(params)
     this.setState({
       url: encodeURI(params.url),
       isShare: params.share
@@ -85,15 +87,23 @@ class Repo extends Component {
   getRepo() {
     let that = this
     api.get(this.state.url).then((res)=>{
-      console.log(res)
-      that.setState({
-        repo: res.data
-      }, ()=>{
-        Taro.hideLoading()
-        Taro.stopPullDownRefresh()
-        that.getReadme()
-        that.checkStarring()
-      })
+      if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        let baseUrl = 'https://raw.githubusercontent.com/' + res.data.full_name + '/master/'
+        that.setState({
+          repo: res.data,
+          baseUrl: baseUrl
+        }, ()=>{
+          that.getReadme()
+          that.checkStarring()
+        })
+      } else {
+        Taro.showToast({
+          icon: 'none',
+          title: res.data.message
+        })
+      }
+      Taro.stopPullDownRefresh()
+      Taro.hideLoading()
     })
   }
 
@@ -104,7 +114,16 @@ class Repo extends Component {
     api.get(url).then((res)=>{
       that.setState({
         readme: res.data
+      }, ()=>{
+        that.parseReadme()
       })
+    })
+  }
+
+  parseReadme() {
+    const { readme } = this.state
+    this.setState({
+      md: base64_decode(readme.content)
     })
   }
 
@@ -210,12 +229,8 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, readme, hasStar, isShare } = this.state
+    const { repo, hasStar, isShare, md, baseUrl } = this.state
     if (!repo) return <View />
-    let md = ''
-    if (readme && readme.content.length > 0) {
-      md = base64_decode(readme.content)
-    }
     return (
       <View className='content'>
         <View className='repo_bg_view'>
@@ -301,11 +316,11 @@ class Repo extends Component {
           </View>
         </View>
         {
-          md.length > 0 &&
+          md &&
           <View className='markdown'>
             <Text className='md_title'>README.md</Text>
-            <View className='md'>
-              <wemark md={md} link highlight type='wemark' />
+            <View className='repo_md'>
+              <Markdown md={md} base={baseUrl} />
             </View>
           </View>
         }

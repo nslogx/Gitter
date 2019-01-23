@@ -52,6 +52,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.loadItemList()
   }
 
@@ -98,9 +99,6 @@ class Index extends Component {
         })
       }
     }
-
-    console.log('e.scrollTop', e.scrollTop)
-
     //给scrollTop重新赋值
     this.setState({
       scrollTop: e.scrollTop
@@ -110,7 +108,6 @@ class Index extends Component {
   getScrollHeight() {
     let that = this
     Taro.createSelectorQuery().select('#list').boundingClientRect((rect)=>{
-      console.log('height', rect.height)
       that.setState({
         scrollHeight: rect.height - 456
       })
@@ -127,7 +124,6 @@ class Index extends Component {
   }
 
   onChange = e => {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setState({
       category: this.state.range[0][e.detail.value[0]],
       language: this.state.range[1][e.detail.value[1]]
@@ -137,40 +133,40 @@ class Index extends Component {
   }
 
   loadItemList () {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    this.setState({
-      apiCount: 0
-    })
     let that = this
-    let params = {
-      'language': this.state.language.urlParam,
-      'since': this.state.category.value,
-    }
 
-    trendingAction.getReposTrendingList(params)
-      .then(() => {
-        that.getScrollHeight()
-        Taro.stopPullDownRefresh()
-        that.setState({
-          apiCount: that.state.apiCount + 1
-        }, ()=>{
-          if (that.state.apiCount === 2) {
-            Taro.hideLoading()
-          }
+    that.setState({
+      apiCount: 0
+    }, ()=> {
+      let params = {
+        'language': this.state.language.urlParam,
+        'since': this.state.category.value,
+      }
+      trendingAction.getReposTrendingList(params)
+        .then(() => {
+          that.getScrollHeight()
+          Taro.stopPullDownRefresh()
+          that.setState({
+            apiCount: that.state.apiCount + 1
+          }, ()=>{
+            if (that.state.apiCount === 2) {
+              Taro.hideLoading()
+            }
+          })
+        })
+      trendingAction.getDevelopersTrendingList(params)
+        .then(() => {
+          that.getScrollHeight()
+          Taro.stopPullDownRefresh()
+          that.setState({
+            apiCount: that.state.apiCount + 1
+          }, ()=>{
+            if (that.state.apiCount === 2) {
+              Taro.hideLoading()
+            }
+          })
         })
     })
-    trendingAction.getDevelopersTrendingList(params)
-      .then(() => {
-        that.getScrollHeight()
-        Taro.stopPullDownRefresh()
-        that.setState({
-          apiCount: that.state.apiCount + 1
-        }, ()=>{
-          if (that.state.apiCount === 2) {
-            Taro.hideLoading()
-          }
-        })
-      })
   }
 
   onActionSearch () {

@@ -1,7 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtInput, AtTextarea, AtButton } from 'taro-ui'
+import { AtInput, AtTextarea } from 'taro-ui'
+import { HTTP_STATUS } from '../../constants/status'
+
 import api from '../../service/api'
 
 import './addIssue.less'
@@ -63,7 +65,7 @@ class AddIssue extends Component {
     } else {
       Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
       let url = '/repos/' + this.state.repo +  '/issues'
-      let source = '\n\n**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
+      let source = '\n\n\n\n\n\n**来自GitHub小程序客户端：**\n\n![image](https://user-images.githubusercontent.com/8692455/51429898-b159f400-1c4e-11e9-91a1-59cd1fab5042.png)'
       let body = ''
       if (comment.length > 0) {
         body = comment + source
@@ -74,7 +76,15 @@ class AddIssue extends Component {
         title: title,
         body: body
       }
-      api.post(url, params).then(()=>{
+      api.post(url, params).then((res)=>{
+        if (res.statusCode === HTTP_STATUS.CREATED) {
+          Taro.navigateBack()
+        } else {
+          Taro.showToast({
+            title: res.data.message,
+            icon: 'none'
+          })
+        }
         Taro.hideLoading()
       })
     }

@@ -1,0 +1,99 @@
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.h2w-light .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.h2w-light .hljs-comment,
+.h2w-light .hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.h2w-light .hljs-keyword,
+.h2w-light .hljs-selector-tag,
+.h2w-light .hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.h2w-light .hljs-number,
+.h2w-light .hljs-literal,
+.h2w-light .hljs-variable,
+.h2w-light .hljs-template-variable,
+.h2w-light .hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.h2w-light .hljs-string,
+.h2w-light .hljs-doctag {
+  color: #d14;
+}
+
+.h2w-light .hljs-title,
+.h2w-light .hljs-section,
+.h2w-light .hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.h2w-light .hljs-subst {
+  font-weight: normal;
+}
+
+.h2w-light .hljs-type,
+.h2w-light .hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.h2w-light .hljs-tag,
+.h2w-light .hljs-name,
+.h2w-light .hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.h2w-light .hljs-regexp,
+.h2w-light .hljs-link {
+  color: #009926;
+}
+
+.h2w-light .hljs-symbol,
+.h2w-light .hljs-bullet {
+  color: #990073;
+}
+
+.h2w-light .hljs-built_in,
+.h2w-light .hljs-builtin-name {
+  color: #0086b3;
+}
+
+.h2w-light .hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.h2w-light .hljs-deletion {
+  background: #fdd;
+}
+
+.h2w-light .hljs-addition {
+  background: #dfd;
+}
+
+.h2w-light .hljs-emphasis {
+  font-style: italic;
+}
+
+.h2w-light .hljs-strong {
+  font-weight: bold;
+}

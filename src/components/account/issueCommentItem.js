@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import { View, Text, Navigator } from '@tarojs/components'
 import { AtAvatar } from 'taro-ui'
 import { timeago } from '../../utils/common'
-
+import Markdown from '../repo/markdown'
 
 import './issueCommentItem.less'
 
 export default class IssueCommentItem extends Component {
   config = {
-    usingComponents: {
-      wemark: '../wemark/wemark'
-    }
   }
 
   static propTypes = {
@@ -38,7 +35,7 @@ export default class IssueCommentItem extends Component {
         </View>
         <View className='markdown'>
           <View className='md'>
-            <wemark md={item.body} link highlight type='wemark' />
+            <Markdown md={item.body} />
           </View>
         </View>
       </View>

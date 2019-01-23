@@ -65,7 +65,6 @@ class RepoList extends Component {
       per_page: GLOBAL_CONFIG.PER_PAGE
     }
     api.get(url, params).then((res)=>{
-      console.log(res)
       if (page === 1) {
         that.setState({
           repos: res.data

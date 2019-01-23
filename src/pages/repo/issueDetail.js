@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { AtIcon } from 'taro-ui'
 import IssueCommentItem from '../../components/account/issueCommentItem'
+import Markdown from '../../components/repo/markdown'
 
 import api from '../../service/api'
 import './issueDetail.less'
@@ -11,10 +12,7 @@ class IssueDetail extends Component {
 
   config = {
     navigationBarTitleText: 'Issue Comments',
-    enablePullDownRefresh: true,
-    usingComponents: {
-      wemark: '../../components/wemark/wemark'
-    }
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
@@ -77,7 +75,6 @@ class IssueDetail extends Component {
       per_page: GLOBAL_CONFIG.PER_PAGE
     }
     api.get(comments_url, params).then((res)=>{
-      console.log(res)
       if (page === 1) {
         that.setState({
           comments: res.data
@@ -123,7 +120,7 @@ class IssueDetail extends Component {
             issue.body.length > 0 ? (
               <View className='markdown'>
                 <View className='md'>
-                  <wemark md={issue.body} link highlight type='wemark' />
+                  <Markdown md={issue.body} />
                 </View>
               </View>
             ) : (

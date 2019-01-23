@@ -1,0 +1,421 @@
+/*音频播放器样式*/
+.audioForH2w {
+    height: 136rpx;
+    margin:16rpx 0;
+    background: #f1f1f1;
+    position: relative;
+}
+
+.audioForH2w--play .audioForH2w__icon {
+    display: none;
+    opacity: 1;
+}
+
+.audioForH2w--play .audioForH2w__cover image {
+    opacity: 1;
+}
+
+/* .audioForH2w--end .audioForH2w__icon {width:20rpx; height:20rpx; background:white; border:0; left:24rpx; top:24rpx; border-radius:2rpx;} */
+.audioForH2w__cover {
+    width: 136rpx;
+    height: 136rpx;
+    background: black;
+    float: left;
+}
+
+.audioForH2w__cover image {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    margin:0;
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.audioForH2w__info {
+    padding-left: 20rpx;
+    padding-top: 16rpx;
+    position: absolute;
+    left: 136rpx;
+    right: 0;
+}
+
+.audioForH2w__schedule {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 255, 0, 0.1);
+    height: 136rpx;
+    width: 0;
+}
+
+.audioForH2w__title {
+    display: block;
+    font-size: 24rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    font-weight: bold;
+}
+
+.audioForH2w__author {
+    display: block;
+    font-size: 20rpx;
+    height: 32rpx;
+    line-height: 32rpx;
+}
+
+.audioForH2w__time {
+    display: block;
+    font-size: 20rpx;
+    height: 32rpx;
+    line-height: 32rpx;
+}
+
+.audioForH2w__icon {
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 60rpx;
+    top: 48rpx;
+    border-width: 20rpx 0 20rpx 20rpx;
+    border-style: solid;
+    border-color: transparent transparent transparent #fff;
+    z-index: 1;
+}
+
+/*正文样式*/
+.h2w {
+    font-family: "STHeitiTC-Light", "Microsoft YaHei Light", "Hiragino Sans GB", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 32rpx;
+    line-height: 1.8;
+    word-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.h2w__main {
+    margin: 0 40rpx;
+    padding-top: 40rpx;
+}
+
+/**标题**/
+.h2w__h1,
+.h2w__h2,
+.h2w__h3,
+.h2w__h4,
+.h2w__h5,
+.h2w__h6 {
+    font-weight: bold;
+}
+
+.h2w__h1 {
+    border-bottom-style: double;
+    border-bottom-width: 6rpx;
+    font-size: 42rpx;
+    padding-bottom: 10rpx;
+    margin-bottom: 20rpx;
+}
+
+.h2w__h2 {
+    border-bottom-style: solid;
+    border-bottom-width: 1rpx;
+    font-size: 40rpx;
+    padding-bottom: 8rpx;
+    margin-bottom: 18rpx;
+}
+
+.h2w__h3 {
+    font-size: 38rpx;
+    padding-bottom: 6rpx;
+    margin-bottom: 12rpx;
+}
+
+.h2w__h4 {
+    font-size: 36rpx;
+    padding-bottom: 4rpx;
+    margin-bottom: 12rpx;
+}
+
+.h2w__h5 {
+    font-size: 34rpx;
+    padding-bottom: 2rpx;
+    margin-bottom: 12rpx;
+}
+
+.h2w__h6 {
+    margin-bottom: 12rpx;
+}
+
+
+/**表格**/
+.h2w__table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    margin-bottom: 40rpx;
+}
+
+.h2w__table .h2w__tr:nth-child(2n) {
+    background-color: red;
+}
+
+.h2w__colgroup {
+    display: table-column-group;
+}
+
+.h2w__col {
+    display: table-column;
+}
+
+.h2w__thead {
+    display: table-header-group;
+}
+
+.h2w__tbody {
+    display: table-row-group;
+}
+
+.h2w__tfoot {
+    display: table-footer-group;
+}
+
+.h2w__tr {
+    display: table-row;
+}
+
+.h2w__th,
+.h2w__td {
+    padding: 8rpx 16rpx;
+    font-size: 28rpx;
+    border-width: 1rpx;
+    border-style: solid;
+    display: table-cell;
+}
+
+.h2w__th {
+    font-weight: bold;
+}
+
+/**代码块**/
+.h2w__pre {
+    /*white-space:nowrap;*/
+    padding: 20rpx;
+    font-size: 28rpx;
+    word-break: normal;
+    border-width: 1rpx;
+    border-style: solid;
+    margin-bottom: 40rpx;
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.h2w__pre .h2w__code {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+}
+
+.h2w__pre,
+.h2w__code {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, "STHeitiTC-Light", "Microsoft YaHei Light", -apple-system, system-ui, BlinkMacSystemFont;
+}
+
+.h2w__code {
+    padding: 4rpx 8rpx;
+    margin: 0 4rpx;
+    border-width: 1rpx;
+    border-style: solid;
+    border-radius: 8rpx;
+    font-size: 80%;
+    overflow-x: auto;
+}
+
+.h2w__pre .h2w__span,
+.h2w__pre .h2w__a,
+.h2w__pre .h2w__span,
+.h2w__pre .h2w__b,
+.h2w__pre .h2w__strong,
+.h2w__pre .h2w__i,
+.h2w__pre .h2w__em {
+    display: inline;
+}
+
+.h2w__pre {
+    white-space: pre;
+    display: block;
+}
+
+.h2w__pre .h2w__code {
+    white-space: pre;
+    width: 9999px;
+    display: block;
+    font-size: 80%;
+}
+
+/**列表**/
+.h2w__ul,
+.h2w__ol {
+    margin-bottom: 40rpx;
+    padding-left: 1rem;
+}
+
+.h2w__ul .h2w__ol,
+.h2w__ol .h2w__ul {
+    margin-bottom: 0;
+}
+
+.h2w__li {
+    display: list-item;
+}
+
+/**todo**/
+.h2w__todogroup {
+    margin-bottom: 40rpx;
+}
+
+.h2w__todogroup .h2w__todogroup {
+    padding-left: 1.6rem;
+}
+
+/**一级ol样式**/
+.h2w__ol {
+    list-style-type: decimal;
+}
+
+/**二级ol样式**/
+.h2w__ul .h2w__ol,
+.h2w__ol .h2w__ol {
+    list-style-type: lower-roman;
+}
+
+/**三级ol样式**/
+.h2w__ul .h2w__ul .h2w__ol,
+.h2w__ul .h2w__ol .h2w__ol,
+.h2w__ol .h2w__ul .h2w__ol,
+.h2w__ol .h2w__ol .h2w__ol {
+    list-style-type: lower-alpha;
+}
+
+/**一级ul样式**/
+.h2w__ul {
+    list-style-type: disc;
+}
+
+/**二级ul样式**/
+.h2w__ul .h2w__ul,
+.h2w__ol .h2w__ul {
+    list-style-type: circle;
+}
+
+/**三级样式**/
+.h2w__ol .h2w__ol .h2w__ul,
+.h2w__ol .h2w__ul .h2w__ul,
+.h2w__ul .h2w__ol .h2w__ul,
+.h2w__ul .h2w__ul .h2w__ul {
+    list-style-type: square;
+}
+
+/**块元素**/
+.h2w__p {
+    margin: 20rpx 0 20rpx 0;
+    /*word-wrap:break-word;
+    word-break:break-all;*/
+    /*text-align:justify;*/
+}
+
+.h2w__div {
+    /*text-align:justify;*/
+}
+
+.h2w__blockquote {
+    border-left-width: 8rpx;
+    border-left-style: solid;
+    padding: 0 20rpx;
+}
+
+/**内连元素**/
+.h2w__a,
+.h2w__span,
+.h2w__b,
+.h2w__strong,
+.h2w__i,
+.h2w__em {
+    display: inline;
+}
+
+.h2w__b,
+.h2w__strong {
+    font-weight: bold;
+}
+
+.h2w__i,
+.h2w__em {
+    font-style: italic;
+}
+
+/**文本删除线**/
+.h2w__s,
+.h2w__strike,
+.h2w__del {
+    text-decoration: line-through;
+}
+
+/**文本下划线**/
+.h2w__ins,
+.h2w__u {
+    text-decoration: underline;
+}
+
+/**链接**/
+.h2w__a {
+    margin: 0 8rpx;
+    border-bottom-width: 1rpx;
+    border-bottom-style: solid;
+    line-height: 1;
+}
+
+.h2w__hr {
+    height: 8rpx;
+    margin: 40rpx 0;
+}
+
+/**荧光标记**/
+.h2w__mark {
+    border-radius: 4rpx;
+}
+
+/**上标、下标**/
+.h2w__sup,
+.h2w__sub {
+    font-size: 75%;
+    position: relative;
+}
+
+.h2w__sup {
+    top: -0.5em;
+}
+
+.h2w__sub {
+    bottom: -0.25em;
+}
+
+/**emoji表情**/
+.h2w__g-emoji {
+    margin: 0 0.1em;
+    font-family: "Apple Color Emoji", "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/**内置元素**/
+image,
+video {
+    width: 100%;
+    margin: 10rpx auto;
+}
+
+image {
+    height: auto;
+}
+
+video {
+    height: 220px;
+}
