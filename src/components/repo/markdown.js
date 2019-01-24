@@ -36,29 +36,54 @@ export default class Markdown extends Component {
 
   parseReadme() {
     const { md, base } = this.props
-    let url = 'https://gitter-weapp.herokuapp.com/parse'
     let that = this
-    let params = {
-      type: 'markdown',
-      content: md
-    }
-    api.post(url, params).then((res)=>{
-      if (res.statusCode === HTTP_STATUS.SUCCESS) {
-        let data = res.data
-        if (base && base.length > 0) {
-          data = render.initData(res.data, {base: base, app: this.$scope})
-        }
-        console.log(data)
-        that.setState({
-          fail: false,
-          data: data
-        })
-      } else {
-        that.setState({
-          fail: true
-        })
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'parse',
+      // 传递给云函数的event参数
+      data: {
+        func: 'parse',
+        type: 'markdown',
+        content: md,
       }
+    }).then(res => {
+      let data = res.result.data
+      if (base && base.length > 0) {
+        data = render.initData(data, {base: base, app: this.$scope})
+      }
+      that.setState({
+        fail: false,
+        data: data
+      })
+    }).catch(err => {
+      console.log('cloud', err)
+      that.setState({
+        fail: true
+      })
     })
+    // let url = 'https://gitter-weapp.herokuapp.com/parse'
+    // let that = this
+    // let params = {
+    //   type: 'markdown',
+    //   content: md
+    // }
+    // api.post(url, params).then((res)=>{
+    //   if (res.statusCode === HTTP_STATUS.SUCCESS) {
+    //     let data = res.data
+    //     if (base && base.length > 0) {
+    //       data = render.initData(res.data, {base: base, app: this.$scope})
+    //     }
+    //     console.log(data)
+    //     that.setState({
+    //       fail: false,
+    //       data: data
+    //     })
+    //   } else {
+    //     that.setState({
+    //       fail: true
+    //     })
+    //   }
+    // })
   }
 
   onTap (e) {

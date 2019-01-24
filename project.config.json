@@ -3,7 +3,8 @@
 	"projectname": "Gitter",
 	"description": "Gitter",
 	"appid": "wx2252b6835e7eb568",
-	"setting": {
+  "cloudfunctionRoot": "cloud/functions/",
+  "setting": {
 		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
