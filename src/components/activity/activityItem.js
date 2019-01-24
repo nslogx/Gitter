@@ -31,7 +31,7 @@ export default class ActivityItem extends Component {
               </Text>
             </Navigator>
             <Navigator url='' hoverClass='none' >
-              <Text className='text'>{item.payload.action}</Text>
+              <Text className='text'>starred</Text>
             </Navigator>
             <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
               <Text className='username'>
@@ -154,7 +154,7 @@ export default class ActivityItem extends Component {
               </Text>
             </Navigator>
             <Navigator url='' hoverClass='none' >
-              <Text className='text'>started following</Text>
+              <Text className='text'>starred following</Text>
             </Navigator>
             <Navigator url={'/pages/account/developerInfo?username=' + item.payload.target.login} >
               <Text className='username'>
