@@ -133,15 +133,11 @@ class Index extends Component {
   }
 
   loadItemList () {
+    const { current } = this.state
     let that = this
     that.setState({
       apiCount: 0
     }, ()=> {
-      let params = {
-        'language': this.state.language.urlParam,
-        'since': this.state.category.value,
-      }
-
       let that = this
       wx.cloud.callFunction({
         // 要调用的云函数名称
@@ -157,13 +153,16 @@ class Index extends Component {
           apiCount: that.state.apiCount + 1,
           repos: res.result.data
         }, ()=>{
-          if (that.state.apiCount === 2) {
+          if (current === 0) {
+            that.getScrollHeight()
+          }
+          if (that.state.apiCount > 1) {
             Taro.hideLoading()
             Taro.stopPullDownRefresh()
           }
         })
       }).catch(err => {
-        that.getScrollHeight()
+        Taro.hideLoading()
         Taro.stopPullDownRefresh()
       })
 
@@ -181,13 +180,16 @@ class Index extends Component {
           apiCount: that.state.apiCount + 1,
           developers: res.result.data
         }, ()=>{
-          if (that.state.apiCount === 2) {
+          if (current === 1) {
+            that.getScrollHeight()
+          }
+          if (that.state.apiCount > 1) {
             Taro.hideLoading()
             Taro.stopPullDownRefresh()
           }
         })
       }).catch(err => {
-        that.getScrollHeight()
+        Taro.hideLoading()
         Taro.stopPullDownRefresh()
       })
     })

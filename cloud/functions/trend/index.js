@@ -18,7 +18,8 @@ exports.main = async (event, context) => {
     'daily'}`;
     const cacheData = await db.collection('repositories').where({
       cacheKey: cacheKey
-    }).get()
+    }).orderBy('cacheDate', 'desc').get()
+    console.log('cacheData', cacheData)
     if (cacheData.data.length !== 0 &&
       ((date.getTime() - cacheData.data[0].cacheDate)  < 1800 * 1000)) {
       res = JSON.parse(cacheData.data[0].content)
@@ -36,7 +37,7 @@ exports.main = async (event, context) => {
     const cacheKey = `developers::${language || 'nolang'}::${since || 'daily'}`;
     const cacheData = await db.collection('developers').where({
       cacheKey: cacheKey
-    }).get()
+    }).orderBy('cacheDate', 'desc').get()
     if (cacheData.data.length !== 0 &&
       ((date.getTime() - cacheData.data[0].cacheDate)  < 1800 * 1000)) {
       res = JSON.parse(cacheData.data[0].content)
