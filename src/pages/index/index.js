@@ -1,13 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import { languages } from '../../utils/language'
 
 import ItemList from '../../components/index/itemList'
-
-import trendingAction from '../../actions/trending'
 
 import './index.less'
 
@@ -35,6 +32,8 @@ class Index extends Component {
       scrollHeight: 0,
       isHidden: false,
       apiCount: 0,
+      repos: [],
+      developers: [],
       range: [
         [{'name': 'Today',
         'value': 'daily'},
@@ -128,13 +127,13 @@ class Index extends Component {
       category: this.state.range[0][e.detail.value[0]],
       language: this.state.range[1][e.detail.value[1]]
     }, () => {
+      Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
       this.loadItemList()
     })
   }
 
   loadItemList () {
     let that = this
-
     that.setState({
       apiCount: 0
     }, ()=> {
@@ -142,30 +141,55 @@ class Index extends Component {
         'language': this.state.language.urlParam,
         'since': this.state.category.value,
       }
-      trendingAction.getReposTrendingList(params)
-        .then(() => {
-          that.getScrollHeight()
-          Taro.stopPullDownRefresh()
-          that.setState({
-            apiCount: that.state.apiCount + 1
-          }, ()=>{
-            if (that.state.apiCount === 2) {
-              Taro.hideLoading()
-            }
-          })
+
+      let that = this
+      wx.cloud.callFunction({
+        // 要调用的云函数名称
+        name: 'trend',
+        // 传递给云函数的event参数
+        data: {
+          type: 'repositories',
+          language: that.state.language.urlParam,
+          since: that.state.category.value
+        }
+      }).then(res => {
+        that.setState({
+          apiCount: that.state.apiCount + 1,
+          repos: res.result.data
+        }, ()=>{
+          if (that.state.apiCount === 2) {
+            Taro.hideLoading()
+            Taro.stopPullDownRefresh()
+          }
         })
-      trendingAction.getDevelopersTrendingList(params)
-        .then(() => {
-          that.getScrollHeight()
-          Taro.stopPullDownRefresh()
-          that.setState({
-            apiCount: that.state.apiCount + 1
-          }, ()=>{
-            if (that.state.apiCount === 2) {
-              Taro.hideLoading()
-            }
-          })
+      }).catch(err => {
+        that.getScrollHeight()
+        Taro.stopPullDownRefresh()
+      })
+
+      wx.cloud.callFunction({
+        // 要调用的云函数名称
+        name: 'trend',
+        // 传递给云函数的event参数
+        data: {
+          type: 'developers',
+          language: that.state.language.urlParam,
+          since: that.state.category.value
+        }
+      }).then(res => {
+        that.setState({
+          apiCount: that.state.apiCount + 1,
+          developers: res.result.data
+        }, ()=>{
+          if (that.state.apiCount === 2) {
+            Taro.hideLoading()
+            Taro.stopPullDownRefresh()
+          }
         })
+      }).catch(err => {
+        that.getScrollHeight()
+        Taro.stopPullDownRefresh()
+      })
     })
   }
 
@@ -183,6 +207,7 @@ class Index extends Component {
     } else if (categoryValue === 'monthly') {
       categoryType = 2
     }
+    const { developers, repos } = this.state
     return (
       <View className='content' id='list'>
         <View className='search_bg' onClick={this.onActionSearch.bind(this)}>
@@ -202,10 +227,10 @@ class Index extends Component {
           ]}
           onClick={this.handleClick.bind(this)} >
           <AtTabsPane current={this.state.current} index={0}>
-            <ItemList itemList={this.props.repos} type={0} categoryType={categoryType} />
+            <ItemList itemList={repos} type={0} categoryType={categoryType} />
           </AtTabsPane>
           <AtTabsPane current={this.state.current} index={1}>
-            <ItemList itemList={this.props.developers} type={1} categoryType={categoryType} />
+            <ItemList itemList={developers} type={1} categoryType={categoryType} />
           </AtTabsPane>
 
         </AtTabs>
@@ -230,10 +255,4 @@ class Index extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    repos: state.trending.repos,
-    developers: state.trending.developers
-  }
-}
-export default connect(mapStateToProps)(Index)
+export default Index

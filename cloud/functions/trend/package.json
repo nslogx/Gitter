@@ -1,0 +1,19 @@
+{
+  "name": "trend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "latest",
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.4",
+    "lodash": "^4.17.11",
+    "memory-cache": "^0.2.0",
+    "node-fetch": "^2.2.0"
+  }
+}

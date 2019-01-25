@@ -9,7 +9,7 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { func, data, type, content } = event
+  const { func, type, content } = event
   let res
   if (func === 'parse') {
     if (type === 'markdown') {
