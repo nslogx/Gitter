@@ -31,7 +31,6 @@ class Index extends Component {
       scrollTop: null,
       scrollHeight: 0,
       isHidden: false,
-      apiCount: 0,
       repos: [],
       developers: [],
       range: [
@@ -135,63 +134,52 @@ class Index extends Component {
   loadItemList () {
     const { current } = this.state
     let that = this
-    that.setState({
-      apiCount: 0
-    }, ()=> {
-      let that = this
-      wx.cloud.callFunction({
-        // 要调用的云函数名称
-        name: 'trend',
-        // 传递给云函数的event参数
-        data: {
-          type: 'repositories',
-          language: that.state.language.urlParam,
-          since: that.state.category.value
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'trend',
+      // 传递给云函数的event参数
+      data: {
+        type: 'repositories',
+        language: that.state.language.urlParam,
+        since: that.state.category.value
+      }
+    }).then(res => {
+      that.setState({
+        repos: res.result.data
+      }, ()=>{
+        if (current === 0) {
+          that.getScrollHeight()
+          Taro.hideLoading()
+          Taro.stopPullDownRefresh()
         }
-      }).then(res => {
-        that.setState({
-          apiCount: that.state.apiCount + 1,
-          repos: res.result.data
-        }, ()=>{
-          if (current === 0) {
-            that.getScrollHeight()
-          }
-          if (that.state.apiCount > 1) {
-            Taro.hideLoading()
-            Taro.stopPullDownRefresh()
-          }
-        })
-      }).catch(err => {
-        Taro.hideLoading()
-        Taro.stopPullDownRefresh()
       })
+    }).catch(err => {
+      Taro.hideLoading()
+      Taro.stopPullDownRefresh()
+    })
 
-      wx.cloud.callFunction({
-        // 要调用的云函数名称
-        name: 'trend',
-        // 传递给云函数的event参数
-        data: {
-          type: 'developers',
-          language: that.state.language.urlParam,
-          since: that.state.category.value
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'trend',
+      // 传递给云函数的event参数
+      data: {
+        type: 'developers',
+        language: that.state.language.urlParam,
+        since: that.state.category.value
+      }
+    }).then(res => {
+      that.setState({
+        developers: res.result.data
+      }, ()=>{
+        if (current === 1) {
+          Taro.stopPullDownRefresh()
+          that.getScrollHeight()
+          Taro.hideLoading()
         }
-      }).then(res => {
-        that.setState({
-          apiCount: that.state.apiCount + 1,
-          developers: res.result.data
-        }, ()=>{
-          if (current === 1) {
-            that.getScrollHeight()
-          }
-          if (that.state.apiCount > 1) {
-            Taro.hideLoading()
-            Taro.stopPullDownRefresh()
-          }
-        })
-      }).catch(err => {
-        Taro.hideLoading()
-        Taro.stopPullDownRefresh()
       })
+    }).catch(err => {
+      Taro.hideLoading()
+      Taro.stopPullDownRefresh()
     })
   }
 
