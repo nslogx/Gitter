@@ -43,7 +43,7 @@ cd Gitter
 - [ ] 完善Issue相关功能
 - [ ] ...
 
-有疑问或建议可提issue，我会尽快处理，或者可加我的微信(请注明GitHub)：
+有疑问或建议可提issue，我会尽快处理，或者可入微信讨论群：
 ![Author](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/WeChat.png)
 
 
