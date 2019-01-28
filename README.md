@@ -37,6 +37,8 @@ cd Gitter
 |User|Repo|
 |![文库](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img02.png) | ![作者](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img03.png)|
 
+![Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
+
 ### Todo
 
 - [x] 完善Markdown解析
