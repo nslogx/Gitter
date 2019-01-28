@@ -7,6 +7,8 @@
 
 感谢相关作者的努力及开源精神。
 
+[Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
+
 ### 说明
 
 - 由于小程序的限制，无法使用OAuth跳转认证，故采用Token+Account认证方式；
@@ -14,8 +16,6 @@
 - Token的生成方式请移步[New personal access token](https://github.com/settings/tokens/new)，按照步骤即可生成Token；
 - ~~由于目前个人能力有限，目前在小程序内关于Markdown的解析并不完美，欢迎有兴趣的大佬PR；~~(采用[Towxml](https://github.com/sbfkcel/towxml)提供的方案，基本上已经完美解析，感谢开源作者)
 - **此源码仅供交流学习，严禁以任何形式独立发布或用于商业用途；**
-
-[Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
 
 ### 使用
 
