@@ -15,6 +15,8 @@
 - ~~由于目前个人能力有限，目前在小程序内关于Markdown的解析并不完美，欢迎有兴趣的大佬PR；~~(采用[Towxml](https://github.com/sbfkcel/towxml)提供的方案，基本上已经完美解析，感谢开源作者)
 - **此源码仅供交流学习，严禁以任何形式独立发布或用于商业用途；**
 
+[Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
+
 ### 使用
 
 ``` 
@@ -36,8 +38,6 @@ cd Gitter
 |![摘录](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img00.png) | ![详情](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img01.png)|
 |User|Repo|
 |![文库](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img02.png) | ![作者](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/img03.png)|
-
-![Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
 
 ### Todo
 
