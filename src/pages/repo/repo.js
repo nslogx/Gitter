@@ -252,7 +252,7 @@ class Repo extends Component {
           <View className='repo_number_item_view'>
             <View className='repo_number_item'>
               <AtIcon prefixClass='ion' value='ios-eye' size='25' color='#333' />
-              <Text className='repo_number_title'>{repo.watchers_count}</Text>
+              <Text className='repo_number_title'>{repo.subscribers_count}</Text>
             </View>
             <View className='repo_number_item' onClick={this.handleStar.bind(this)}>
               <AtIcon prefixClass='ion'
@@ -306,10 +306,6 @@ class Repo extends Component {
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
           </View>
-          {/*<View className='repo_info_list'>*/}
-            {/*<View className='list_title'>Pull Requests</View>*/}
-            {/*<AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />*/}
-          {/*</View>*/}
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTRIBUTORS_LIST)}>
             <View className='list_title'>Contributors</View>
             <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
