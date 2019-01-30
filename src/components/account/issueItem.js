@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, Text, Navigator } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import { timeago } from '../../utils/common'
-
+import IssueLabels from './issueLabels'
 
 import './issueItem.less'
 
@@ -31,6 +31,10 @@ export default class IssueItem extends Component {
           <Text className='issue_title'>
             {item.title}
           </Text>
+          {
+            item.labels.length > 0 &&
+              <IssueLabels items={item.labels} />
+          }
           {
             item.comments > 0 &&
             <Text className='issue_desc'>
