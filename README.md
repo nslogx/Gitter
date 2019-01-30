@@ -7,6 +7,8 @@
 
 感谢相关作者的努力及开源精神。
 
+[Gitter - 高颜值GitHub小程序客户端诞生记](https://juejin.im/post/5c4c738ce51d4525211c129b)
+
 ### 说明
 
 - 由于小程序的限制，无法使用OAuth跳转认证，故采用Token+Account认证方式；
