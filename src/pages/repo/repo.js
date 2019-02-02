@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Button, Navigator } from '@tarojs/components'
+import { View, Text, Button, Navigator, Ad } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { AtIcon } from 'taro-ui'
 import { base64_decode } from '../../utils/base64'
@@ -93,8 +93,8 @@ class Repo extends Component {
           repo: res.data,
           baseUrl: baseUrl
         }, ()=>{
-          that.getReadme()
           that.checkStarring()
+          that.getReadme()
         })
       } else {
         Taro.showToast({
@@ -141,26 +141,29 @@ class Repo extends Component {
   }
 
   handleStar() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     const { hasStar, repo } = this.state
     let url = '/user/starred/' + repo.full_name
     let that = this
     if (hasStar) {
       api.delete(url).then((res)=>{
-        repo.stargazers_count -= 1
         if (res.statusCode === 204) {
-          that.setState({
-            hasStar: false,
-            repo: repo
+          that.getRepo()
+        } else {
+          Taro.showToast({
+            title: res.data.message,
+            icon: 'none'
           })
         }
       })
     } else {
       api.put(url).then((res)=>{
         if (res.statusCode === 204) {
-          repo.stargazers_count += 1
-          that.setState({
-            hasStar: true,
-            repo: repo
+          that.getRepo()
+        } else {
+          Taro.showToast({
+            title: res.data.message,
+            icon: 'none'
           })
         }
       })
@@ -170,12 +173,13 @@ class Repo extends Component {
   handleFork() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     const { repo } = this.state
-    let that = this
     let url = '/repos/' + repo.full_name + '/forks'
     api.post(url).then((res)=>{
-      if (res.statusCode === HTTP_STATUS.SUCCESS) {
+      Taro.hideLoading()
+      if (res.statusCode === HTTP_STATUS.ACCEPTED) {
         Taro.showToast({
-          title: 'Success'
+          title: 'Success!',
+          icon: 'success'
         })
       } else {
         Taro.showToast({
@@ -183,7 +187,6 @@ class Repo extends Component {
           icon: 'none'
         })
       }
-      Taro.hideLoading()
     })
   }
 
@@ -320,6 +323,9 @@ class Repo extends Component {
             </View>
           </View>
         }
+        <View className='ad'>
+          <Ad unitId='adunit-04a1d10f49572d65' />
+        </View>
         {
           isShare &&
           <View className='home_view' onClick={this.onClickedHome.bind(this)}>
