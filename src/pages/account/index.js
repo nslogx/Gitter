@@ -143,7 +143,10 @@ class Index extends Component {
               <Image className='account_bg' src={require('../../assets/images/account_bg.png')}/>
               <View className='user_info'>
                 <AtAvatar className='avatar' circle image={userInfo.avatar_url}/>
-                <Text className='username'>{userInfo.name}</Text>
+                {
+                  userInfo.name.length > 0 &&
+                  <Text className='username'>{userInfo.name}</Text>
+                }
                 <View className='login_name'>@{userInfo.login}</View>
               </View>
               <View className='info_view'>
