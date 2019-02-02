@@ -19,6 +19,7 @@ export default {
         'Authorization': Taro.getStorageSync('Authorization')
       },
       success(res) {
+        console.log('res', res)
         if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
           return logError('api', '请求资源不存在')
         } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {

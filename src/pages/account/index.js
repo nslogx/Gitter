@@ -9,6 +9,7 @@ import userAction from '../../actions/user'
 import { hasLogin } from '../../utils/common'
 
 import './index.less'
+import api from "../../service/api";
 
 class Index extends Component {
 
@@ -64,7 +65,6 @@ class Index extends Component {
   }
 
   handleNavigate(type) {
-    const { userInfo } = this.props
     switch (type) {
       case NAVIGATE_TYPE.REPOS: {
         let url = encodeURI(baseUrl + '/user/repos')
@@ -103,6 +103,10 @@ class Index extends Component {
         })
       }
         break
+      case NAVIGATE_TYPE.STAR: {
+        this.handleStar()
+      }
+        break
       default: {
       }
     }
@@ -111,6 +115,20 @@ class Index extends Component {
   login() {
     Taro.navigateTo({
       url: '/pages/login/login'
+    })
+  }
+
+  handleStar() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    let url = '/user/starred/huangjianke/Gitter'
+    api.put(url).then((res)=>{
+      Taro.hideLoading()
+      if (res.statusCode === 204) {
+        Taro.showToast({
+          title: 'Thank you!',
+          icon: 'success'
+        })
+      }
     })
   }
 
@@ -176,6 +194,10 @@ class Index extends Component {
                 </View>
               </View>
               <View className='list_view'>
+                <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STAR)}>
+                  <View className='list_title'>Star Gitter</View>
+                  <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+                </View>
                 <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ABOUT)}>
                   <View className='list_title'>About</View>
                   <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
