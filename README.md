@@ -45,8 +45,10 @@ cd Gitter
 - [ ] 完善Issue相关功能
 - [ ] ...
 
-有疑问或建议可提issue，我会尽快处理，或者可入微信讨论群：
-![Author](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/WeChat.png)
+有疑问或建议可提issue，我会尽快处理。
+
+微信讨论群：
+由于人数已满，有需要的可以添加我个人微信：Huangjianke0
 
 
 ### LICENSE
