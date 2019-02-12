@@ -23,7 +23,8 @@ class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLogin: false
+      isLogin: false,
+      hasStar: false
     }
   }
 
@@ -57,10 +58,23 @@ class Index extends Component {
       userAction.getUserInfo().then(()=>{
         Taro.hideLoading()
         Taro.stopPullDownRefresh()
+        this.checkStarring()
       })
     } else {
       Taro.hideLoading()
       Taro.stopPullDownRefresh()
+    }
+  }
+
+  checkStarring() {
+    if (hasLogin()) {
+      let that = this
+      let url = '/user/starred/huangjianke/Gitter'
+      api.get(url).then((res)=>{
+        that.setState({
+          hasStar: res.statusCode === 204
+        })
+      })
     }
   }
 
@@ -133,7 +147,7 @@ class Index extends Component {
   }
 
   render() {
-    const { isLogin } = this.state
+    const { isLogin, hasStar } = this.state
     const { userInfo } = this.props
     return (
       <View>
@@ -197,10 +211,14 @@ class Index extends Component {
                 </View>
               </View>
               <View className='list_view'>
-                <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STAR)}>
-                  <View className='list_title'>Star Gitter</View>
-                  <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
-                </View>
+                {
+                  !hasStar && (
+                    <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STAR)}>
+                      <View className='list_title'>Star Gitter ❤</View>
+                      <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+                    </View>
+                  )
+                }
                 <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ABOUT)}>
                   <View className='list_title'>About</View>
                   <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
