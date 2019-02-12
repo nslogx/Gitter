@@ -76,6 +76,7 @@ class App extends Component {
       env: 'gitter-33fa2c',
       traceUser: true
     })
+    this.loadConfig()
   }
 
   componentDidShow () {}
@@ -85,6 +86,18 @@ class App extends Component {
   componentCatchError () {}
 
   componentDidCatchError () {}
+
+  loadConfig() {
+    const db = wx.cloud.database()
+    db.collection('config').get().then(res => {
+      const config = res.data[0]
+      if (config) {
+        Taro.setStorageSync('config', config)
+      } else {
+        Taro.setStorageSync('config', null)
+      }
+    })
+  }
 
   /*更新小程序*/
   updateApp() {

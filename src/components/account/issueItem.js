@@ -31,10 +31,10 @@ export default class IssueItem extends Component {
           <Text className='issue_title'>
             {item.title}
           </Text>
-          {
-            item.labels.length > 0 &&
-              <IssueLabels items={item.labels} />
-          }
+          {/*{*/}
+            {/*item.labels.length > 0 &&*/}
+              {/*<IssueLabels items={item.labels} />*/}
+          {/*}*/}
           {
             item.comments > 0 &&
             <Text className='issue_desc'>

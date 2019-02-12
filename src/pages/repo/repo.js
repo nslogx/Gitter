@@ -30,7 +30,9 @@ class Repo extends Component {
       repo: null,
       readme: null,
       hasStar: false,
+      hasWatching: false,
       isShare: false,
+      showAd: true,
       baseUrl: null,
       md: null
     }
@@ -50,8 +52,11 @@ class Repo extends Component {
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getRepo()
+    const config = Taro.getStorageSync('config')
+    this.setState({
+      showAd: config.repo_ad
+    })
   }
-
 
   onPullDownRefresh() {
     this.getRepo()
@@ -93,8 +98,9 @@ class Repo extends Component {
           repo: res.data,
           baseUrl: baseUrl
         }, ()=>{
-          that.checkStarring()
           that.getReadme()
+          that.checkStarring()
+          // that.checkWatching()
         })
       } else {
         Taro.showToast({
@@ -135,6 +141,19 @@ class Repo extends Component {
       api.get(url).then((res)=>{
         that.setState({
           hasStar: res.statusCode === 204
+        })
+      })
+    }
+  }
+
+  checkWatching() {
+    if (hasLogin()) {
+      const { repo } = this.state
+      let that = this
+      let url =  '/repos/' + repo.full_name + '/subscription'
+      api.get(url).then((res)=>{
+        that.setState({
+          hasWatching: res.statusCode === 200
         })
       })
     }
@@ -232,7 +251,7 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, hasStar, isShare, md, baseUrl } = this.state
+    const { repo, hasStar, isShare, md, baseUrl, showAd } = this.state
     if (!repo) return <View />
     return (
       <View className='content'>
@@ -261,7 +280,7 @@ class Repo extends Component {
               <AtIcon prefixClass='ion'
                       value={hasStar ? 'ios-star' : 'ios-star-outline'}
                       size='25'
-                      color={hasStar ? '#ff4949' : '#333'} />
+                      color={hasStar ? '#333' : '#333'} />
               <Text className='repo_number_title'>{repo.stargazers_count}</Text>
             </View>
             <View className='repo_number_item' onClick={this.handleFork.bind(this)}>
@@ -323,9 +342,13 @@ class Repo extends Component {
             </View>
           </View>
         }
-        <View className='ad'>
-          <Ad unitId='adunit-04a1d10f49572d65' />
-        </View>
+        {
+          (md && showAd) &&
+          <View className='ad'>
+            <Text className='support'>Support me ❤</Text>
+            <Ad unitId='adunit-04a1d10f49572d65' />
+          </View>
+        }
         {
           isShare &&
           <View className='home_view' onClick={this.onClickedHome.bind(this)}>

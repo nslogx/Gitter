@@ -1,5 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Navigator, Image, Text } from '@tarojs/components'
+import { View, Navigator, Image, Text, Ad } from '@tarojs/components'
 
 import './about.less'
 
@@ -62,7 +62,7 @@ class About extends Component {
                className='logo'
                src={require('../../assets/images/logo.png')}/>
         <Text className='version'>
-          Gitter v1.0.0
+          Gitter v1.2.0
         </Text>
         <Navigator url={url}>
           <Text className='link'>
@@ -71,6 +71,10 @@ class About extends Component {
         </Navigator>
         <View className='logout' onClick={this.logout.bind(this)}>
           Logout
+        </View>
+        <View className='ad'>
+          <Text className='support'>Support me ❤</Text>
+          <Ad unitId='adunit-3861174abe44ff28' />
         </View>
       </View>
     )
