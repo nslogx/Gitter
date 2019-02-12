@@ -53,7 +53,12 @@ class About extends Component {
 
   }
 
+  loadError(event) {
+    console.log(event.detail)
+  }
+
   render () {
+    const { loadAd } = this.state
     let api = 'https://api.github.com/repos/huangjianke/Gitter'
     let url = '/pages/repo/repo?url=' + decodeURI(api)
     return (
@@ -74,7 +79,7 @@ class About extends Component {
         </View>
         <View className='ad'>
           <Text className='support'>Support me ❤</Text>
-          <Ad unitId='adunit-3861174abe44ff28' />
+          <Ad unitId='adunit-3861174abe44ff28' onError={this.loadError.bind(this)} />
         </View>
       </View>
     )

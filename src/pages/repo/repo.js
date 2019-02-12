@@ -250,6 +250,10 @@ class Repo extends Component {
     })
   }
 
+  loadError(event) {
+    console.log(event.detail)
+  }
+
   render () {
     const { repo, hasStar, isShare, md, baseUrl, showAd } = this.state
     if (!repo) return <View />
@@ -346,7 +350,7 @@ class Repo extends Component {
           (md && showAd) &&
           <View className='ad'>
             <Text className='support'>Support me ❤</Text>
-            <Ad unitId='adunit-04a1d10f49572d65' />
+            <Ad unitId='adunit-04a1d10f49572d65' onError={this.loadError.bind(this)} />
           </View>
         }
         {
