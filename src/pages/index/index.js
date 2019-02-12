@@ -189,6 +189,14 @@ class Index extends Component {
     })
   }
 
+  onShareAppMessage(obj) {
+    return {
+      title: 'Github 今日热榜，随时随地发现您喜欢的项目',
+      path: '/pages/index/index',
+      imageUrl: '../../assets/images/cover.png'
+    }
+  }
+
   render () {
     let categoryType = 0
     let categoryValue = this.state.category.value
