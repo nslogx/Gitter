@@ -9,7 +9,7 @@ import api from "../../service/api";
 class StarredRepo extends Component {
 
   config = {
-    navigationBarTitleText: 'Starred Repo',
+    navigationBarTitleText: 'Starred Repos',
     enablePullDownRefresh: true
   }
 
