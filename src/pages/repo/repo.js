@@ -32,7 +32,7 @@ class Repo extends Component {
       hasStar: false,
       hasWatching: false,
       isShare: false,
-      showAd: true,
+      loadAd: true,
       baseUrl: null,
       md: null
     }
@@ -52,10 +52,6 @@ class Repo extends Component {
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.getRepo()
-    const config = Taro.getStorageSync('config')
-    this.setState({
-      showAd: config.repo_ad
-    })
   }
 
   onPullDownRefresh() {
@@ -251,11 +247,14 @@ class Repo extends Component {
   }
 
   loadError(event) {
+    this.setState({
+      loadAd: false
+    })
     console.log(event.detail)
   }
 
   render () {
-    const { repo, hasStar, isShare, md, baseUrl, showAd } = this.state
+    const { repo, hasStar, isShare, md, baseUrl, loadAd } = this.state
     if (!repo) return <View />
     return (
       <View className='content'>
@@ -347,9 +346,9 @@ class Repo extends Component {
           </View>
         }
         {
-          (md && showAd) &&
+          (md && loadAd) &&
           <View className='ad'>
-            <Text className='support'>Support me ❤</Text>
+            <Text className='support'>Support Gitter ❤</Text>
             <Ad unitId='adunit-04a1d10f49572d65' onError={this.loadError.bind(this)} />
           </View>
         }

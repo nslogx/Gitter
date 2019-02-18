@@ -12,6 +12,7 @@ class About extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loadAd: true
     }
   }
 
@@ -54,6 +55,9 @@ class About extends Component {
   }
 
   loadError(event) {
+    this.setState({
+      loadAd: false
+    })
     console.log(event.detail)
   }
 
@@ -77,10 +81,14 @@ class About extends Component {
         <View className='logout' onClick={this.logout.bind(this)}>
           Logout
         </View>
-        <View className='ad'>
-          <Text className='support'>Support me ❤</Text>
-          <Ad unitId='adunit-3861174abe44ff28' onError={this.loadError.bind(this)} />
-        </View>
+        {
+          loadAd && (
+            <View className='ad'>
+              <Text className='support'>Support Gitter ❤</Text>
+              <Ad unitId='adunit-3861174abe44ff28' onError={this.loadError.bind(this)} />
+            </View>
+          )
+        }
       </View>
     )
   }
