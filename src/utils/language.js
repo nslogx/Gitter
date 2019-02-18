@@ -44,6 +44,14 @@ export const languages = [
     "name": "Objective-C"
   },
   {
+    "urlParam": "vue",
+    "name": "Vue"
+  },
+  {
+    "urlParam": "css",
+    "name": "CSS"
+  },
+  {
     "urlParam": "matlab",
     "name": "MATLAB"
   },
@@ -64,12 +72,48 @@ export const languages = [
     "name": "Swift"
   },
   {
+    "urlParam": "objective-c++",
+    "name": "Objective-C++"
+  },
+  {
     "urlParam": "go",
     "name": "Go"
   },
   {
     "urlParam": "ruby",
     "name": "Ruby"
+  },
+  {
+    "urlParam": "lua",
+    "name": "Lua"
+  },
+  {
+    "urlParam": "dart",
+    "name": "Dart"
+  },
+  {
+    "urlParam": "scala",
+    "name": "Scala"
+  },
+  {
+    "urlParam": "rust",
+    "name": "Rust"
+  },
+  {
+    "urlParam": "kotlin",
+    "name": "Kotlin"
+  },
+  {
+    "urlParam": "erlang",
+    "name": "Erlang"
+  },
+  {
+    "urlParam": "julia",
+    "name": "Julia"
+  },
+  {
+    "urlParam": "xml",
+    "name": "XML"
   },
   {
     "urlParam": "1c-enterprise",
@@ -384,10 +428,6 @@ export const languages = [
     "name": "Csound Score"
   },
   {
-    "urlParam": "css",
-    "name": "CSS"
-  },
-  {
     "urlParam": "csv",
     "name": "CSV"
   },
@@ -418,10 +458,6 @@ export const languages = [
   {
     "urlParam": "darcs-patch",
     "name": "Darcs Patch"
-  },
-  {
-    "urlParam": "dart",
-    "name": "Dart"
   },
   {
     "urlParam": "dataweave",
@@ -534,10 +570,6 @@ export const languages = [
   {
     "urlParam": "eq",
     "name": "EQ"
-  },
-  {
-    "urlParam": "erlang",
-    "name": "Erlang"
   },
   {
     "urlParam": "f%23",
@@ -900,10 +932,6 @@ export const languages = [
     "name": "JSX"
   },
   {
-    "urlParam": "julia",
-    "name": "Julia"
-  },
-  {
     "urlParam": "jupyter-notebook",
     "name": "Jupyter Notebook"
   },
@@ -922,10 +950,6 @@ export const languages = [
   {
     "urlParam": "kit",
     "name": "Kit"
-  },
-  {
-    "urlParam": "kotlin",
-    "name": "Kotlin"
   },
   {
     "urlParam": "krl",
@@ -1022,10 +1046,6 @@ export const languages = [
   {
     "urlParam": "lsl",
     "name": "LSL"
-  },
-  {
-    "urlParam": "lua",
-    "name": "Lua"
   },
   {
     "urlParam": "m",
@@ -1226,10 +1246,6 @@ export const languages = [
   {
     "urlParam": "objdump",
     "name": "ObjDump"
-  },
-  {
-    "urlParam": "objective-c++",
-    "name": "Objective-C++"
   },
   {
     "urlParam": "objective-j",
@@ -1560,10 +1576,6 @@ export const languages = [
     "name": "RUNOFF"
   },
   {
-    "urlParam": "rust",
-    "name": "Rust"
-  },
-  {
     "urlParam": "sage",
     "name": "Sage"
   },
@@ -1578,10 +1590,6 @@ export const languages = [
   {
     "urlParam": "sass",
     "name": "Sass"
-  },
-  {
-    "urlParam": "scala",
-    "name": "Scala"
   },
   {
     "urlParam": "scaml",
@@ -1840,10 +1848,6 @@ export const languages = [
     "name": "Volt"
   },
   {
-    "urlParam": "vue",
-    "name": "Vue"
-  },
-  {
     "urlParam": "wavefront-material",
     "name": "Wavefront Material"
   },
@@ -1906,10 +1910,6 @@ export const languages = [
   {
     "urlParam": "xcompose",
     "name": "XCompose"
-  },
-  {
-    "urlParam": "xml",
-    "name": "XML"
   },
   {
     "urlParam": "xojo",

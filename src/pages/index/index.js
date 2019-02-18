@@ -1,10 +1,10 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Picker, Text } from '@tarojs/components'
+import { View, Picker, Text, Swiper, SwiperItem, ScrollView } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
-import { AtTabs, AtTabsPane, AtSearchBar } from 'taro-ui'
 import { languages } from '../../utils/language'
 
 import ItemList from '../../components/index/itemList'
+import Segment from '../../components/index/segment'
 
 import './index.less'
 
@@ -12,13 +12,14 @@ class Index extends Component {
 
   config = {
     navigationBarTitleText: 'Trending',
-    enablePullDownRefresh: true
+    enablePullDownRefresh: false
   }
 
   constructor (props) {
     super(props)
     this.state = {
       current: 0,
+      windowHeight: 0,
       category: {
         'name': 'Today',
         'value': 'daily'
@@ -28,8 +29,6 @@ class Index extends Component {
         'urlParam': ''
       },
       animation: null,
-      scrollTop: null,
-      scrollHeight: 0,
       isHidden: false,
       repos: [],
       developers: [],
@@ -52,6 +51,15 @@ class Index extends Component {
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
     this.loadItemList()
+
+    let that = this
+    Taro.getSystemInfo({
+      success(res) {
+        that.setState({
+          windowHeight: res.windowHeight - (res.windowWidth / 750) * 80
+        })
+      }
+    })
   }
 
   componentWillUnmount () { }
@@ -64,15 +72,18 @@ class Index extends Component {
     this.loadItemList()
   }
 
-  onPageScroll(e) {
-    if (e.scrollTop <= 0) {
-      // 滚动到最顶部
-      e.scrollTop = 0;
-    } else if (e.scrollTop > this.state.scrollHeight) {
-      // 滚动到最底部
-      e.scrollTop = this.state.scrollHeight;
-    }
-    if (e.scrollTop > this.state.scrollTop || e.scrollTop >= this.state.scrollHeight) {
+  onScroll(e) {
+    if (e.detail.scrollTop < 0) return;
+    if (e.detail.deltaY > 0) {
+      let animation = Taro.createAnimation({
+        duration: 400,
+        timingFunction: 'ease',
+      }).bottom(25).step().export()
+      this.setState({
+        isHidden: false,
+        animation: animation
+      })
+    } else {
       //向下滚动
       if (!this.state.isHidden) {
         let animation = Taro.createAnimation({
@@ -84,41 +95,7 @@ class Index extends Component {
           animation: animation
         })
       }
-    } else {
-      //向上滚动
-      if (this.state.isHidden) {
-        let animation = Taro.createAnimation({
-          duration: 400,
-          timingFunction: 'ease',
-        }).bottom(25).step().export()
-        this.setState({
-          isHidden: false,
-          animation: animation
-        })
-      }
     }
-    //给scrollTop重新赋值
-    this.setState({
-      scrollTop: e.scrollTop
-    })
-  }
-
-  getScrollHeight() {
-    let that = this
-    Taro.createSelectorQuery().select('#list').boundingClientRect((rect)=>{
-      that.setState({
-        scrollHeight: rect.height - 456
-      })
-    }).exec()
-  }
-
-  handleClick (value) {
-    let that = this
-    this.setState({
-      current: value
-    }, ()=>{
-      that.getScrollHeight()
-    })
   }
 
   onChange = e => {
@@ -128,6 +105,13 @@ class Index extends Component {
     }, () => {
       Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
       this.loadItemList()
+    })
+  }
+
+  onSwiperChange(e) {
+    console.log(e.detail.current)
+    this.setState({
+      current: e.detail.current
     })
   }
 
@@ -148,7 +132,6 @@ class Index extends Component {
         repos: res.result.data
       }, ()=>{
         if (current === 0) {
-          that.getScrollHeight()
           Taro.hideLoading()
           Taro.stopPullDownRefresh()
         }
@@ -173,7 +156,6 @@ class Index extends Component {
       }, ()=>{
         if (current === 1) {
           Taro.stopPullDownRefresh()
-          that.getScrollHeight()
           Taro.hideLoading()
         }
       })
@@ -183,10 +165,15 @@ class Index extends Component {
     })
   }
 
-  onActionSearch () {
-    Taro.navigateTo({
-      url: '/pages/search/index'
+  onTabChange(index) {
+    this.setState({
+      current: index
     })
+  }
+
+  onRefresh() {
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    this.loadItemList()
   }
 
   onShareAppMessage(obj) {
@@ -205,33 +192,30 @@ class Index extends Component {
     } else if (categoryValue === 'monthly') {
       categoryType = 2
     }
-    const { developers, repos } = this.state
+    const { developers, repos, current, windowHeight } = this.state
     return (
       <View className='content' id='list'>
-        <View className='search_bg' onClick={this.onActionSearch.bind(this)}>
-          <AtSearchBar
-            disabled={true}
-            placeholder='Search'
-            actionName=''
-          />
-        </View>
-        <AtTabs
-          swipeable={false}
-          animated={true}
-          current={this.state.current}
-          tabList={[
-            { title: 'Repositories' },
-            { title: 'Developers' }
-          ]}
-          onClick={this.handleClick.bind(this)} >
-          <AtTabsPane current={this.state.current} index={0}>
-            <ItemList itemList={repos} type={0} categoryType={categoryType} />
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <ItemList itemList={developers} type={1} categoryType={categoryType} />
-          </AtTabsPane>
-
-        </AtTabs>
+        <Segment current={current}
+                 onTabChange={this.onTabChange}
+                 onRefresh={this.onRefresh} />
+        <Swiper indicatorDots={false}
+                current={current}
+                style='height: {{windowHeight}}px'
+                onChange={this.onSwiperChange}
+        >
+          <SwiperItem>
+            <ScrollView scrollY style='height: {{windowHeight}}px' onScroll={this.onScroll}>
+              <ItemList itemList={repos} type={0} categoryType={categoryType} />
+              <View className='bottom' />
+            </ScrollView>
+          </SwiperItem>
+          <SwiperItem>
+            <ScrollView scrollY style='height: {{windowHeight}}px' onScroll={this.onScroll}>
+              <ItemList itemList={developers} type={1} categoryType={categoryType} />
+              <View className='bottom' />
+            </ScrollView>
+          </SwiperItem>
+        </Swiper>
         {
           this.state.range[1].length > 0 &&
           <View>

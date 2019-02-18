@@ -35,6 +35,9 @@ export default class Markdown extends Component {
   parseReadme() {
     const { md, base } = this.props
     let that = this
+    that.setState({
+      fail: false
+    })
     wx.cloud.callFunction({
       // 要调用的云函数名称
       name: 'parse',
