@@ -11,14 +11,12 @@ export default class Segment extends Component {
 
   static propTypes = {
     current: PropTypes.number,
-    onTabChange: PropTypes.func,
-    onRefresh: PropTypes.func
+    onTabChange: PropTypes.func
   }
 
   static defaultProps = {
     current: 0,
-    onTabChange: () => {},
-    onRefresh: () => {}
+    onTabChange: () => {}
   }
 
   componentWillMount() {
@@ -30,13 +28,23 @@ export default class Segment extends Component {
     })
   }
 
+  onActionConfig () {
+    Taro.navigateTo({
+      url: '/pages/index/configLanguages'
+    })
+  }
+
   render() {
-    const { current, onTabChange, onRefresh } = this.props
+    const { current, onTabChange } = this.props
     return (
       <View className='content'>
-        <AtIcon value='reload' size='22' color='#333' onClick={onRefresh} />
+        <View className='action-view' onClick={this.onActionConfig.bind(this)}>
+          <AtIcon value='filter' size='22' color='#333' />
+        </View>
         <Tab tabList={['REPO', 'USER']} current={current} onTabClick={onTabChange.bind(this)} />
-        <AtIcon value='search' size='22' color='#333' onClick={this.onActionSearch.bind(this)} />
+        <View className='action-view' onClick={this.onActionSearch.bind(this)}>
+          <AtIcon value='search' size='22' color='#333' />
+        </View>
       </View>
     )
   }

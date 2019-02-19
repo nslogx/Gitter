@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types';
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 
 
@@ -42,21 +42,21 @@ export default class TrendingRepoItem extends Component {
            item.language.length > 0 &&
            <View className='number_item'>
              <AtIcon prefixClass='ion' value='ios-radio-button-on' size='15' color={item.languageColor} />
-             <View className='number_title'>{item.language}</View>
+             <Text className='number_title'>{item.language}</Text>
            </View>
          }
          <View className='number_item'>
            <AtIcon prefixClass='ion' value='ios-star' size='15' color='#7f7f7f' />
-           <View className='number_title'>{item.stars}</View>
+           <Text className='number_title'>{item.stars}</Text>
          </View>
          <View className='number_item'>
            <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#7f7f7f' />
-           <View className='number_title'>{item.forks}</View>
+           <Text className='number_title'>{item.forks}</Text>
          </View>
        </View>
        <View className='today_view'>
          <AtIcon prefixClass='ion' value='ios-star' size='17' color='#ff4949' />
-         <View className='today_title'>{currentPeriod}</View>
+         <Text className='today_title'>{currentPeriod}</Text>
        </View>
      </View>
     )
