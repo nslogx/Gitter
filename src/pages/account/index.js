@@ -142,7 +142,9 @@ class Index extends Component {
           title: 'Thank you!',
           icon: 'success'
         })
-        this.getUserInfo()
+        setTimeout(()=>{
+          this.getUserInfo()
+        }, 1000)
       }
     })
   }
