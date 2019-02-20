@@ -19,26 +19,26 @@ export const languages = [
         "urlParam": "ada",
         "name": "Ada"
       },
-      {
-        "urlParam": "adobe-font-metrics",
-        "name": "Adobe Font Metrics"
-      },
+      // {
+      //   "urlParam": "adobe-font-metrics",
+      //   "name": "Adobe Font Metrics"
+      // },
       {
         "urlParam": "agda",
         "name": "Agda"
       },
-      {
-        "urlParam": "ags-script",
-        "name": "AGS Script"
-      },
+      // {
+      //   "urlParam": "ags-script",
+      //   "name": "AGS Script"
+      // },
       {
         "urlParam": "alloy",
         "name": "Alloy"
       },
-      {
-        "urlParam": "alpine-abuild",
-        "name": "Alpine Abuild"
-      },
+      // {
+      //   "urlParam": "alpine-abuild",
+      //   "name": "Alpine Abuild"
+      // },
       {
         "urlParam": "ampl",
         "name": "AMPL"
@@ -47,10 +47,10 @@ export const languages = [
         "urlParam": "angelscript",
         "name": "AngelScript"
       },
-      {
-        "urlParam": "ant-build-system",
-        "name": "Ant Build System"
-      },
+      // {
+      //   "urlParam": "ant-build-system",
+      //   "name": "Ant Build System"
+      // },
       {
         "urlParam": "antlr",
         "name": "ANTLR"
@@ -63,18 +63,18 @@ export const languages = [
         "urlParam": "apex",
         "name": "Apex"
       },
-      {
-        "urlParam": "api-blueprint",
-        "name": "API Blueprint"
-      },
+      // {
+      //   "urlParam": "api-blueprint",
+      //   "name": "API Blueprint"
+      // },
       {
         "urlParam": "apl",
         "name": "APL"
       },
-      {
-        "urlParam": "apollo-guidance-computer",
-        "name": "Apollo Guidance Computer"
-      },
+      // {
+      //   "urlParam": "apollo-guidance-computer",
+      //   "name": "Apollo Guidance Computer"
+      // },
       {
         "urlParam": "applescript",
         "name": "AppleScript"
@@ -211,10 +211,10 @@ export const languages = [
         "urlParam": "c2hs-haskell",
         "name": "C2hs Haskell"
       },
-      {
-        "urlParam": "cap'n-proto",
-        "name": "Cap'n Proto"
-      },
+      // {
+      //   "urlParam": "cap'n-proto",
+      //   "name": "Cap'n Proto"
+      // },
       {
         "urlParam": "cartocss",
         "name": "CartoCSS"
@@ -259,14 +259,14 @@ export const languages = [
         "urlParam": "clojure",
         "name": "Clojure"
       },
-      {
-        "urlParam": "closure-templates",
-        "name": "Closure Templates"
-      },
-      {
-        "urlParam": "cloud-firestore-security-rules",
-        "name": "Cloud Firestore Security Rules"
-      },
+      // {
+      //   "urlParam": "closure-templates",
+      //   "name": "Closure Templates"
+      // },
+      // {
+      //   "urlParam": "cloud-firestore-security-rules",
+      //   "name": "Cloud Firestore Security Rules"
+      // },
       {
         "urlParam": "cmake",
         "name": "CMake"
@@ -283,30 +283,30 @@ export const languages = [
         "urlParam": "coldfusion",
         "name": "ColdFusion"
       },
-      {
-        "urlParam": "coldfusion-cfc",
-        "name": "ColdFusion CFC"
-      },
+      // {
+      //   "urlParam": "coldfusion-cfc",
+      //   "name": "ColdFusion CFC"
+      // },
       {
         "urlParam": "collada",
         "name": "COLLADA"
       },
-      {
-        "urlParam": "common-lisp",
-        "name": "Common Lisp"
-      },
-      {
-        "urlParam": "common-workflow-language",
-        "name": "Common Workflow Language"
-      },
-      {
-        "urlParam": "component-pascal",
-        "name": "Component Pascal"
-      },
-      {
-        "urlParam": "conll-u",
-        "name": "CoNLL-U"
-      },
+      // {
+      //   "urlParam": "common-lisp",
+      //   "name": "Common Lisp"
+      // },
+      // {
+      //   "urlParam": "common-workflow-language",
+      //   "name": "Common Workflow Language"
+      // },
+      // {
+      //   "urlParam": "component-pascal",
+      //   "name": "Component Pascal"
+      // },
+      // {
+      //   "urlParam": "conll-u",
+      //   "name": "CoNLL-U"
+      // },
       {
         "urlParam": "cool",
         "name": "Cool"
@@ -315,10 +315,10 @@ export const languages = [
         "urlParam": "coq",
         "name": "Coq"
       },
-      {
-        "urlParam": "cpp-objdump",
-        "name": "Cpp-ObjDump"
-      },
+      // {
+      //   "urlParam": "cpp-objdump",
+      //   "name": "Cpp-ObjDump"
+      // },
       {
         "urlParam": "creole",
         "name": "Creole"
@@ -335,14 +335,14 @@ export const languages = [
         "urlParam": "csound",
         "name": "Csound"
       },
-      {
-        "urlParam": "csound-document",
-        "name": "Csound Document"
-      },
-      {
-        "urlParam": "csound-score",
-        "name": "Csound Score"
-      },
+      // {
+      //   "urlParam": "csound-document",
+      //   "name": "Csound Document"
+      // },
+      // {
+      //   "urlParam": "csound-score",
+      //   "name": "Csound Score"
+      // },
       {
         "urlParam": "css",
         "name": "CSS"
@@ -377,14 +377,14 @@ export const languages = [
         "urlParam": "d",
         "name": "D"
       },
-      {
-        "urlParam": "d-objdump",
-        "name": "D-ObjDump"
-      },
-      {
-        "urlParam": "darcs-patch",
-        "name": "Darcs Patch"
-      },
+      // {
+      //   "urlParam": "d-objdump",
+      //   "name": "D-ObjDump"
+      // },
+      // {
+      //   "urlParam": "darcs-patch",
+      //   "name": "Darcs Patch"
+      // },
       {
         "urlParam": "dart",
         "name": "Dart"
@@ -401,10 +401,10 @@ export const languages = [
         "urlParam": "diff",
         "name": "Diff"
       },
-      {
-        "urlParam": "digital-command-language",
-        "name": "DIGITAL Command Language"
-      },
+      // {
+      //   "urlParam": "digital-command-language",
+      //   "name": "DIGITAL Command Language"
+      // },
       {
         "urlParam": "dm",
         "name": "DM"
@@ -455,10 +455,10 @@ export const languages = [
         "urlParam": "ec",
         "name": "eC"
       },
-      {
-        "urlParam": "ecere-projects",
-        "name": "Ecere Projects"
-      },
+      // {
+      //   "urlParam": "ecere-projects",
+      //   "name": "Ecere Projects"
+      // },
       {
         "urlParam": "ecl",
         "name": "ECL"
@@ -467,10 +467,10 @@ export const languages = [
         "urlParam": "eclipse",
         "name": "ECLiPSe"
       },
-      {
-        "urlParam": "edje-data-collection",
-        "name": "Edje Data Collection"
-      },
+      // {
+      //   "urlParam": "edje-data-collection",
+      //   "name": "Edje Data Collection"
+      // },
       {
         "urlParam": "edn",
         "name": "edn"
@@ -491,10 +491,10 @@ export const languages = [
         "urlParam": "elm",
         "name": "Elm"
       },
-      {
-        "urlParam": "emacs-lisp",
-        "name": "Emacs Lisp"
-      },
+      // {
+      //   "urlParam": "emacs-lisp",
+      //   "name": "Emacs Lisp"
+      // },
       {
         "urlParam": "emberscript",
         "name": "EmberScript"
@@ -537,14 +537,14 @@ export const languages = [
         "urlParam": "fantom",
         "name": "Fantom"
       },
-      {
-        "urlParam": "figlet-font",
-        "name": "FIGlet Font"
-      },
-      {
-        "urlParam": "filebench-wml",
-        "name": "Filebench WML"
-      },
+      // {
+      //   "urlParam": "figlet-font",
+      //   "name": "FIGlet Font"
+      // },
+      // {
+      //   "urlParam": "filebench-wml",
+      //   "name": "Filebench WML"
+      // },
       {
         "urlParam": "filterscript",
         "name": "Filterscript"
@@ -587,10 +587,10 @@ export const languages = [
         "urlParam": "g-code",
         "name": "G-code"
       },
-      {
-        "urlParam": "game-maker-language",
-        "name": "Game Maker Language"
-      },
+      // {
+      //   "urlParam": "game-maker-language",
+      //   "name": "Game Maker Language"
+      // },
       {
         "urlParam": "gams",
         "name": "GAMS"
@@ -599,10 +599,10 @@ export const languages = [
         "urlParam": "gap",
         "name": "GAP"
       },
-      {
-        "urlParam": "gcc-machine-description",
-        "name": "GCC Machine Description"
-      },
+      // {
+      //   "urlParam": "gcc-machine-description",
+      //   "name": "GCC Machine Description"
+      // },
       {
         "urlParam": "gdb",
         "name": "GDB"
@@ -619,22 +619,22 @@ export const languages = [
         "urlParam": "genshi",
         "name": "Genshi"
       },
-      {
-        "urlParam": "gentoo-ebuild",
-        "name": "Gentoo Ebuild"
-      },
-      {
-        "urlParam": "gentoo-eclass",
-        "name": "Gentoo Eclass"
-      },
-      {
-        "urlParam": "gerber-image",
-        "name": "Gerber Image"
-      },
-      {
-        "urlParam": "gettext-catalog",
-        "name": "Gettext Catalog"
-      },
+      // {
+      //   "urlParam": "gentoo-ebuild",
+      //   "name": "Gentoo Ebuild"
+      // },
+      // {
+      //   "urlParam": "gentoo-eclass",
+      //   "name": "Gentoo Eclass"
+      // },
+      // {
+      //   "urlParam": "gerber-image",
+      //   "name": "Gerber Image"
+      // },
+      // {
+      //   "urlParam": "gettext-catalog",
+      //   "name": "Gettext Catalog"
+      // },
       {
         "urlParam": "gherkin",
         "name": "Gherkin"
@@ -647,10 +647,10 @@ export const languages = [
         "urlParam": "glyph",
         "name": "Glyph"
       },
-      {
-        "urlParam": "glyph-bitmap-distribution-format",
-        "name": "Glyph Bitmap Distribution Format"
-      },
+      // {
+      //   "urlParam": "glyph-bitmap-distribution-format",
+      //   "name": "Glyph Bitmap Distribution Format"
+      // },
       {
         "urlParam": "gn",
         "name": "GN"
@@ -679,30 +679,30 @@ export const languages = [
         "urlParam": "gradle",
         "name": "Gradle"
       },
-      {
-        "urlParam": "grammatical-framework",
-        "name": "Grammatical Framework"
-      },
-      {
-        "urlParam": "graph-modeling-language",
-        "name": "Graph Modeling Language"
-      },
+      // {
+      //   "urlParam": "grammatical-framework",
+      //   "name": "Grammatical Framework"
+      // },
+      // {
+      //   "urlParam": "graph-modeling-language",
+      //   "name": "Graph Modeling Language"
+      // },
       {
         "urlParam": "graphql",
         "name": "GraphQL"
       },
-      {
-        "urlParam": "graphviz-(dot)",
-        "name": "Graphviz (DOT)"
-      },
+      // {
+      //   "urlParam": "graphviz-(dot)",
+      //   "name": "Graphviz (DOT)"
+      // },
       {
         "urlParam": "groovy",
         "name": "Groovy"
-      },
-      {
-        "urlParam": "groovy-server-pages",
-        "name": "Groovy Server Pages"
       }
+      // {
+      //   "urlParam": "groovy-server-pages",
+      //   "name": "Groovy Server Pages"
+      // }
     ]
   },
   {
@@ -753,30 +753,30 @@ export const languages = [
         "urlParam": "html",
         "name": "HTML"
       },
-      {
-        "urlParam": "html+django",
-        "name": "HTML+Django"
-      },
-      {
-        "urlParam": "html+ecr",
-        "name": "HTML+ECR"
-      },
-      {
-        "urlParam": "html+eex",
-        "name": "HTML+EEX"
-      },
-      {
-        "urlParam": "html+erb",
-        "name": "HTML+ERB"
-      },
-      {
-        "urlParam": "html+php",
-        "name": "HTML+PHP"
-      },
-      {
-        "urlParam": "html+razor",
-        "name": "HTML+Razor"
-      },
+      // {
+      //   "urlParam": "html+django",
+      //   "name": "HTML+Django"
+      // },
+      // {
+      //   "urlParam": "html+ecr",
+      //   "name": "HTML+ECR"
+      // },
+      // {
+      //   "urlParam": "html+eex",
+      //   "name": "HTML+EEX"
+      // },
+      // {
+      //   "urlParam": "html+erb",
+      //   "name": "HTML+ERB"
+      // },
+      // {
+      //   "urlParam": "html+php",
+      //   "name": "HTML+PHP"
+      // },
+      // {
+      //   "urlParam": "html+razor",
+      //   "name": "HTML+Razor"
+      // },
       {
         "urlParam": "http",
         "name": "HTTP"
@@ -807,22 +807,22 @@ export const languages = [
         "urlParam": "idris",
         "name": "Idris"
       },
-      {
-        "urlParam": "igor-pro",
-        "name": "IGOR Pro"
-      },
-      {
-        "urlParam": "inform-7",
-        "name": "Inform 7"
-      },
+      // {
+      //   "urlParam": "igor-pro",
+      //   "name": "IGOR Pro"
+      // },
+      // {
+      //   "urlParam": "inform-7",
+      //   "name": "Inform 7"
+      // },
       {
         "urlParam": "ini",
         "name": "INI"
       },
-      {
-        "urlParam": "inno-setup",
-        "name": "Inno Setup"
-      },
+      // {
+      //   "urlParam": "inno-setup",
+      //   "name": "Inno Setup"
+      // },
       {
         "urlParam": "io",
         "name": "Io"
@@ -839,10 +839,10 @@ export const languages = [
         "urlParam": "isabelle",
         "name": "Isabelle"
       },
-      {
-        "urlParam": "isabelle-root",
-        "name": "Isabelle ROOT"
-      }
+      // {
+      //   "urlParam": "isabelle-root",
+      //   "name": "Isabelle ROOT"
+      // }
     ]
   },
   {
@@ -861,14 +861,14 @@ export const languages = [
         "urlParam": "java",
         "name": "Java"
       },
-      {
-        "urlParam": "java-properties",
-        "name": "Java Properties"
-      },
-      {
-        "urlParam": "java-server-pages",
-        "name": "Java Server Pages"
-      },
+      // {
+      //   "urlParam": "java-properties",
+      //   "name": "Java Properties"
+      // },
+      // {
+      //   "urlParam": "java-server-pages",
+      //   "name": "Java Server Pages"
+      // },
       {
         "urlParam": "javascript",
         "name": "JavaScript"
@@ -881,10 +881,10 @@ export const languages = [
         "urlParam": "jison",
         "name": "Jison"
       },
-      {
-        "urlParam": "jison-lex",
-        "name": "Jison Lex"
-      },
+      // {
+      //   "urlParam": "jison-lex",
+      //   "name": "Jison Lex"
+      // },
       {
         "urlParam": "jolie",
         "name": "Jolie"
@@ -893,10 +893,10 @@ export const languages = [
         "urlParam": "json",
         "name": "JSON"
       },
-      {
-        "urlParam": "json-with-comments",
-        "name": "JSON with Comments"
-      },
+      // {
+      //   "urlParam": "json-with-comments",
+      //   "name": "JSON with Comments"
+      // },
       {
         "urlParam": "json5",
         "name": "JSON5"
@@ -916,29 +916,29 @@ export const languages = [
       {
         "urlParam": "julia",
         "name": "Julia"
-      },
-      {
-        "urlParam": "jupyter-notebook",
-        "name": "Jupyter Notebook"
       }
+      // {
+      //   "urlParam": "jupyter-notebook",
+      //   "name": "Jupyter Notebook"
+      // }
     ]
   },
   {
     title: 'K',
     key: 'K',
     items: [
-      {
-        "urlParam": "kicad-layout",
-        "name": "KiCad Layout"
-      },
-      {
-        "urlParam": "kicad-legacy-layout",
-        "name": "KiCad Legacy Layout"
-      },
-      {
-        "urlParam": "kicad-schematic",
-        "name": "KiCad Schematic"
-      },
+      // {
+      //   "urlParam": "kicad-layout",
+      //   "name": "KiCad Layout"
+      // },
+      // {
+      //   "urlParam": "kicad-legacy-layout",
+      //   "name": "KiCad Legacy Layout"
+      // },
+      // {
+      //   "urlParam": "kicad-schematic",
+      //   "name": "KiCad Schematic"
+      // },
       {
         "urlParam": "kit",
         "name": "Kit"
@@ -993,30 +993,30 @@ export const languages = [
         "urlParam": "limbo",
         "name": "Limbo"
       },
-      {
-        "urlParam": "linker-script",
-        "name": "Linker Script"
-      },
-      {
-        "urlParam": "linux-kernel-module",
-        "name": "Linux Kernel Module"
-      },
+      // {
+      //   "urlParam": "linker-script",
+      //   "name": "Linker Script"
+      // },
+      // {
+      //   "urlParam": "linux-kernel-module",
+      //   "name": "Linux Kernel Module"
+      // },
       {
         "urlParam": "liquid",
         "name": "Liquid"
       },
-      {
-        "urlParam": "literate-agda",
-        "name": "Literate Agda"
-      },
-      {
-        "urlParam": "literate-coffeescript",
-        "name": "Literate CoffeeScript"
-      },
-      {
-        "urlParam": "literate-haskell",
-        "name": "Literate Haskell"
-      },
+      // {
+      //   "urlParam": "literate-agda",
+      //   "name": "Literate Agda"
+      // },
+      // {
+      //   "urlParam": "literate-coffeescript",
+      //   "name": "Literate CoffeeScript"
+      // },
+      // {
+      //   "urlParam": "literate-haskell",
+      //   "name": "Literate Haskell"
+      // },
       {
         "urlParam": "livescript",
         "name": "LiveScript"
@@ -1099,10 +1099,10 @@ export const languages = [
         "urlParam": "matlab",
         "name": "MATLAB"
       },
-      {
-        "urlParam": "maven-pom",
-        "name": "Maven POM"
-      },
+      // {
+      //   "urlParam": "maven-pom",
+      //   "name": "Maven POM"
+      // },
       {
         "urlParam": "max",
         "name": "Max"
@@ -1147,10 +1147,10 @@ export const languages = [
         "urlParam": "modula-3",
         "name": "Modula-3"
       },
-      {
-        "urlParam": "module-management-system",
-        "name": "Module Management System"
-      },
+      // {
+      //   "urlParam": "module-management-system",
+      //   "name": "Module Management System"
+      // },
       {
         "urlParam": "monkey",
         "name": "Monkey"
@@ -1311,22 +1311,22 @@ export const languages = [
         "urlParam": "opencl",
         "name": "OpenCL"
       },
-      {
-        "urlParam": "openedge-abl",
-        "name": "OpenEdge ABL"
-      },
-      {
-        "urlParam": "openrc-runscript",
-        "name": "OpenRC runscript"
-      },
+      // {
+      //   "urlParam": "openedge-abl",
+      //   "name": "OpenEdge ABL"
+      // },
+      // {
+      //   "urlParam": "openrc-runscript",
+      //   "name": "OpenRC runscript"
+      // },
       {
         "urlParam": "openscad",
         "name": "OpenSCAD"
       },
-      {
-        "urlParam": "opentype-feature-file",
-        "name": "OpenType Feature File"
-      },
+      // {
+      //   "urlParam": "opentype-feature-file",
+      //   "name": "OpenType Feature File"
+      // },
       {
         "urlParam": "org",
         "name": "Org"
@@ -1365,14 +1365,14 @@ export const languages = [
         "urlParam": "parrot",
         "name": "Parrot"
       },
-      {
-        "urlParam": "parrot-assembly",
-        "name": "Parrot Assembly"
-      },
-      {
-        "urlParam": "parrot-internal-representation",
-        "name": "Parrot Internal Representation"
-      },
+      // {
+      //   "urlParam": "parrot-assembly",
+      //   "name": "Parrot Assembly"
+      // },
+      // {
+      //   "urlParam": "parrot-internal-representation",
+      //   "name": "Parrot Internal Representation"
+      // },
       {
         "urlParam": "pascal",
         "name": "Pascal"
@@ -1469,18 +1469,18 @@ export const languages = [
         "urlParam": "prolog",
         "name": "Prolog"
       },
-      {
-        "urlParam": "propeller-spin",
-        "name": "Propeller Spin"
-      },
-      {
-        "urlParam": "protocol-buffer",
-        "name": "Protocol Buffer"
-      },
-      {
-        "urlParam": "public-key",
-        "name": "Public Key"
-      },
+      // {
+      //   "urlParam": "propeller-spin",
+      //   "name": "Propeller Spin"
+      // },
+      // {
+      //   "urlParam": "protocol-buffer",
+      //   "name": "Protocol Buffer"
+      // },
+      // {
+      //   "urlParam": "public-key",
+      //   "name": "Public Key"
+      // },
       {
         "urlParam": "pug",
         "name": "Pug"
@@ -1489,10 +1489,10 @@ export const languages = [
         "urlParam": "puppet",
         "name": "Puppet"
       },
-      {
-        "urlParam": "pure-data",
-        "name": "Pure Data"
-      },
+      // {
+      //   "urlParam": "pure-data",
+      //   "name": "Pure Data"
+      // },
       {
         "urlParam": "purebasic",
         "name": "PureBasic"
@@ -1505,14 +1505,14 @@ export const languages = [
         "urlParam": "python",
         "name": "Python"
       },
-      {
-        "urlParam": "python-console",
-        "name": "Python console"
-      },
-      {
-        "urlParam": "python-traceback",
-        "name": "Python traceback"
-      }
+      // {
+      //   "urlParam": "python-console",
+      //   "name": "Python console"
+      // },
+      // {
+      //   "urlParam": "python-traceback",
+      //   "name": "Python traceback"
+      // }
     ]
   },
   {
@@ -1589,14 +1589,14 @@ export const languages = [
         "urlParam": "redcode",
         "name": "Redcode"
       },
-      {
-        "urlParam": "regular-expression",
-        "name": "Regular Expression"
-      },
-      {
-        "urlParam": "ren'py",
-        "name": "Ren'Py"
-      },
+      // {
+      //   "urlParam": "regular-expression",
+      //   "name": "Regular Expression"
+      // },
+      // {
+      //   "urlParam": "ren'py",
+      //   "name": "Ren'Py"
+      // },
       {
         "urlParam": "renderscript",
         "name": "RenderScript"
@@ -1759,10 +1759,10 @@ export const languages = [
         "urlParam": "sparql",
         "name": "SPARQL"
       },
-      {
-        "urlParam": "spline-font-database",
-        "name": "Spline Font Database"
-      },
+      // {
+      //   "urlParam": "spline-font-database",
+      //   "name": "Spline Font Database"
+      // },
       {
         "urlParam": "sqf",
         "name": "SQF"
@@ -1779,18 +1779,18 @@ export const languages = [
         "urlParam": "squirrel",
         "name": "Squirrel"
       },
-      {
-        "urlParam": "srecode-template",
-        "name": "SRecode Template"
-      },
+      // {
+      //   "urlParam": "srecode-template",
+      //   "name": "SRecode Template"
+      // },
       {
         "urlParam": "stan",
         "name": "Stan"
       },
-      {
-        "urlParam": "standard-ml",
-        "name": "Standard ML"
-      },
+      // {
+      //   "urlParam": "standard-ml",
+      //   "name": "Standard ML"
+      // },
       {
         "urlParam": "stata",
         "name": "Stata"
@@ -1803,10 +1803,10 @@ export const languages = [
         "urlParam": "stylus",
         "name": "Stylus"
       },
-      {
-        "urlParam": "subrip-text",
-        "name": "SubRip Text"
-      },
+      // {
+      //   "urlParam": "subrip-text",
+      //   "name": "SubRip Text"
+      // },
       {
         "urlParam": "sugarss",
         "name": "SugarSS"
@@ -1865,10 +1865,10 @@ export const languages = [
         "urlParam": "thrift",
         "name": "Thrift"
       },
-      {
-        "urlParam": "ti-program",
-        "name": "TI Program"
-      },
+      // {
+      //   "urlParam": "ti-program",
+      //   "name": "TI Program"
+      // },
       {
         "urlParam": "tla",
         "name": "TLA"
@@ -1893,10 +1893,10 @@ export const languages = [
         "urlParam": "txl",
         "name": "TXL"
       },
-      {
-        "urlParam": "type-language",
-        "name": "Type Language"
-      },
+      // {
+      //   "urlParam": "type-language",
+      //   "name": "Type Language"
+      // },
       {
         "urlParam": "typescript",
         "name": "TypeScript"
@@ -1907,18 +1907,18 @@ export const languages = [
     title: 'U',
     key: 'U',
     items: [
-      {
-        "urlParam": "unified-parallel-c",
-        "name": "Unified Parallel C"
-      },
-      {
-        "urlParam": "unity3d-asset",
-        "name": "Unity3D Asset"
-      },
-      {
-        "urlParam": "unix-assembly",
-        "name": "Unix Assembly"
-      },
+      // {
+      //   "urlParam": "unified-parallel-c",
+      //   "name": "Unified Parallel C"
+      // },
+      // {
+      //   "urlParam": "unity3d-asset",
+      //   "name": "Unity3D Asset"
+      // },
+      // {
+      //   "urlParam": "unix-assembly",
+      //   "name": "Unix Assembly"
+      // },
       {
         "urlParam": "uno",
         "name": "Uno"
@@ -1953,10 +1953,10 @@ export const languages = [
         "urlParam": "vhdl",
         "name": "VHDL"
       },
-      {
-        "urlParam": "vim-script",
-        "name": "Vim script"
-      },
+      // {
+      //   "urlParam": "vim-script",
+      //   "name": "Vim script"
+      // },
       {
         "urlParam": "visual-basic",
         "name": "Visual Basic"
@@ -1975,22 +1975,22 @@ export const languages = [
     title: 'W',
     key: 'W',
     items: [
-      {
-        "urlParam": "wavefront-material",
-        "name": "Wavefront Material"
-      },
-      {
-        "urlParam": "wavefront-object",
-        "name": "Wavefront Object"
-      },
+      // {
+      //   "urlParam": "wavefront-material",
+      //   "name": "Wavefront Material"
+      // },
+      // {
+      //   "urlParam": "wavefront-object",
+      //   "name": "Wavefront Object"
+      // },
       {
         "urlParam": "wdl",
         "name": "wdl"
       },
-      {
-        "urlParam": "web-ontology-language",
-        "name": "Web Ontology Language"
-      },
+      // {
+      //   "urlParam": "web-ontology-language",
+      //   "name": "Web Ontology Language"
+      // },
       {
         "urlParam": "webassembly",
         "name": "WebAssembly"
@@ -1999,36 +1999,36 @@ export const languages = [
         "urlParam": "webidl",
         "name": "WebIDL"
       },
-      {
-        "urlParam": "windows-registry-entries",
-        "name": "Windows Registry Entries"
-      },
+      // {
+      //   "urlParam": "windows-registry-entries",
+      //   "name": "Windows Registry Entries"
+      // },
       {
         "urlParam": "wisp",
         "name": "wisp"
-      },
-      {
-        "urlParam": "world-of-warcraft-addon-data",
-        "name": "World of Warcraft Addon Data"
       }
+      // {
+      //   "urlParam": "world-of-warcraft-addon-data",
+      //   "name": "World of Warcraft Addon Data"
+      // }
     ]
   },
   {
     title: 'X',
     key: 'X',
     items: [
-      {
-        "urlParam": "x-bitmap",
-        "name": "X BitMap"
-      },
-      {
-        "urlParam": "x-font-directory-index",
-        "name": "X Font Directory Index"
-      },
-      {
-        "urlParam": "x-pixmap",
-        "name": "X PixMap"
-      },
+      // {
+      //   "urlParam": "x-bitmap",
+      //   "name": "X BitMap"
+      // },
+      // {
+      //   "urlParam": "x-font-directory-index",
+      //   "name": "X Font Directory Index"
+      // },
+      // {
+      //   "urlParam": "x-pixmap",
+      //   "name": "X PixMap"
+      // },
       {
         "urlParam": "x10",
         "name": "X10"

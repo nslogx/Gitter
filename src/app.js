@@ -1,6 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
+import { set as setGlobalData } from './utils/global_data'
 
 import Index from './pages/index'
 
@@ -22,7 +23,7 @@ class App extends Component {
   config = {
     pages: [
       'pages/index/index',
-      'pages/index/configLanguages',
+      'pages/index/favoriteLanguages',
       'pages/account/index',
       'pages/activity/index',
       'pages/search/index',
@@ -77,7 +78,7 @@ class App extends Component {
       env: 'gitter-33fa2c',
       traceUser: true
     })
-    this.loadConfig()
+    this.loadOpenId()
   }
 
   componentDidShow () {}
@@ -88,15 +89,16 @@ class App extends Component {
 
   componentDidCatchError () {}
 
-  loadConfig() {
-    const db = wx.cloud.database()
-    db.collection('config').get().then(res => {
-      const config = res.data[0]
-      if (config) {
-        Taro.setStorageSync('config', config)
-      } else {
-        Taro.setStorageSync('config', null)
-      }
+  loadOpenId() {
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'openid',
+    }).then(res => {
+      console.log('res', res)
+      setGlobalData('openid', res.result.openid || '')
+      Taro.setStorageSync('openid', res.result.openid || '')
+    }).catch(err => {
+      console.log('openid err', err)
     })
   }
 

@@ -3,10 +3,6 @@
   flex-direction: column;
 }
 
-.bottom {
-  height: 20px;
-}
-
 .filter {
   display: flex;
   align-items: center;
@@ -18,25 +14,34 @@
   transform: translate(-50%, -50%);
   z-index: 888;
   background: #2d8cf0;
-  height: 60px;
-  border-radius: 30px;
+  height: 70px;
+  border-radius: 35px;
   opacity: 0.95;
-  color: #fff;
-  font-size: 32px;
   padding: 0 30px;
+  color: white;
 }
 
 .category {
+  color: white;
+  font-size: 33px;
   margin-right: 5px;
 }
 
 .language {
+  color: white;
+  font-size: 33px;
   margin-left: 5px;
 }
 
-.fixed {
+.segment-fixed {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100000;
+}
+
+.segment-placeholder {
+  height: 80px;
+  background-color: white;
 }

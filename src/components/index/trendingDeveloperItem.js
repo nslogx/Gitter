@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types';
-import { View, Text } from '@tarojs/components'
+import { View, Navigator } from '@tarojs/components'
 import { AtIcon, AtAvatar } from 'taro-ui'
 
 
@@ -15,6 +15,17 @@ export default class TrendingDeveloperItem extends Component {
     item: null,
   }
 
+  onClickRepo(e) {
+    e.stopPropagation()
+    const { item } = this.props
+    console.log('item',item)
+    let api = 'https://api.github.com/repos/' + item.username + '/' + item.repo.name
+    let url = '/pages/repo/repo?url=' + decodeURI(api)
+    Taro.navigateTo({
+      url: url
+    })
+  }
+
   render() {
     const { item } = this.props
     if (!item) return <View />
@@ -25,7 +36,7 @@ export default class TrendingDeveloperItem extends Component {
           <View className='user_name'>{item.username}</View>
           <View className='repo'>
             <AtIcon prefixClass='ion' value='md-bookmarks' size='18' color='#333' />
-            <View className='repo_title'>{item.repo.name}</View>
+            <View className='repo_title' onClick={this.onClickRepo.bind(this)} hoverStopPropagation>{item.repo.name}</View>
           </View>
           <View className='repo_desc'>{item.repo.description}</View>
         </View>

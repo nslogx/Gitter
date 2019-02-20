@@ -30,7 +30,7 @@ export default class Segment extends Component {
 
   onActionConfig () {
     Taro.navigateTo({
-      url: '/pages/index/configLanguages'
+      url: '/pages/index/favoriteLanguages'
     })
   }
 

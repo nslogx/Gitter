@@ -2,9 +2,12 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text, Swiper, SwiperItem, ScrollView } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { languages } from '../../utils/language'
+import { get as getGlobalData, set as setGlobalData  } from '../../utils/global_data'
+import { AtNoticebar } from 'taro-ui'
 
 import ItemList from '../../components/index/itemList'
 import Segment from '../../components/index/segment'
+import Empty from '../../components/index/empty'
 
 import './index.less'
 
@@ -12,7 +15,7 @@ class Index extends Component {
 
   config = {
     navigationBarTitleText: 'Trending',
-    enablePullDownRefresh: false
+    enablePullDownRefresh: true
   }
 
   constructor (props) {
@@ -30,6 +33,8 @@ class Index extends Component {
       },
       animation: null,
       isHidden: false,
+      fixed: false,
+      notice: null,
       repos: [],
       developers: [],
       range: [
@@ -50,7 +55,9 @@ class Index extends Component {
 
   componentDidMount() {
     Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    this.loadLanguages()
     this.loadItemList()
+    this.loadNotice()
 
     let that = this
     Taro.getSystemInfo({
@@ -64,12 +71,29 @@ class Index extends Component {
 
   componentWillUnmount () { }
 
-  componentDidShow () { }
+  componentDidShow () {
+    this.updateLanguages()
+  }
 
   componentDidHide () { }
 
   onPullDownRefresh() {
     this.loadItemList()
+  }
+
+  onPageScroll(obj) {
+    const { fixed } = this.state
+    if (obj.scrollTop > 0) {
+      if (!fixed) {
+        this.setState({
+          fixed: true
+        })
+      }
+    } else {
+      this.setState({
+        fixed: false
+      })
+    }
   }
 
   onScroll(e) {
@@ -165,6 +189,84 @@ class Index extends Component {
     })
   }
 
+  loadLanguages() {
+    let that = this
+    const db = wx.cloud.database()
+    let openid = getGlobalData('openid')
+    if (!openid) {
+      openid = Taro.getStorageSync('openid')
+    }
+    db.collection('languages')
+      .where({
+        _openid: openid, // 当前用户 openid
+      })
+      .get()
+      .then(res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          setGlobalData('favoriteLanguages', res.data[0].languages)
+          that.updateLanguages()
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  loadNotice() {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('notices')
+      .get()
+      .then(res => {
+        console.log('notices', res)
+        if (res.data.length > 0) {
+          that.setState({
+            notice: res.data[0]
+          })
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  updateLanguages() {
+    let favoriteLanguages = getGlobalData('favoriteLanguages')
+    if (favoriteLanguages && favoriteLanguages.length > 0) {
+      let language = favoriteLanguages[0]
+      if (language.name !== 'All') {
+        favoriteLanguages.unshift({
+          "urlParam": "",
+          "name": "All"
+        })
+      }
+      this.setState({
+        range: [
+          [{'name': 'Today',
+            'value': 'daily'},
+            {'name': 'Week',
+              'value': 'weekly'},
+            {'name': 'Month',
+              'value': 'monthly'}],
+          favoriteLanguages
+        ]
+      })
+    } else {
+      this.setState({
+        range: [
+          [{'name': 'Today',
+            'value': 'daily'},
+            {'name': 'Week',
+              'value': 'weekly'},
+            {'name': 'Month',
+              'value': 'monthly'}],
+          languages
+        ]
+      })
+    }
+  }
+
   onTabChange(index) {
     this.setState({
       current: index
@@ -192,30 +294,34 @@ class Index extends Component {
     } else if (categoryValue === 'monthly') {
       categoryType = 2
     }
-    const { developers, repos, current, windowHeight } = this.state
+    const { developers, repos, current, notice, fixed } = this.state
     return (
-      <View className='content' id='list'>
-        <Segment current={current}
-                 onTabChange={this.onTabChange}
-                 onRefresh={this.onRefresh} />
-        <Swiper indicatorDots={false}
-                current={current}
-                style='height: {{windowHeight}}px'
-                onChange={this.onSwiperChange}
-        >
-          <SwiperItem>
-            <ScrollView scrollY style='height: {{windowHeight}}px' onScroll={this.onScroll}>
-              <ItemList itemList={repos} type={0} categoryType={categoryType} />
-              <View className='bottom' />
-            </ScrollView>
-          </SwiperItem>
-          <SwiperItem>
-            <ScrollView scrollY style='height: {{windowHeight}}px' onScroll={this.onScroll}>
-              <ItemList itemList={developers} type={1} categoryType={categoryType} />
-              <View className='bottom' />
-            </ScrollView>
-          </SwiperItem>
-        </Swiper>
+      <View className='content'>
+        <View className={fixed ? 'segment-fixed' : ''}>
+          <Segment current={current}
+                   onTabChange={this.onTabChange}
+                   onRefresh={this.onRefresh}
+          />
+        </View>
+        {
+          fixed &&
+          <View className='segment-placeholder' />
+        }
+
+        {
+          notice.status &&
+          <AtNoticebar icon='volume-plus' close>
+            {notice.content}
+          </AtNoticebar>
+        }
+        {
+          current === 0 &&
+          (repos.length > 0 ? <ItemList itemList={repos} type={0} categoryType={categoryType} /> : <Empty />)
+        }
+        {
+          current === 1 &&
+          (developers.length > 0 ? <ItemList itemList={developers} type={1} categoryType={categoryType} /> : <Empty />)
+        }
         {
           this.state.range[1].length > 0 &&
           <View>
