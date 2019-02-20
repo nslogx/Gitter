@@ -24,7 +24,7 @@ class Index extends Component {
     super(props)
     this.state = {
       isLogin: false,
-      hasStar: false
+      hasStar: true
     }
   }
 
@@ -142,6 +142,7 @@ class Index extends Component {
           title: 'Thank you!',
           icon: 'success'
         })
+        this.getUserInfo()
       }
     })
   }
@@ -182,6 +183,16 @@ class Index extends Component {
                   </View>
                 </View>
               </View>
+              {
+                !hasStar && (
+                  <View className='list_view'>
+                    <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STAR)}>
+                      <View className='list_title'>Star Gitter ❤</View>
+                      <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+                    </View>
+                  </View>
+                )
+              }
               <View className='list_view'>
                 <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STARRED_REPOS)}>
                   <View className='list_title'>Starred Repos</View>
@@ -211,14 +222,6 @@ class Index extends Component {
                 </View>
               </View>
               <View className='list_view'>
-                {
-                  !hasStar && (
-                    <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.STAR)}>
-                      <View className='list_title'>Star Gitter ❤</View>
-                      <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
-                    </View>
-                  )
-                }
                 <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ABOUT)}>
                   <View className='list_title'>About</View>
                   <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
@@ -230,7 +233,7 @@ class Index extends Component {
             <View className='content'>
               <Image mode='aspectFit'
                      className='logo'
-                     src={require('../../assets/images/logo.png')} />
+                     src={require('../../assets/images/octocat.png')} />
               <View className='login_button'
                     onClick={this.login.bind(this)}>
                 Login

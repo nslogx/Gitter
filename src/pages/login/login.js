@@ -131,7 +131,7 @@ class Login extends Component {
         <View className='logo_bg'>
           <Image mode='aspectFit'
                  className='logo'
-                 src={require('../../assets/images/logo.png')}/>
+                 src={require('../../assets/images/octocat.png')}/>
         </View>
         <View className='login_content'>
           <View className='switch_view'>
