@@ -45,7 +45,7 @@ cd Gitter
 
 - [x] 完善Markdown解析
 - [x] 完善Trending列表筛选功能
-- [ ] 完善Search相关功能
+- [x] 完善Search相关功能
 - [ ] 完善Issue相关功能
 - [ ] ...
 
