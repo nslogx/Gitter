@@ -27,6 +27,7 @@ class App extends Component {
       'pages/account/index',
       'pages/activity/index',
       'pages/search/index',
+      'pages/search/searchResult',
       'pages/account/follow',
       'pages/account/about',
       'pages/account/developerInfo',

@@ -1,6 +1,21 @@
 .content {
   display: flex;
   flex-direction: column;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.search-segment-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000000;
+}
+
+.search-segment-placeholder {
+  height: 80px;
+  background-color: white;
 }
 
 .filter {
@@ -22,27 +37,9 @@
   font-size: 33px;
 }
 
-.category {
+.filter-title {
   color: white;
   font-size: 33px;
-  margin-right: 5px;
+  margin: 0 10px;
 }
 
-.language {
-  color: white;
-  font-size: 33px;
-  margin-left: 5px;
-}
-
-.segment-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100000;
-}
-
-.segment-placeholder {
-  height: 80px;
-  background-color: white;
-}

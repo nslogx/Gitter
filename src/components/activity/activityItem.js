@@ -33,7 +33,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>starred</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -56,7 +56,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{'created a ' + item.payload.ref_type}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -79,7 +79,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>forked</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.payload.forkee.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.payload.forkee.url)} >
               <Text className='username'>
                 {item.payload.forkee.full_name}
               </Text>
@@ -87,7 +87,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>from</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -110,7 +110,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{item.payload.action + ' a issue in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -133,7 +133,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{item.payload.action + ' a issue comment in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -179,7 +179,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>pushed commits in</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -202,7 +202,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{item.payload.action + ' a PullRequest in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -225,7 +225,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{item.payload.action + ' a pullRequest comment in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -248,7 +248,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>creates a commit comment in </Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -271,7 +271,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{'deleted a ' + item.payload.ref_type + ' in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -294,7 +294,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>{item.payload.action + ' a member in'}</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>
@@ -317,7 +317,7 @@ export default class ActivityItem extends Component {
             <Navigator url='' hoverClass='none' >
               <Text className='text'>make</Text>
             </Navigator>
-            <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repo.url)} >
+            <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repo.url)} >
               <Text className='username'>
                 {item.repo.name}
               </Text>

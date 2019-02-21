@@ -273,11 +273,6 @@ class Index extends Component {
     })
   }
 
-  onRefresh() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    this.loadItemList()
-  }
-
   onShareAppMessage(obj) {
     return {
       title: 'Github 今日热榜，随时随地发现您喜欢的开源项目',
@@ -300,14 +295,12 @@ class Index extends Component {
         <View className={fixed ? 'segment-fixed' : ''}>
           <Segment current={current}
                    onTabChange={this.onTabChange}
-                   onRefresh={this.onRefresh}
           />
         </View>
         {
           fixed &&
           <View className='segment-placeholder' />
         }
-
         {
           notice.status &&
           <AtNoticebar icon='volume-plus' close>

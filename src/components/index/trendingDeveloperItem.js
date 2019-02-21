@@ -20,7 +20,7 @@ export default class TrendingDeveloperItem extends Component {
     const { item } = this.props
     console.log('item',item)
     let api = 'https://api.github.com/repos/' + item.username + '/' + item.repo.name
-    let url = '/pages/repo/repo?url=' + decodeURI(api)
+    let url = '/pages/repo/repo?url=' + encodeURI(api)
     Taro.navigateTo({
       url: url
     })

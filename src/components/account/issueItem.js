@@ -47,7 +47,7 @@ export default class IssueItem extends Component {
           {
             item.repository &&
             <View>
-              <Navigator url={'/pages/repo/repo?url=' + decodeURI(item.repository.url)}>
+              <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repository.url)}>
                 <Text className='issue_repo'>{item.repository.full_name}</Text>
               </Navigator>
             </View>

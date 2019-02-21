@@ -4,3 +4,29 @@
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+.search-bar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+}
+
+.search-history-bg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  width: 100%;
+}
+
+.search-history {
+  width: 100%;
+}
+
+.clear {
+  margin-top: 50px;
+  color: #2d8cf0;
+  font-size: 32px;
+}

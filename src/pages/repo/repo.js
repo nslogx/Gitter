@@ -44,7 +44,7 @@ class Repo extends Component {
   componentWillMount() {
     let params = this.$router.params
     this.setState({
-      url: encodeURI(params.url),
+      url: decodeURI(params.url),
       isShare: params.share
     })
   }
@@ -78,7 +78,7 @@ class Repo extends Component {
   onShareAppMessage(obj) {
     const { repo } = this.state
     const { url } = this.state
-    let path = '/pages/repo/repo?url=' + decodeURI(url) + '&share=true'
+    let path = '/pages/repo/repo?url=' + encodeURI(url) + '&share=true'
     return {
       title: repo.name + ' -- ' +repo.description || 'no description',
       path: path
@@ -264,7 +264,7 @@ class Repo extends Component {
             repo.fork &&
             <View className='fork'>
               <AtIcon prefixClass='ion' value='ios-git-network' size='15' color='#fff' />
-              <Navigator url={'/pages/repo/repo?url=' + decodeURI(repo.parent.url)}>
+              <Navigator url={'/pages/repo/repo?url=' + encodeURI(repo.parent.url)}>
                 <Text className='fork_title'>
                   {repo.parent.full_name}
                 </Text>

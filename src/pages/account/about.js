@@ -64,7 +64,7 @@ class About extends Component {
   render () {
     const { loadAd } = this.state
     let api = 'https://api.github.com/repos/huangjianke/Gitter'
-    let url = '/pages/repo/repo?url=' + decodeURI(api)
+    let url = '/pages/repo/repo?url=' + encodeURI(api)
     return (
       <View className='content'>
         <Image mode='aspectFit'
