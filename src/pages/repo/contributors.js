@@ -9,7 +9,6 @@ import LoadMore from '../../components/common/loadMore'
 import api from '../../service/api'
 
 import './contentList.less'
-import ActivityItem from "../activity";
 
 class Contributors extends Component {
 
@@ -110,7 +109,7 @@ class Contributors extends Component {
   }
 
   render () {
-    const { dataList } = this.state
+    const { dataList, refresh_status } = this.state
     return (
       <View className='content'>
         {
