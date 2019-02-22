@@ -12,13 +12,15 @@ export default class Segment extends Component {
   static propTypes = {
     current: PropTypes.number,
     onTabChange: PropTypes.func,
-    showAction: PropTypes.bool
+    showAction: PropTypes.bool,
+    tabList: PropTypes.array
   }
 
   static defaultProps = {
     current: 0,
     onTabChange: () => {},
-    showAction: true
+    showAction: true,
+    tabList: []
   }
 
   componentWillMount() {
@@ -37,7 +39,7 @@ export default class Segment extends Component {
   }
 
   render() {
-    const { current, onTabChange, showAction } = this.props
+    const { current, onTabChange, showAction, tabList } = this.props
     return (
       <View className='content'>
         {
@@ -45,7 +47,7 @@ export default class Segment extends Component {
             <AtIcon value='filter' size='22' color='#333' />
           </View> : <View className='action-view' />
         }
-        <Tab tabList={['REPO', 'USER']} current={current} onTabClick={onTabChange.bind(this)} />
+        <Tab tabList={tabList} current={current} onTabClick={onTabChange.bind(this)} />
         {
           showAction ? <View className='action-view' onClick={this.onActionSearch.bind(this)}>
             <AtIcon value='search' size='22' color='#333' />

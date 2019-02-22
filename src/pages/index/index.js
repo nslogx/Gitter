@@ -293,7 +293,8 @@ class Index extends Component {
     return (
       <View className='content'>
         <View className={fixed ? 'segment-fixed' : ''}>
-          <Segment current={current}
+          <Segment tabList={['REPO', 'USER']}
+                   current={current}
                    onTabChange={this.onTabChange}
           />
         </View>

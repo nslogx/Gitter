@@ -273,7 +273,8 @@ class SearchResult extends Component {
     return (
       <View className='content'>
         <View className={fixed ? 'search-segment-fixed' : ''}>
-          <Segment current={current}
+          <Segment tabList={['REPO', 'USER']}
+                   current={current}
                    showAction={false}
                    onTabChange={this.onTabChange}
           />
