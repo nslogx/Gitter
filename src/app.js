@@ -95,9 +95,11 @@ class App extends Component {
       // 要调用的云函数名称
       name: 'openid',
     }).then(res => {
-      console.log('res', res)
-      setGlobalData('openid', res.result.openid || '')
-      Taro.setStorageSync('openid', res.result.openid || '')
+      const openid = res.result.openid
+      setGlobalData('openid', openid || null)
+      if (openid) {
+        Taro.setStorageSync('openid', openid)
+      }
     }).catch(err => {
       console.log('openid err', err)
     })
