@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 
 import RepoItem from '../../components/account/repoItem'
+import Empty from '../../components/index/empty'
 import LoadMore from '../../components/common/loadMore'
 import { REFRESH_STATUS } from '../../constants/status'
 
@@ -122,7 +123,7 @@ class RepoList extends Component {
     })
     return (
       <View className='content'>
-        {repoList}
+        {repos.length > 0 ? repoList : <Empty />}
         <LoadMore status={refresh_status} />
       </View>
     )
