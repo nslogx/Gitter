@@ -1,8 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtTabs, AtTabsPane, AtIcon } from 'taro-ui'
-import IssueList from '../../components/account/issueList'
+import { AtIcon } from 'taro-ui'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
+
+import IssueList from '../../components/account/issueList'
+import Segment from '../../components/index/segment'
+import Empty from '../../components/index/empty'
+
 import api from '../../service/api'
 
 import './issues.less'
@@ -24,7 +28,8 @@ class Issues extends Component {
       isRefresh: false,
       page: 1,
       isUser: false,
-      repo: null
+      repo: null,
+      fixed: false
     }
   }
 
@@ -51,6 +56,21 @@ class Issues extends Component {
   componentDidShow () { }
 
   componentDidHide () { }
+
+  onPageScroll(obj) {
+    const { fixed } = this.state
+    if (obj.scrollTop > 0) {
+      if (!fixed) {
+        this.setState({
+          fixed: true
+        })
+      }
+    } else {
+      this.setState({
+        fixed: false
+      })
+    }
+  }
 
   onPullDownRefresh() {
     let that = this
@@ -140,26 +160,29 @@ class Issues extends Component {
     })
   }
 
+  onTabChange(index) {
+    this.setState({
+      current: index
+    })
+  }
+
   render () {
-    const { openList, closedList, isUser } = this.state
+    const { openList, closedList, isUser, fixed, current } = this.state
+    const count = current === 0 ? openList.length : closedList.length
     return (
       <View className='content'>
-        <AtTabs
-          swipeable={false}
-          animated={true}
-          current={this.state.current}
-          tabList={[
-            { title: 'open' },
-            { title: 'closed' }
-          ]}
-          onClick={this.handleClick.bind(this)} >
-          <AtTabsPane current={this.state.current} index={0}>
-            <IssueList itemList={openList} />
-          </AtTabsPane>
-          <AtTabsPane current={this.state.current} index={1}>
-            <IssueList itemList={closedList} />
-          </AtTabsPane>
-        </AtTabs>
+        <View className={fixed ? 'segment-fixed' : ''}>
+          <Segment tabList={['OPEN', 'CLOSED']}
+                   current={current}
+                   showAction={false}
+                   onTabChange={this.onTabChange}
+          />
+        </View>
+        {
+          fixed &&
+          <View className='segment-placeholder' />
+        }
+        {count === 0 ? <Empty /> : <IssueList itemList={current === 0 ? openList : closedList} />}
         {
           isUser &&
           <View className='add_issue' onClick={this.addIssue.bind(this)}>
