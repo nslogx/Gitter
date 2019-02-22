@@ -2,6 +2,9 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import FollowItem from '../../components/account/followItem'
+import { REFRESH_STATUS } from '../../constants/status'
+import Empty from '../../components/index/empty'
+import LoadMore from '../../components/common/loadMore'
 
 import './follow.less'
 import api from "../../service/api";
@@ -17,7 +20,8 @@ class Follow extends Component {
     this.state = {
       url: '',
       page: 1,
-      dataList: []
+      dataList: [],
+      refresh_status: REFRESH_STATUS.NORMAL
     }
   }
 
@@ -83,19 +87,27 @@ class Follow extends Component {
   }
 
   onReachBottom() {
-    let that = this
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    const { page } = this.state
-    this.setState({
-      page: page + 1
-    }, ()=>{
-      that.getDataist()
-    })
+    const { page, refresh_status } = this.state
+    if (refresh_status !== REFRESH_STATUS.NO_MORE_DATA) {
+      let that = this
+      this.setState({
+        page: page + 1
+      }, ()=>{
+        that.getDataist()
+      })
+    }
   }
 
   getDataist() {
     let that = this
     const { url, page, dataList } = this.state
+
+    if (page !== 1) {
+      that.setState({
+        refresh_status: REFRESH_STATUS.REFRESHING
+      })
+    }
+
     let params = {
       page: page,
       per_page: GLOBAL_CONFIG.PER_PAGE
@@ -110,13 +122,17 @@ class Follow extends Component {
           dataList: dataList.concat(res.data)
         })
       }
+      let status = res.data.length < GLOBAL_CONFIG.PER_PAGE ? REFRESH_STATUS.NO_MORE_DATA : REFRESH_STATUS.NORMAL
+      that.setState({
+        refresh_status: status
+      })
       Taro.stopPullDownRefresh()
       Taro.hideLoading()
     })
   }
 
   render () {
-    const { dataList } = this.state
+    const { dataList, refresh_status } = this.state
     const itemList = dataList.map((item, index) => {
       return (
         <View onClick={this.handleClickedItem.bind(this, item)} key={index}>
@@ -126,7 +142,8 @@ class Follow extends Component {
     })
     return (
       <View className='content'>
-        {itemList}
+        {dataList.length > 0 ? itemList : <Empty />}
+        <LoadMore status={refresh_status} />
       </View>
     )
   }
