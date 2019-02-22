@@ -2,8 +2,12 @@ import Taro, { Component } from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { hasLogin } from '../../utils/common'
-import { HTTP_STATUS } from '../../constants/status'
+import { HTTP_STATUS, REFRESH_STATUS } from '../../constants/status'
+
 import ActivityItem from '../../components/activity/activityItem'
+import Empty from '../../components/index/empty'
+import LoadMore from '../../components/common/loadMore'
+
 import api from '../../service/api'
 
 import './index.less'
@@ -19,7 +23,8 @@ class Index extends Component {
     super(props)
     this.state = {
       list: [],
-      page: 1
+      page: 1,
+      refresh_status: REFRESH_STATUS.NORMAL
     }
   }
 
@@ -75,14 +80,15 @@ class Index extends Component {
   }
 
   onReachBottom() {
-    let that = this
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    const { page } = this.state
-    this.setState({
-      page: page + 1
-    }, ()=>{
-      that.getActivityList()
-    })
+    const { page, refresh_status } = this.state
+    if (refresh_status !== REFRESH_STATUS.NO_MORE_DATA) {
+      let that = this
+      this.setState({
+        page: page + 1
+      }, ()=>{
+        that.getActivityList()
+      })
+    }
   }
 
   getActivityList() {
@@ -93,6 +99,13 @@ class Index extends Component {
       let userInfo =  Taro.getStorageSync('userInfo')
       url = '/users/' + userInfo.login + '/received_events'
     }
+
+    if (page !== 1) {
+      that.setState({
+        refresh_status: REFRESH_STATUS.REFRESHING
+      })
+    }
+
     let params = {
       per_page: GLOBAL_CONFIG.PER_PAGE,
       page: page
@@ -108,10 +121,17 @@ class Index extends Component {
             list: list.concat(res.data)
           })
         }
+        let status = res.data.length < GLOBAL_CONFIG.PER_PAGE ? REFRESH_STATUS.NO_MORE_DATA : REFRESH_STATUS.NORMAL
+        that.setState({
+          refresh_status: status
+        })
       } else {
         Taro.showToast({
           title: res.data.message,
           icon: 'none'
+        })
+        that.setState({
+          refresh_status: REFRESH_STATUS.NORMAL
         })
       }
     Taro.stopPullDownRefresh()
@@ -120,18 +140,21 @@ class Index extends Component {
   }
 
   render () {
-    const { list } = this.state
+    const { list, refresh_status } = this.state
     return (
       <View className='content'>
         {
-          list.map((item, index)=>{
-            return (
-              <View key={index} className='list_view'>
-                <ActivityItem item={item} />
-              </View>
-            )
-          })
+          list.length > 0 ? (
+            list.map((item, index)=>{
+              return (
+                <View key={index} className='list_view'>
+                  <ActivityItem item={item} />
+                </View>
+              )
+            })
+          ) : <Empty />
         }
+        <LoadMore status={refresh_status} />
       </View>
     )
   }
