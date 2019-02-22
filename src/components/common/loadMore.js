@@ -21,7 +21,7 @@ export default class LoadMore extends Component {
     let view = null
     switch (status) {
       case REFRESH_STATUS.NORMAL: {
-        view = <View />
+        view = <View className='normal' />
       }
         break
       case REFRESH_STATUS.REFRESHING: {
