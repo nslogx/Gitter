@@ -1,11 +1,13 @@
 import Taro, {Component} from '@tarojs/taro'
 import {Text, View} from '@tarojs/components'
 import {GLOBAL_CONFIG} from '../../constants/globalConfig'
+import { REFRESH_STATUS } from '../../constants/status'
 
 import RepoItem from '../../components/account/repoItem'
 import FollowItem from '../../components/account/followItem'
 import Segment from '../../components/index/segment'
 import Empty from '../../components/index/empty'
+import LoadMore from '../../components/common/loadMore'
 
 import './searchResult.less'
 import api from "../../service/api";
@@ -29,7 +31,9 @@ class SearchResult extends Component {
       repo_sort: 'Best Match',
       user_sort: 'Best Match',
       repo_sort_value: '',
-      user_sort_value: ''
+      user_sort_value: '',
+      repo_status: REFRESH_STATUS.NORMAL,
+      user_status: REFRESH_STATUS.NORMAL
     }
   }
 
@@ -74,7 +78,7 @@ class SearchResult extends Component {
 
   refresh() {
     let that = this
-    const {current} = this.state
+    const { current } = this.state
     if (current === 0) {
       this.setState({
         repo_page: 1
@@ -92,20 +96,23 @@ class SearchResult extends Component {
 
   onReachBottom() {
     let that = this
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    const {repo_page, user_page, current} = this.state
+    const { repo_page, user_page, current, repo_status, user_status } = this.state
     if (current === 0) {
-      this.setState({
-        repo_page: repo_page + 1
-      }, () => {
-        that.searchRepo()
-      })
+      if (repo_status !== REFRESH_STATUS.NO_MORE_DATA) {
+        this.setState({
+          repo_page: repo_page + 1
+        }, () => {
+          that.searchRepo()
+        })
+      }
     } else {
-      this.setState({
-        user_page: user_page + 1
-      }, () => {
-        that.searchUsers()
-      })
+      if (user_status !== REFRESH_STATUS.NO_MORE_DATA) {
+        this.setState({
+          user_page: user_page + 1
+        }, () => {
+          that.searchUsers()
+        })
+      }
     }
   }
 
@@ -113,6 +120,11 @@ class SearchResult extends Component {
     let that = this
     let url = '/search/repositories'
     const {repo_page, repos, value, repo_sort_value} = this.state
+    if (repo_page !== 1) {
+      that.setState({
+        repo_status: REFRESH_STATUS.REFRESHING
+      })
+    }
     let params = {
       page: repo_page,
       per_page: GLOBAL_CONFIG.PER_PAGE,
@@ -129,6 +141,10 @@ class SearchResult extends Component {
           repos: repos.concat(res.data.items)
         })
       }
+      let status = res.data.length < GLOBAL_CONFIG.PER_PAGE ? REFRESH_STATUS.NO_MORE_DATA : REFRESH_STATUS.NORMAL
+      that.setState({
+        repo_status: status
+      })
       Taro.hideLoading()
       Taro.stopPullDownRefresh()
     })
@@ -138,6 +154,11 @@ class SearchResult extends Component {
     let that = this
     let url = '/search/users'
     const {user_page, users, value, user_sort_value} = this.state
+    if (user_page !== 1) {
+      that.setState({
+        user_status: REFRESH_STATUS.REFRESHING
+      })
+    }
     let params = {
       page: user_page,
       per_page: GLOBAL_CONFIG.PER_PAGE,
@@ -154,6 +175,10 @@ class SearchResult extends Component {
           users: users.concat(res.data.items)
         })
       }
+      let status = res.data.length < GLOBAL_CONFIG.PER_PAGE ? REFRESH_STATUS.NO_MORE_DATA : REFRESH_STATUS.NORMAL
+      that.setState({
+        user_status: status
+      })
       Taro.hideLoading()
       Taro.stopPullDownRefresh()
     })
@@ -245,7 +270,7 @@ class SearchResult extends Component {
   }
 
   render() {
-    const {current, repos, users, fixed, repo_sort, user_sort} = this.state
+    const {current, repos, users, fixed, repo_sort, user_sort, repo_status, user_status} = this.state
     let list = null
     let count = current === 0 ? repos.length : users.length
     switch (current) {
@@ -283,7 +308,8 @@ class SearchResult extends Component {
           fixed &&
           <View className='search-segment-placeholder'/>
         }
-        {count === 0 ? <Empty/> : list}
+        {count === 0 ? <Empty /> : list}
+        <LoadMore status={current === 0 ? repo_status : user_status} />
         {
           count > 0 &&
           <View className='filter' onClick={this.onClickedFilter.bind(this)}>
