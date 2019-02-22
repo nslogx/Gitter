@@ -5,6 +5,9 @@ import { AtIcon } from 'taro-ui'
 import IssueCommentItem from '../../components/account/issueCommentItem'
 import Markdown from '../../components/repo/markdown'
 
+import { REFRESH_STATUS } from '../../constants/status'
+import LoadMore from '../../components/common/loadMore'
+
 import api from '../../service/api'
 import './issueDetail.less'
 
@@ -20,7 +23,8 @@ class IssueDetail extends Component {
     this.state = {
       issue: null,
       page: 1,
-      comments: []
+      comments: [],
+      refresh_status: REFRESH_STATUS.NORMAL
     }
   }
 
@@ -56,19 +60,27 @@ class IssueDetail extends Component {
   }
 
   onReachBottom() {
-    let that = this
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    const { page } = this.state
-    this.setState({
-      page: page + 1
-    }, ()=>{
-      that.getComments()
-    })
+    const { page, refresh_status } = this.state
+    if (refresh_status !== REFRESH_STATUS.NO_MORE_DATA) {
+      let that = this
+      this.setState({
+        page: page + 1
+      }, ()=>{
+        that.getComments()
+      })
+    }
   }
 
   getComments() {
     let that = this
     const { url, page, comments } = this.state
+
+    if (page !== 1) {
+      that.setState({
+        refresh_status: REFRESH_STATUS.REFRESHING
+      })
+    }
+
     let comments_url = url + '/comments'
     let params = {
       page: page,
@@ -84,6 +96,10 @@ class IssueDetail extends Component {
           comments: comments.concat(res.data)
         })
       }
+      let status = res.data.length < GLOBAL_CONFIG.PER_PAGE ? REFRESH_STATUS.NO_MORE_DATA : REFRESH_STATUS.NORMAL
+      that.setState({
+        refresh_status: status
+      })
       Taro.stopPullDownRefresh()
       Taro.hideLoading()
     })
@@ -110,7 +126,7 @@ class IssueDetail extends Component {
   }
 
   render () {
-    const { issue, comments } = this.state
+    const { issue, comments, refresh_status } = this.state
     if (!issue) return <View />
     return (
       <View className='content'>
@@ -137,6 +153,7 @@ class IssueDetail extends Component {
             )
           })
         }
+        <LoadMore status={refresh_status} />
         <View className='add_comment' onClick={this.addComment.bind(this)}>
           <AtIcon prefixClass='ion'
                   value='ios-add'
