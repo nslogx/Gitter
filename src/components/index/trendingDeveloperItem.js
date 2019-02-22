@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import PropTypes from 'prop-types';
-import { View, Navigator } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { AtIcon, AtAvatar } from 'taro-ui'
 
 
@@ -33,12 +33,12 @@ export default class TrendingDeveloperItem extends Component {
       <View className='content'>
         <AtAvatar circle size='large' image={item.avatar} />
         <View className='user_info'>
-          <View className='user_name'>{item.username}</View>
+          <Text className='user_name'>{item.username}</Text>
           <View className='repo'>
             <AtIcon prefixClass='ion' value='md-bookmarks' size='18' color='#333' />
-            <View className='repo_title' onClick={this.onClickRepo.bind(this)} hoverStopPropagation>{item.repo.name}</View>
+            <Text className='repo_title' onClick={this.onClickRepo.bind(this)} hoverStopPropagation>{item.repo.name}</Text>
           </View>
-          <View className='repo_desc'>{item.repo.description}</View>
+          <Text className='repo_desc'>{item.repo.description}</Text>
         </View>
       </View>
     )
