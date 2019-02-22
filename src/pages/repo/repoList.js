@@ -62,7 +62,9 @@ class RepoList extends Component {
     const { url, page, repos } = this.state
     let params = {
       page: page,
-      per_page: GLOBAL_CONFIG.PER_PAGE
+      per_page: GLOBAL_CONFIG.PER_PAGE,
+      type: 'owner',
+      sort: 'updated'
     }
     api.get(url, params).then((res)=>{
       if (page === 1) {
