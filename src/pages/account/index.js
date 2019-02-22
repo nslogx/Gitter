@@ -170,7 +170,7 @@ class Index extends Component {
                 {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
                 <View className='item_view'>
                   <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
-                    <View className='title'>{userInfo.public_repos}+{userInfo.owned_private_repos}</View>
+                    <View className='title'>{userInfo ? (userInfo.public_repos + userInfo.owned_private_repos) : null}</View>
                     <View className='desc'>Repos</View>
                   </View>
                   <View className='line'/>
