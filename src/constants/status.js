@@ -12,18 +12,8 @@ export const HTTP_STATUS = {
   GATEWAY_TIMEOUT: 504
 }
 
-// promise status
-export const SUCCESS = { success:'success'}
-export const FAIL = { fail:'fail'}
-export const COMPLETE = { complete:'complete'}
-
-export const PROMISE_STATUS = {
-  success: 'success',
-  fail: 'fail',
-  complete: 'complete'
-}
-
-export const RESULT_STATUS = {
-  SUCCESS:0,
-  SIGNATURE_FAILED: 1000  // 签名失败
+export const REFRESH_STATUS = {
+  NORMAL: 0,
+  REFRESHING: 1,
+  NO_MORE_DATA: 2
 }
