@@ -22,7 +22,6 @@ class Index extends Component {
     super(props)
     this.state = {
       current: 0,
-      windowHeight: 0,
       category: {
         'name': 'Today',
         'value': 'daily'
@@ -35,6 +34,7 @@ class Index extends Component {
       isHidden: false,
       fixed: false,
       notice: null,
+      notice_closed: false,
       repos: [],
       developers: [],
       range: [
@@ -220,8 +220,11 @@ class Index extends Component {
       .then(res => {
         console.log('notices', res)
         if (res.data.length > 0) {
+          const key = 'notice_key_' + res.data[0].notice_id
+          const notice_closed = Taro.getStorageSync(key)
           that.setState({
-            notice: res.data[0]
+            notice: res.data[0],
+            notice_closed: notice_closed
           })
         }
       })
@@ -280,6 +283,12 @@ class Index extends Component {
     }
   }
 
+  onCloseNotice() {
+    const { notice } = this.state
+    const key = 'notice_key_' + notice.notice_id
+    Taro.setStorageSync(key, true)
+  }
+
   render () {
     let categoryType = 0
     let categoryValue = this.state.category.value
@@ -288,7 +297,7 @@ class Index extends Component {
     } else if (categoryValue === 'monthly') {
       categoryType = 2
     }
-    const { developers, repos, current, notice, fixed } = this.state
+    const { developers, repos, current, notice, fixed, notice_closed } = this.state
     return (
       <View className='content'>
         <View className={fixed ? 'segment-fixed' : ''}>
@@ -302,8 +311,10 @@ class Index extends Component {
           <View className='segment-placeholder' />
         }
         {
-          notice.status &&
-          <AtNoticebar icon='volume-plus' close>
+          (notice.status && !notice_closed) &&
+          <AtNoticebar icon='volume-plus'
+                       close
+                       onClose={this.onCloseNotice.bind(this)}>
             {notice.content}
           </AtNoticebar>
         }
