@@ -16,6 +16,15 @@ export default class IssueItem extends Component {
     item: null
   }
 
+  onClickRepo(e) {
+    e.stopPropagation()
+    const { item } = this.props
+    const url = '/pages/repo/repo?url=' + encodeURI(item.repository.url)
+    Taro.navigateTo({
+      url: url
+    })
+  }
+
   render() {
     const { item } = this.props
     if (!item) return <View />
@@ -46,11 +55,9 @@ export default class IssueItem extends Component {
           </Text>
           {
             item.repository &&
-            <View>
-              <Navigator url={'/pages/repo/repo?url=' + encodeURI(item.repository.url)}>
-                <Text className='issue_repo'>{item.repository.full_name}</Text>
-              </Navigator>
-            </View>
+            <Text className='issue_repo' onClick={this.onClickRepo.bind(this)}>
+              {item.repository.full_name}
+            </Text>
           }
         </View>
       </View>
