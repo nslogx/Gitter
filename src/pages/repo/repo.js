@@ -80,7 +80,7 @@ class Repo extends Component {
     const { url } = this.state
     let path = '/pages/repo/repo?url=' + encodeURI(url) + '&share=true'
     return {
-      title: repo.name + ' -- ' +repo.description || 'no description',
+      title: `「${repo.name}」★${repo.stargazers_count} - 来自GitHub的开源项目，快来看看吧~~`,
       path: path
     }
   }
