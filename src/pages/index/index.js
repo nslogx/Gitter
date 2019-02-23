@@ -132,13 +132,6 @@ class Index extends Component {
     })
   }
 
-  onSwiperChange(e) {
-    console.log(e.detail.current)
-    this.setState({
-      current: e.detail.current
-    })
-  }
-
   loadItemList () {
     const { current } = this.state
     let that = this
@@ -155,6 +148,9 @@ class Index extends Component {
       that.setState({
         repos: res.result.data
       }, ()=>{
+        Taro.pageScrollTo({
+          scrollTop: 0
+        })
         if (current === 0) {
           Taro.hideLoading()
           Taro.stopPullDownRefresh()
@@ -178,6 +174,9 @@ class Index extends Component {
       that.setState({
         developers: res.result.data
       }, ()=>{
+        Taro.pageScrollTo({
+          scrollTop: 0
+        })
         if (current === 1) {
           Taro.stopPullDownRefresh()
           Taro.hideLoading()
