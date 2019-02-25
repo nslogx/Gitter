@@ -13,7 +13,7 @@
 
 ### 说明
 
-- 由于小程序的限制，无法使用`OAuth`跳转认证，故采用`Token` + `Account`认证方式；
+- 由于个人类型的小程序无法使用`web-view`组件的限制，无法使用`OAuth`跳转认证，故采用`Token` + `Account`认证方式，另外也暂不支持内部超链接跳转；
 - 推荐使用`Token`认证方式，`Token`及用户名密码仅用于GitHub Api权限校验，不会被上传服务器；
 - Token的生成方式请移步[New personal access token](https://github.com/settings/tokens/new)，按照步骤即可生成Token(**特别提醒：为了最完整的功能体验，生成`Token`的时候请确保勾选全部权限**)；
 - ~~由于目前个人能力有限，目前在小程序内关于Markdown的解析并不完美，欢迎有兴趣的大佬PR；~~(采用[Towxml](https://github.com/sbfkcel/towxml)提供的方案，基本上已经完美解析，感谢开源作者)
