@@ -152,6 +152,12 @@ class Index extends Component {
   render() {
     const { isLogin, hasStar } = this.state
     const { userInfo } = this.props
+
+    let repo_counts = userInfo ? Number(userInfo.public_repos) : 0
+    if (userInfo && userInfo.owned_private_repos > 0) {
+      repo_counts +=  Number(userInfo.owned_private_repos)
+    }
+
     return (
       <View>
         {
@@ -170,7 +176,7 @@ class Index extends Component {
                 {userInfo.bio.length > 0 && <View className='bio'>{userInfo.bio}</View>}
                 <View className='item_view'>
                   <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPOS)}>
-                    <View className='title'>{userInfo ? (userInfo.public_repos + userInfo.owned_private_repos) : null}</View>
+                    <View className='title'>{userInfo ? repo_counts : ''}</View>
                     <View className='desc'>Repos</View>
                   </View>
                   <View className='line'/>
