@@ -6,18 +6,23 @@ import { AtActivityIndicator } from 'taro-ui'
 import './markdown.less'
 
 import Towxml from '../towxml/main'
+import {base64_decode} from "../../utils/base64";
 
 const render = new Towxml()
 
 export default class Markdown extends Component {
   static propTypes = {
     md: PropTypes.string,
-    base: PropTypes.string
+    base: PropTypes.string,
+    cache: PropTypes.bool,
+    cacheKey: PropTypes.string
   }
 
   static defaultProps = {
     md: null,
-    base: null
+    base: null,
+    cache: false,
+    cacheKey: null
   }
 
   constructor(props) {
@@ -29,11 +34,30 @@ export default class Markdown extends Component {
   }
 
   componentDidMount() {
-    this.parseReadme()
+    const { cache, cacheKey } = this.props
+    if (cache) {
+      let that = this
+      Taro.getStorage({
+        key: cacheKey,
+        complete(res) {
+          console.log('markdown complete', res)
+          if (res.data) {
+            that.setState({
+              fail: false,
+              data: res.data
+            })
+          } else {
+            that.parseReadme()
+          }
+        }
+      })
+    } else {
+      this.parseReadme()
+    }
   }
 
   parseReadme() {
-    const { md, base } = this.props
+    const { md, base, cache, cacheKey } = this.props
     let that = this
     that.setState({
       fail: false
@@ -56,6 +80,12 @@ export default class Markdown extends Component {
         fail: false,
         data: data
       })
+      if (cache) {
+        Taro.setStorage({
+          key: cacheKey,
+          data: data
+        })
+      }
     }).catch(err => {
       console.log('cloud', err)
       that.setState({
