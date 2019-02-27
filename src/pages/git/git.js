@@ -85,7 +85,7 @@ class Git extends Component {
 
   onShareAppMessage(obj) {
     return {
-      title: 'Git 中文教程'
+      title: '嗨！优秀的 Git 中文教程了解一下~~'
     }
   }
 

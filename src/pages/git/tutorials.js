@@ -1,9 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { AtIcon } from 'taro-ui'
 import Markdown from '../../components/repo/markdown'
 import { base64_decode } from '../../utils/base64'
-import { AtDrawer } from 'taro-ui'
-import { get as getGlobalData  } from '../../utils/global_data'
 
 import './tutorials.less'
 import {GLOBAL_CONFIG} from "../../constants/globalConfig";
@@ -18,9 +17,10 @@ class Tutorials extends Component {
     this.state = {
       item: null,
       md: null,
-      show: false,
-      itemList: [],
-      menus: []
+      isShare: false,
+      // show: false,
+      // itemList: [],
+      // menus: []
     }
   }
 
@@ -31,7 +31,8 @@ class Tutorials extends Component {
   componentWillMount() {
     let params = this.$router.params
     this.setState({
-      item: JSON.parse(decodeURI(params.value))
+      item: JSON.parse(decodeURI(params.value)),
+      isShare: params.share
     }, ()=> {
       Taro.setNavigationBarTitle({
         title: this.state.item.title
@@ -41,7 +42,7 @@ class Tutorials extends Component {
 
   componentDidMount() {
     this.loadLocalItem()
-    this.loadMenus()
+    // this.loadMenus()
   }
 
   componentWillUnmount() {
@@ -104,30 +105,42 @@ class Tutorials extends Component {
       })
   }
 
-  loadMenus() {
-    const dataList = getGlobalData('git_list')
-    let menus = []
-    let itemList = []
-    for (let item of dataList) {
-      for (let sub_item of item.children) {
-        menus.push(sub_item.title)
-        itemList.push(sub_item)
-      }
+  // loadMenus() {
+  //   const dataList = getGlobalData('git_list')
+  //   let menus = []
+  //   let itemList = []
+  //   for (let item of dataList) {
+  //     for (let sub_item of item.children) {
+  //       menus.push(sub_item.title)
+  //       itemList.push(sub_item)
+  //     }
+  //   }
+  //   this.setState({
+  //     itemList: itemList,
+  //     menus: menus
+  //   })
+  // }
+
+  onShareAppMessage(obj) {
+    const { item } = this.state
+
+    let value = encodeURI(JSON.stringify(item))
+    const path = `/pages/git/tutorials?value=${value}&share=true`
+
+    return {
+      title: `Git 中文教程之：${item.title}`,
+      path: path
     }
-    this.setState({
-      itemList: itemList,
-      menus: menus
-    })
   }
 
-  onClickedFilter() {
-    this.setState({
-      show: true
+  onClickedHome () {
+    Taro.reLaunch({
+      url: '/pages/index/index'
     })
   }
 
   render() {
-    const { md, show, item, menus } = this.state
+    const { md, item, isShare } = this.state
     let cacheKey = ''
     if (item) {
       cacheKey = `git_md_content_${item.item_id}`
@@ -142,14 +155,15 @@ class Tutorials extends Component {
             </View>
           </View>
         }
-        {/*<View className='filter' onClick={this.onClickedFilter.bind(this)}>*/}
-          {/*<AtIcon value='filter' size='25' color='#ffffff' />*/}
-        {/*</View>*/}
-        <AtDrawer
-          show={show}
-          items={menus}
-          mask
-        / >
+        {
+          isShare &&
+          <View className='home_view' onClick={this.onClickedHome.bind(this)}>
+            <AtIcon prefixClass='ion'
+                    value='ios-home'
+                    size='30'
+                    color='#fff' />
+          </View>
+        }
       </View>
     )
   }
