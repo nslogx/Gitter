@@ -25,6 +25,8 @@ class App extends Component {
       'pages/index/index',
       'pages/index/favoriteLanguages',
       'pages/account/index',
+      'pages/git/git',
+      'pages/git/tutorials',
       'pages/activity/index',
       'pages/search/index',
       'pages/search/searchResult',
@@ -60,6 +62,11 @@ class App extends Component {
         text: 'Activity',
         iconPath: './assets/images/tab_news.png',
         selectedIconPath: './assets/images/tab_news_s.png'
+      }, {
+        pagePath: 'pages/git/git',
+        text: 'Git',
+        iconPath: './assets/images/tab_git.png',
+        selectedIconPath: './assets/images/tab_git_s.png'
       }, {
         pagePath: 'pages/account/index',
         text: 'Me',
