@@ -71,7 +71,7 @@ class About extends Component {
                className='logo'
                src={require('../../assets/images/logo.png')}/>
         <Text className='version'>
-          Gitter v1.2.8
+          Gitter v1.2.9
         </Text>
         <Navigator url={url}>
           <Text className='link'>
