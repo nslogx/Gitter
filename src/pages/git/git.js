@@ -1,8 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import {Image, View} from '@tarojs/components'
-import { AtAccordion, AtList, AtListItem } from 'taro-ui'
+import { Image, View, Text } from '@tarojs/components'
+import { AtAccordion } from 'taro-ui'
+import { GLOBAL_CONFIG } from '../../constants/globalConfig'
+import { set as setGlobalData  } from '../../utils/global_data'
 
 import GitItem from '../../components/git/gitItem'
+import Empty from '../../components/index/empty'
 
 import './git.less'
 
@@ -27,7 +30,26 @@ class Git extends Component {
   }
 
   componentDidMount() {
-    this.loadItemList()
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    let that = this
+    Taro.getStorage({
+      key: 'git_list',
+      success(res) {
+        console.log(res)
+      },
+      complete(res) {
+        console.log('complete', res)
+        if (res.data) {
+          that.setState({
+            itemList: res.data
+          })
+          setGlobalData('git_list', res.data)
+          Taro.hideLoading()
+        } else {
+          that.loadItemList()
+        }
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -45,14 +67,26 @@ class Git extends Component {
     db.collection('git_tutorials')
       .get()
       .then(res => {
-        console.log(res)
         that.setState({
           itemList: res.data
         })
+        Taro.setStorage({
+          key: 'git_list',
+          data: res.data
+        })
+        setGlobalData('git_list', res.data)
+        Taro.hideLoading()
       })
       .catch(err => {
         console.error(err)
+        Taro.hideLoading()
       })
+  }
+
+  onShareAppMessage(obj) {
+    return {
+      title: 'Git 中文教程'
+    }
   }
 
   render() {
@@ -68,13 +102,22 @@ class Git extends Component {
     })
 
     return (
-      <View className='content'>
-        <View className='logo-bg'>
-          <Image mode='aspectFit'
-                 className='logo'
-                 src={require('../../assets/images/octocat.png')}/>
-        </View>
-        {list}
+      <View>
+        {
+          itemList && itemList.length > 0 ? (
+            <View className='content'>
+              <View className='logo-bg'>
+                <Image mode='aspectFit'
+                       className='logo'
+                       src={require('../../assets/images/octocat.png')}/>
+              </View>
+              {list}
+              <View className='info-view'>
+                <Text className='info'>- Pro Git -</Text>
+              </View>
+            </View>
+          ) : (<Empty />)
+        }
       </View>
     )
   }

@@ -15,9 +15,9 @@ export default class GitItem extends Component {
   }
 
   onClicked(item) {
-    console.log('onClicked', item)
+    let value = encodeURI(JSON.stringify(item))
     Taro.navigateTo({
-      url: '/pages/git/tutorials'
+      url: `/pages/git/tutorials?value=${value}`
     })
   }
 
