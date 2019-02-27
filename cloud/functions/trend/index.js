@@ -25,13 +25,15 @@ exports.main = async (event, context) => {
       res = JSON.parse(cacheData.data[0].content)
     } else {
       res = await fetchRepositories({ language, since });
-      await db.collection('repositories').add({
-        data: {
-          cacheDate: date.getTime(),
-          cacheKey: cacheKey,
-          content: JSON.stringify(res)
-        }
-      })
+      if (res && res.length > 0) {
+        await db.collection('repositories').add({
+          data: {
+            cacheDate: date.getTime(),
+            cacheKey: cacheKey,
+            content: JSON.stringify(res)
+          }
+        })
+      }
     }
   } else if (type === 'developers') {
     const cacheKey = `developers::${language || 'nolang'}::${since || 'daily'}`;
@@ -43,13 +45,15 @@ exports.main = async (event, context) => {
       res = JSON.parse(cacheData.data[0].content)
     } else {
       res = await fetchDevelopers({ language, since });
-      await db.collection('developers').add({
-        data: {
-          cacheDate: date.getTime(),
-          cacheKey: cacheKey,
-          content: JSON.stringify(res)
-        }
-      })
+      if (res && res.length > 0) {
+        await db.collection('developers').add({
+          data: {
+            cacheDate: date.getTime(),
+            cacheKey: cacheKey,
+            content: JSON.stringify(res)
+          }
+        })
+      }
     }
   }
 
