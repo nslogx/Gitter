@@ -234,6 +234,13 @@ class Repo extends Component {
         })
       }
         break
+      case NAVIGATE_TYPE.REPO_EVENTS_LIST: {
+        let url = '/pages/repo/repoEvents?url=/repos/' + repo.full_name + '/events'
+        Taro.navigateTo({
+          url: url
+        })
+      }
+        break
       default: {
 
       }
@@ -330,6 +337,10 @@ class Repo extends Component {
               }
               <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
             </View>
+          </View>
+          <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_EVENTS_LIST)}>
+            <View className='list_title'>Events</View>
+            <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
           </View>
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.REPO_CONTRIBUTORS_LIST)}>
             <View className='list_title'>Contributors</View>

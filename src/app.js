@@ -43,6 +43,7 @@ class App extends Component {
       'pages/repo/contributors',
       'pages/repo/starredRepo',
       'pages/repo/file',
+      'pages/repo/repoEvents',
       'pages/login/login'
     ],
     window: {
