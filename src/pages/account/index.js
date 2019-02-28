@@ -110,17 +110,27 @@ class Index extends Component {
           url: '/pages/repo/issues?url=/user/issues'
         })
       }
-        break
+      break
       case NAVIGATE_TYPE.ABOUT: {
         Taro.navigateTo({
           url: '/pages/account/about'
         })
       }
-        break
+      break
       case NAVIGATE_TYPE.STAR: {
         this.handleStar()
       }
-        break
+      break
+      case NAVIGATE_TYPE.FEEDBACK: {
+        Taro.navigateToMiniProgram({
+          appId: 'wx8abaf00ee8c3202e',
+          extraData: {
+            id: '55362',
+            customData: {}
+          }
+        })
+      }
+      break
       default: {
       }
     }
@@ -230,6 +240,10 @@ class Index extends Component {
                 </View>
               </View>
               <View className='list_view'>
+                <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FEEDBACK)}>
+                  <View className='list_title'>Feedback</View>
+                  <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />
+                </View>
                 <View className='list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.ABOUT)}>
                   <View className='list_title'>About</View>
                   <AtIcon prefixClass='ion' value='ios-arrow-forward' size='18' color='#7f7f7f' />

@@ -77,7 +77,10 @@ class App extends Component {
       selectedColor: '#2d8cf0',
       backgroundColor: '#ffffff',
       borderStyle: 'white'
-    }
+    },
+    navigateToMiniProgramAppIdList: [
+      'wx8abaf00ee8c3202e'
+    ]
   }
 
   componentDidMount () {
