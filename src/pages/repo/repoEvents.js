@@ -14,7 +14,8 @@ import './repoEvents.less'
 class RepoEvents extends Component {
 
   config = {
-    navigationBarTitleText: 'Events'
+    navigationBarTitleText: 'Events',
+    enablePullDownRefresh: true
   }
 
   constructor(props) {
