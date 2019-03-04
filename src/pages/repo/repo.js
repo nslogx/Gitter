@@ -507,7 +507,7 @@ class Repo extends Component {
             <View className='repo_share_item'>
               <Button className='action_button'
                       onClick={this.onClickedActionButton.bind(this, 1)}>
-                <AtIcon prefixClass='ion' value='ios-crop' size='25' color='#333' />
+                <AtIcon prefixClass='ion' value='md-images' size='22' color='#333' />
                 <Text className='action_button_title'>save</Text>
               </Button>
             </View>
