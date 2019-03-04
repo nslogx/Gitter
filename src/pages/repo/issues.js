@@ -45,7 +45,7 @@ class Issues extends Component {
     let params = this.$router.params
     this.setState({
       url: params.url,
-      isUser: params.url.indexOf('user') !== 1,
+      isUser: params.url.indexOf('user') !== -1,
       repo: params.repo
     })
   }
@@ -216,7 +216,7 @@ class Issues extends Component {
         )}
         <LoadMore status={current === 0 ? open_status : close_status} />
         {
-          isUser &&
+          !isUser &&
           <View className='add_issue' onClick={this.addIssue.bind(this)}>
             <AtIcon prefixClass='ion'
                     value='ios-add'
