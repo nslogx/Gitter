@@ -6,7 +6,6 @@ import { AtActivityIndicator } from 'taro-ui'
 import './markdown.less'
 
 import Towxml from '../towxml/main'
-import {base64_decode} from "../../utils/base64";
 
 const render = new Towxml()
 
