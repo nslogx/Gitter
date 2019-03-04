@@ -14,7 +14,7 @@
 ### 说明
 
 - 由于个人类型的小程序无法使用`web-view`组件的限制，无法使用`OAuth`跳转认证，故采用`Token` + `Account`认证方式，另外也暂不支持内部超链接跳转；
-- 推荐使用`Token`认证方式，`Token`及用户名密码仅用于GitHub Api权限校验，不会被上传服务器；
+- 推荐使用`Token`认证方式，`Token`及用户名密码仅用于 `GitHub Api` 权限校验，不会被上传服务器；
 - Token的生成方式请移步[New personal access token](https://github.com/settings/tokens/new)，按照步骤即可生成Token(**特别提醒：为了最完整的功能体验，生成`Token`的时候请确保勾选全部权限**)；
 - ~~由于目前个人能力有限，目前在小程序内关于Markdown的解析并不完美，欢迎有兴趣的大佬PR；~~(采用[Towxml](https://github.com/sbfkcel/towxml)提供的方案，基本上已经完美解析，感谢开源作者)
 - **此源码仅供交流学习，严禁以任何形式独立发布或用于商业用途；**
@@ -43,11 +43,34 @@ cd Gitter
 
 ### Todo
 
-- [x] 完善Markdown解析
-- [x] 完善Trending列表筛选功能
-- [x] 完善Search相关功能
-- [ ] 完善Issue相关功能
+- [x] 完善 `Markdown` 解析
+- [x] 完善 `Trending` 列表筛选功能
+- [x] 完善 `Search` 相关功能
+- [ ] 完善 `Issue` 相关功能
 - [ ] ...
+
+## 更新记录
+
+- v1.3.1
+
+  1、新增 分享仓库海报 功能
+ 
+- v1.3.0
+
+  1、优化刷新逻辑
+  
+  2、新增反馈入口
+  
+- v1.2.0
+
+  1、优化 `Trending` 列表筛选功能
+  
+  2、优化 `Search` 相关功能
+  
+- v1.0.0
+
+  `Gitter` 诞生了
+
 
 有疑问或建议可提`issue`，我会尽快处理。
 
