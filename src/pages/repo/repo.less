@@ -47,7 +47,6 @@
   margin-top: -70px;
   border-radius: 10px;
   width: 700px;
-  height: 245px;
   background-color: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
 
@@ -56,7 +55,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    margin-top: 30px;
+    margin: 30px 0;
 
     .repo_number_item {
       display: flex;
@@ -71,16 +70,37 @@
     }
   }
 
-  .share_button {
-    margin-top: 20px;
-    border-radius: 35px;
-    width: 200px;
-    height: 70px;
-    font-size: 34px;
-    color: #fff;
-    padding: 0 0;
-    line-height: 70px;
-    background-color: #2d8cf0;
+  .share_item_view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 0 15px 0;
+  }
+}
+
+.repo_share_view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+  border-radius: 10px;
+  width: 700px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+
+  .repo_share_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    margin: 15px 0;
+
+    .repo_share_title {
+      color: #333333;
+      font-size: 32px;
+    }
   }
 }
 
@@ -186,4 +206,21 @@
   height: 100px;
   border-radius: 50px;
   background-color: #2d8cf0;
+}
+
+.action_button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+}
+
+.action_button_title {
+  font-size: 34px;
+  color: #333333;
+  margin-top: -45px;
+}
+
+.action_button::after {
+  border: none;
 }

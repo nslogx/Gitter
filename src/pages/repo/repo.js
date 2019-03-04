@@ -7,10 +7,9 @@ import { hasLogin } from '../../utils/common'
 import { HTTP_STATUS } from '../../constants/status'
 import { NAVIGATE_TYPE } from '../../constants/navigateType'
 import Markdown from '../../components/repo/markdown'
-import api from '../../service/api'
+import Painter from '../../components/repo/painter'
 
-import Towxml from '../../components/towxml/main'
-const render = new Towxml()
+import api from '../../service/api'
 
 import './repo.less'
 
@@ -34,7 +33,8 @@ class Repo extends Component {
       isShare: false,
       loadAd: true,
       baseUrl: null,
-      md: null
+      md: null,
+      posterData: null
     }
   }
 
@@ -76,8 +76,7 @@ class Repo extends Component {
   }
 
   onShareAppMessage(obj) {
-    const { repo } = this.state
-    const { url } = this.state
+    const { repo, url } = this.state
     let path = '/pages/repo/repo?url=' + encodeURI(url) + '&share=true'
     return {
       title: `「${repo.name}」★${repo.stargazers_count} - 来自GitHub的开源项目，快来看看吧~~`,
@@ -253,6 +252,203 @@ class Repo extends Component {
     })
   }
 
+  onClickedActionButton(index) {
+    console.log(index)
+    const { repo } = this.state
+    if (index === 1) {
+      this.loadWXACode()
+    } else if (index === 2) {
+      const url = `https://github.com/${repo.full_name}`
+      Taro.setClipboardData({
+        data: url
+      })
+    }
+  }
+
+  loadWXACode() {
+    const { repo, url } = this.state
+    const path = '/pages/repo/repo?url=' + encodeURI(url) + '&share=true'
+    let that = this
+    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    wx.cloud.callFunction({
+      // 要调用的云函数名称
+      name: 'wxacode',
+      // 传递给云函数的event参数
+      data: {
+        path: path,
+        name: `${repo.owner.login}_${repo.name}`
+      }
+    }).then(res => {
+      console.log('wxacode', res)
+      if (res.result && res.result.length > 0) {
+        that.generatePoster(res.result[0].tempFileURL)
+      } else {
+        Taro.hideLoading()
+      }
+    }).catch(err => {
+      Taro.hideLoading()
+    })
+  }
+
+  generatePoster(imgUrl) {
+    const { repo } = this.state
+    const data = {
+      background: '#f7f7f7',
+      width: '750rpx',
+      height: '1100rpx',
+      borderRadius: '0rpx',
+      views: [
+        {
+          type: 'rect',
+          css: {
+            left: '50rpx',
+            width: '650rpx',
+            top: '50rpx',
+            color: '#ffffff',
+            height: '900rpx',
+            borderRadius: '20rpx',
+            shadow: '10rpx 10rpx 5rpx #888888',
+          }
+        },
+        {
+          type: 'rect',
+          css: {
+            left: '50rpx',
+            width: '650rpx',
+            height: '640rpx',
+            top: '50rpx',
+            color: '#2d8cf0',
+            borderRadius: '20rpx',
+          }
+        },
+        {
+          type: 'rect',
+          css: {
+            left: '50rpx',
+            width: '650rpx',
+            height: '50rpx',
+            top: '640rpx',
+            color: '#2d8cf0',
+          }
+        },
+        {
+          type: 'text',
+          text: `「${repo.name}」`,
+          css: {
+            top: '80rpx',
+            left: '375rpx',
+            align: 'center',
+            fontSize: '38rpx',
+            color: '#ffffff',
+            width: '550rpx',
+            maxLines: '1',
+          }
+        },
+        {
+          type: 'text',
+          text: `Stars：★${repo.stargazers_count}  ${repo.stargazers_count > 99 ? '🔥' : ''}`,
+          css: {
+            top: '150rpx',
+            left: '80rpx',
+            width: '550rpx',
+            maxLines: '1',
+            fontSize: '28rpx',
+            color: '#ffffff'
+          }
+        },
+        {
+          type: 'text',
+          text: `作者：${repo.owner.login}`,
+          css: {
+            top: '250rpx',
+            left: '80rpx',
+            width: '550rpx',
+            maxLines: '1',
+            fontSize: '28rpx',
+            color: '#ffffff'
+          }
+        },
+        {
+          type: 'text',
+          text: `GitHub：https://github.com/${repo.full_name}`,
+          css: {
+            top: '350rpx',
+            left: '80rpx',
+            width: '550rpx',
+            fontSize: '28rpx',
+            color: '#ffffff',
+            lineHeight: '36rpx',
+            maxLines: '2',
+          }
+        },
+        {
+          type: 'text',
+          text: `项目描述：${repo.description || '暂无描述'}`,
+          css: {
+            top: '450rpx',
+            left: '80rpx',
+            width: '550rpx',
+            fontSize: '28rpx',
+            maxLines: '4',
+            color: '#ffffff',
+            lineHeight: '36rpx'
+          }
+        },
+        {
+          type: 'image',
+          url: `${imgUrl}`,
+          css: {
+            bottom: '180rpx',
+            left: '120rpx',
+            width: '200rpx',
+            height: '200rpx',
+          },
+        },
+        {
+          type: 'text',
+          text: '长按识别，查看项目详情',
+          css: {
+            bottom: '290rpx',
+            left: '350rpx',
+            fontSize: '28rpx',
+            color: '#666666'
+          }
+        },
+        {
+          type: 'text',
+          text: '分享自「Gitter」',
+          css: {
+            bottom: '230rpx',
+            left: '350rpx',
+            fontSize: '28rpx',
+            color: '#666666',
+          }
+        },
+        {
+          type: 'text',
+          text: '开源的世界，有你才更精彩',
+          css: {
+            bottom: '60rpx',
+            left: '375rpx',
+            align: 'center',
+            fontSize: '28rpx',
+            color: '#666666',
+          }
+        }
+      ],
+    }
+    this.setState({
+      posterData: data
+    })
+  }
+
+  onPainterFinished() {
+    console.log('onPainterFinished')
+    this.setState({
+      posterData: null
+    })
+  }
+
   loadError(event) {
     this.setState({
       loadAd: false
@@ -261,7 +457,8 @@ class Repo extends Component {
   }
 
   render () {
-    const { repo, hasStar, isShare, md, baseUrl, loadAd } = this.state
+    const { repo, hasStar, isShare, md, baseUrl, loadAd, posterData } = this.state
+    console.log('posterData', posterData)
     if (!repo) return <View />
     return (
       <View className='content'>
@@ -298,7 +495,30 @@ class Repo extends Component {
               <Text className='repo_number_title'>{repo.forks_count}</Text>
             </View>
           </View>
-          <Button className='share_button' openType='share'>Share</Button>
+          <View className='share_item_view'>
+            <View className='repo_share_item'>
+              <Button className='action_button'
+                      openType='share'
+                      onClick={this.onClickedActionButton.bind(this, 0)}>
+                <AtIcon prefixClass='ion' value='ios-share-alt' size='25' color='#333' />
+                <Text className='action_button_title'>share</Text>
+              </Button>
+            </View>
+            <View className='repo_share_item'>
+              <Button className='action_button'
+                      onClick={this.onClickedActionButton.bind(this, 1)}>
+                <AtIcon prefixClass='ion' value='ios-crop' size='25' color='#333' />
+                <Text className='action_button_title'>save</Text>
+              </Button>
+            </View>
+            <View className='repo_share_item'>
+              <Button className='action_button'
+                      onClick={this.onClickedActionButton.bind(this, 2)}>
+                <AtIcon prefixClass='ion' value='ios-link' size='23' color='#333' />
+                <Text className='action_button_title'>copy</Text>
+              </Button>
+            </View>
+          </View>
         </View>
         <View className='repo_info_list_view'>
           <View className='repo_info_list' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.USER)}>
@@ -371,6 +591,9 @@ class Repo extends Component {
                     size='30'
                     color='#fff' />
           </View>
+        }
+        {
+          posterData && <Painter style='position:fixed;top:-9999rpx' data={posterData} save onPainterFinished={this.onPainterFinished}/>
         }
       </View>
     )
