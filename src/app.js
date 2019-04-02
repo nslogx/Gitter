@@ -1,7 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
-import { set as setGlobalData } from './utils/global_data'
+import {get as getGlobalData, set as setGlobalData} from './utils/global_data'
 
 import Index from './pages/index'
 
@@ -91,6 +91,7 @@ class App extends Component {
       traceUser: true
     })
     this.loadOpenId()
+    this.loadConfig()
   }
 
   componentDidShow () {}
@@ -114,6 +115,26 @@ class App extends Component {
     }).catch(err => {
       console.log('openid err', err)
     })
+  }
+
+  loadConfig() {
+    let that = this
+    const db = wx.cloud.database()
+    db.collection('config')
+      .where({})
+      .get()
+      .then(res => {
+        console.log(res)
+        if (res.data.length > 0) {
+          Taro.setStorage({
+            key: 'config_gitter',
+            data: res.data[0]
+          })
+        }
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
   /*更新小程序*/

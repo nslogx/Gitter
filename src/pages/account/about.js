@@ -12,7 +12,8 @@ class About extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loadAd: true
+      loadAd: true,
+      config: null
     }
   }
 
@@ -24,6 +25,18 @@ class About extends Component {
   }
 
   componentDidMount() {
+    let that = this
+    Taro.getStorage({
+      key: 'config_gitter',
+      success(res) {
+        console.log('config_gitter', res)
+        if (res.data) {
+          that.setState({
+            config: res.data
+          })
+        }
+      }
+    })
   }
 
   componentWillUnmount () { }
@@ -61,8 +74,16 @@ class About extends Component {
     console.log(event.detail)
   }
 
+  previewImage() {
+    const { config } = this.state
+    Taro.previewImage({
+      urls: [config.support_url]
+    })
+  }
+
   render () {
-    const { loadAd } = this.state
+    const { loadAd, config } = this.state
+    console.log('config', config)
     let api = 'https://api.github.com/repos/huangjianke/Gitter'
     let url = '/pages/repo/repo?url=' + encodeURI(api)
     return (
@@ -81,6 +102,18 @@ class About extends Component {
         <View className='logout' onClick={this.logout.bind(this)}>
           Logout
         </View>
+        {
+          config.support && (
+            <View className='support_view'>
+              <Text className='support_title'>Support Gitter ❤</Text>
+              <Image className='support_image'
+                     src={config.support_url}
+                     onClick={this.previewImage}
+              />
+              <Text className='support_title'>点击长按识别</Text>
+            </View>
+          )
+        }
         {
           loadAd && (
             <View className='ad'>
