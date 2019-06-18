@@ -3,8 +3,8 @@
 	"projectname": "Gitter",
 	"description": "Gitter",
 	"appid": "wx2252b6835e7eb568",
-  "cloudfunctionRoot": "cloud/functions/",
-  "setting": {
+	"cloudfunctionRoot": "cloud/functions/",
+	"setting": {
 		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
@@ -14,6 +14,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.5.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
