@@ -2,7 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Picker, Text, Swiper, SwiperItem, ScrollView } from '@tarojs/components'
 import { GLOBAL_CONFIG } from '../../constants/globalConfig'
 import { languages } from '../../utils/language'
-import { get as getGlobalData, set as setGlobalData  } from '../../utils/global_data'
+import { get as getGlobalData, set as setGlobalData } from '../../utils/global_data'
 import { AtNoticebar } from 'taro-ui'
 
 import ItemList from '../../components/index/itemList'
@@ -18,7 +18,7 @@ class Index extends Component {
     enablePullDownRefresh: true
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       current: 0,
@@ -38,26 +38,34 @@ class Index extends Component {
       repos: [],
       developers: [],
       range: [
-        [{'name': 'Today',
-        'value': 'daily'},
-        {'name': 'Week',
-          'value': 'weekly'},
-        {'name': 'Month',
-          'value': 'monthly'}],
+        [{
+          'name': 'Today',
+          'value': 'daily'
+        },
+        {
+          'name': 'Week',
+          'value': 'weekly'
+        },
+        {
+          'name': 'Month',
+          'value': 'monthly'
+        }],
         languages
       ]
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
 
   componentDidMount() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    this.interstitialAd = null
+    Taro.showLoading({ title: GLOBAL_CONFIG.LOADING_TEXT })
     this.loadLanguages()
     this.loadItemList()
     this.loadNotice()
+    this.loadinterstitialAd()
 
     let that = this
     Taro.getSystemInfo({
@@ -69,13 +77,19 @@ class Index extends Component {
     })
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () {
+  componentDidShow() {
     this.updateLanguages()
+    // 在适合的场景显示插屏广告
+    if (this.interstitialAd) {
+      this.interstitialAd.show().catch((err) => {
+        console.error(err)
+      })
+    }
   }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
   onPullDownRefresh() {
     this.loadItemList()
@@ -127,12 +141,12 @@ class Index extends Component {
       category: this.state.range[0][e.detail.value[0]],
       language: this.state.range[1][e.detail.value[1]]
     }, () => {
-      Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+      Taro.showLoading({ title: GLOBAL_CONFIG.LOADING_TEXT })
       this.loadItemList()
     })
   }
 
-  loadItemList () {
+  loadItemList() {
     const { current } = this.state
     let that = this
     wx.cloud.callFunction({
@@ -147,7 +161,7 @@ class Index extends Component {
     }).then(res => {
       that.setState({
         repos: res.result.data
-      }, ()=>{
+      }, () => {
         Taro.pageScrollTo({
           scrollTop: 0
         })
@@ -173,7 +187,7 @@ class Index extends Component {
     }).then(res => {
       that.setState({
         developers: res.result.data
-      }, ()=>{
+      }, () => {
         Taro.pageScrollTo({
           scrollTop: 0
         })
@@ -233,6 +247,25 @@ class Index extends Component {
       })
   }
 
+  loadinterstitialAd() {
+    // 在页面onLoad回调事件中创建插屏广告实例
+    if (wx.createInterstitialAd) {
+      this.interstitialAd = wx.createInterstitialAd({
+        adUnitId: 'adunit-fe997b16f427f91f'
+      })
+      this.interstitialAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      this.interstitialAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      this.interstitialAd.onClose((res) => {
+        this.interstitialAd = null
+        console.log('onClose event emit', res)
+      })
+    }
+  }
+
   updateLanguages() {
     let favoriteLanguages = getGlobalData('favoriteLanguages')
     if (favoriteLanguages && favoriteLanguages.length > 0) {
@@ -245,24 +278,36 @@ class Index extends Component {
       }
       this.setState({
         range: [
-          [{'name': 'Today',
-            'value': 'daily'},
-            {'name': 'Week',
-              'value': 'weekly'},
-            {'name': 'Month',
-              'value': 'monthly'}],
+          [{
+            'name': 'Today',
+            'value': 'daily'
+          },
+          {
+            'name': 'Week',
+            'value': 'weekly'
+          },
+          {
+            'name': 'Month',
+            'value': 'monthly'
+          }],
           favoriteLanguages
         ]
       })
     } else {
       this.setState({
         range: [
-          [{'name': 'Today',
-            'value': 'daily'},
-            {'name': 'Week',
-              'value': 'weekly'},
-            {'name': 'Month',
-              'value': 'monthly'}],
+          [{
+            'name': 'Today',
+            'value': 'daily'
+          },
+          {
+            'name': 'Week',
+            'value': 'weekly'
+          },
+          {
+            'name': 'Month',
+            'value': 'monthly'
+          }],
           languages
         ]
       })
@@ -289,7 +334,7 @@ class Index extends Component {
     Taro.setStorageSync(key, true)
   }
 
-  render () {
+  render() {
     let categoryType = 0
     let categoryValue = this.state.category.value
     if (categoryValue === 'weekly') {
@@ -302,8 +347,8 @@ class Index extends Component {
       <View className='content'>
         <View className={fixed ? 'segment-fixed' : ''}>
           <Segment tabList={['REPO', 'USER']}
-                   current={current}
-                   onTabChange={this.onTabChange}
+            current={current}
+            onTabChange={this.onTabChange}
           />
         </View>
         {
@@ -313,8 +358,8 @@ class Index extends Component {
         {
           (notice.status && !notice_closed) &&
           <AtNoticebar icon='volume-plus'
-                       close
-                       onClose={this.onCloseNotice.bind(this)}>
+            close
+            onClose={this.onCloseNotice.bind(this)}>
             {notice.content}
           </AtNoticebar>
         }
@@ -330,9 +375,9 @@ class Index extends Component {
           this.state.range[1].length > 0 &&
           <View>
             <Picker mode='multiSelector'
-                    range={this.state.range}
-                    rangeKey={'name'}
-                    onChange={this.onChange}
+              range={this.state.range}
+              rangeKey={'name'}
+              onChange={this.onChange}
             >
               <View className='filter' animation={this.state.animation}>
                 <Text className='category'>{this.state.category.name}</Text>

@@ -17,7 +17,7 @@ class About extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     console.log(this.props, nextProps)
   }
 
@@ -39,11 +39,11 @@ class About extends Component {
     })
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
   logout() {
 
@@ -81,7 +81,7 @@ class About extends Component {
     })
   }
 
-  render () {
+  render() {
     const { loadAd, config } = this.state
     console.log('config', config)
     let api = 'https://api.github.com/repos/huangjianke/Gitter'
@@ -89,10 +89,10 @@ class About extends Component {
     return (
       <View className='content'>
         <Image mode='aspectFit'
-               className='logo'
-               src={require('../../assets/images/logo.png')}/>
+          className='logo'
+          src={require('../../assets/images/logo.png')} />
         <Text className='version'>
-          Gitter v1.3.1
+          Gitter v1.3.2
         </Text>
         <Navigator url={url}>
           <Text className='link'>
@@ -107,8 +107,8 @@ class About extends Component {
             <View className='support_view'>
               <Text className='support_title'>Support Gitter ❤</Text>
               <Image className='support_image'
-                     src={config.support_url}
-                     onClick={this.previewImage}
+                src={config.support_url}
+                onClick={this.previewImage}
               />
               <Text className='support_title'>点击长按识别</Text>
             </View>
