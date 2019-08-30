@@ -84,3 +84,11 @@ cd Gitter
 ### LICENSE
 
 [Apache License 2.0](./LICENSE)
+
+
+### 其他小程序
+
+|层叠拼图-烧脑益智小游戏|诗词墨客 - 最全中华古诗词小程序|
+| :---: | :---: |
+|![层叠拼图](https://user-images.githubusercontent.com/8692455/64031830-cf3fed80-cb7b-11e9-96cd-49f402427174.png)
+ |![诗词墨客](https://raw.githubusercontent.com/huangjianke/weapp-poem/master/images/code.png)|
