@@ -61,6 +61,7 @@ async function fetchRepositories({
   language = '',
   since = 'daily',
 } = {}) {
+
   const url = `${GITHUB_URL}/trending/${language}?since=${since}`;
   const data = await fetch(url);
   const $ = cheerio.load(await data.text());
@@ -74,6 +75,7 @@ async function fetchRepositories({
           .find('.h3')
           .text()
           .trim();
+        const [username, repoName] = title.split('/').map((v) => v.trim());
         const relativeUrl = $repo
           .find('.h3')
           .find('a')
@@ -116,8 +118,9 @@ async function fetchRepositories({
           : /* istanbul ignore next */ null;
 
         return omitNil({
-          author: title.split(' / ')[0],
-          name: title.split(' / ')[1],
+          author: username,
+          name: repoName,
+          avatar: `${GITHUB_URL}/${username}.png`,
           url: `${GITHUB_URL}${relativeUrl}`,
           description:
             $repo
@@ -128,15 +131,19 @@ async function fetchRepositories({
           languageColor: langColor,
           stars: parseInt(
             $repo
-              .find(`[href="${relativeUrl}/stargazers"]`)
+              .find("span[aria-label='star']")
+              .parent()
               .text()
+              .trim()
               .replace(',', '') || /* istanbul ignore next */ '0',
             10
           ),
           forks: parseInt(
             $repo
-              .find(`[href="${relativeUrl}/network/members"]`)
+              .find("span[aria-label='fork']")
+              .parent()
               .text()
+              .trim()
               .replace(',', '') || /* istanbul ignore next */ '0',
             10
           ),
@@ -161,13 +168,10 @@ async function fetchDevelopers({ language = '', since = 'daily' } = {}) {
     .map((dev) => {
       const $dev = $(dev);
       const relativeUrl = $dev.find('.h3 a').attr('href');
-      const name = getMatchString(
-        $dev
-          .find('.h3 a')
-          .text()
-          .trim(),
-        /^\((.+)\)$/i
-      );
+      const name = $dev
+        .find('.h3 a')
+        .text()
+        .trim();
 
       const username = relativeUrl.slice(1);
 
@@ -176,7 +180,7 @@ async function fetchDevelopers({ language = '', since = 'daily' } = {}) {
         .parent()
         .attr('data-hovercard-type');
 
-      const $repo = $dev.find('.mb-2');
+      const $repo = $dev.find('.mt-2 > article');
 
       $repo.find('svg').remove();
 
@@ -193,7 +197,7 @@ async function fetchDevelopers({ language = '', since = 'daily' } = {}) {
             .trim(),
           description:
             $repo
-              .find('.f6')
+              .find('.f6.mt-1')
               .text()
               .trim() || /* istanbul ignore next */ '',
           url: `${GITHUB_URL}${$repo.find('a').attr('href')}`,

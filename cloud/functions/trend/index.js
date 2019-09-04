@@ -4,7 +4,9 @@ const { fetchRepositories, fetchDevelopers } = require('./fetch')
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  env: 'gitter-prod-pkqn3',
+})
 
 const db = cloud.database()
 
