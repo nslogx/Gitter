@@ -1,7 +1,7 @@
 import '@tarojs/async-await'
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/redux'
-import {get as getGlobalData, set as setGlobalData} from './utils/global_data'
+import { get as getGlobalData, set as setGlobalData } from './utils/global_data'
 
 import Index from './pages/index'
 
@@ -63,12 +63,14 @@ class App extends Component {
         text: 'Activity',
         iconPath: './assets/images/tab_news.png',
         selectedIconPath: './assets/images/tab_news_s.png'
-      }, {
-        pagePath: 'pages/git/git',
-        text: 'Git',
-        iconPath: './assets/images/tab_git.png',
-        selectedIconPath: './assets/images/tab_git_s.png'
-      }, {
+      }, 
+      // {
+      //   pagePath: 'pages/git/git',
+      //   text: 'Git',
+      //   iconPath: './assets/images/tab_git.png',
+      //   selectedIconPath: './assets/images/tab_git_s.png'
+      // }, 
+      {
         pagePath: 'pages/account/index',
         text: 'Me',
         iconPath: './assets/images/tab_me.png',
@@ -84,23 +86,23 @@ class App extends Component {
     ]
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.updateApp()
     wx.cloud.init({
-      env: 'gitter-33fa2c',
+      env: 'gitter-prod-pkqn3',
       traceUser: true
     })
     this.loadOpenId()
     this.loadConfig()
   }
 
-  componentDidShow () {}
+  componentDidShow() { }
 
-  componentDidHide () {}
+  componentDidHide() { }
 
-  componentCatchError () {}
+  componentCatchError() { }
 
-  componentDidCatchError () {}
+  componentDidCatchError() { }
 
   loadOpenId() {
     wx.cloud.callFunction({
@@ -164,7 +166,7 @@ class App extends Component {
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
-  render () {
+  render() {
     return (
       <Provider store={store}>
         <Index />
