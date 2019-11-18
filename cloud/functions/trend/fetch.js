@@ -61,7 +61,6 @@ async function fetchRepositories({
   language = '',
   since = 'daily',
 } = {}) {
-
   const url = `${GITHUB_URL}/trending/${language}?since=${since}`;
   const data = await fetch(url);
   const $ = cheerio.load(await data.text());
@@ -69,13 +68,13 @@ async function fetchRepositories({
     $('.Box article.Box-row')
       .get()
       // eslint-disable-next-line complexity
-      .map((repo) => {
+      .map(repo => {
         const $repo = $(repo);
         const title = $repo
           .find('.h3')
           .text()
           .trim();
-        const [username, repoName] = title.split('/').map((v) => v.trim());
+        const [username, repoName] = title.split('/').map(v => v.trim());
         const relativeUrl = $repo
           .find('.h3')
           .find('a')
@@ -131,7 +130,7 @@ async function fetchRepositories({
           languageColor: langColor,
           stars: parseInt(
             $repo
-              .find("span[aria-label='star']")
+              .find("svg[aria-label='star']")
               .parent()
               .text()
               .trim()
@@ -140,7 +139,7 @@ async function fetchRepositories({
           ),
           forks: parseInt(
             $repo
-              .find("span[aria-label='fork']")
+              .find("svg[aria-label='repo-forked']")
               .parent()
               .text()
               .trim()
@@ -165,7 +164,7 @@ async function fetchDevelopers({ language = '', since = 'daily' } = {}) {
   const $ = cheerio.load(await data.text());
   return $('.Box article.Box-row')
     .get()
-    .map((dev) => {
+    .map(dev => {
       const $dev = $(dev);
       const relativeUrl = $dev.find('.h3 a').attr('href');
       const name = $dev
