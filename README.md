@@ -90,4 +90,4 @@ cd Gitter
 
 |层叠拼图Plus - 烧脑益智小游戏|诗词墨客 - 最全中华古诗词小程序|
 | :---: | :---: |
-|![层叠拼图](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/stack.jpg)|![诗词墨客](https://raw.githubusercontent.com/huangjianke/weapp-poem/master/images/code.png)|
+|![层叠拼图](https://raw.githubusercontent.com/huangjianke/Gitter/master/images/stack.png)|![诗词墨客](https://raw.githubusercontent.com/huangjianke/weapp-poem/master/images/code.png)|
