@@ -35,7 +35,7 @@ export default class IssueItem extends Component {
         <AtIcon prefixClass='ion'
                 value={item.state === 'open' ? 'ios-information-circle-outline' : 'ios-checkmark-circle-outline'}
                 size='20'
-                color='#ff4949' />
+                color={item.state === 'open' ? '#28a745' : '#ff4949'} />
         <View className='detail'>
           <Text className='issue_title'>
             {item.title}
