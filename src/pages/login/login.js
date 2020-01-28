@@ -120,7 +120,7 @@ class Login extends Component {
 
   handleclickedTokenAddress() {
     Taro.setClipboardData({
-      data: 'https://github.com/settings/tokens/new'
+      data: 'https://github.com/settings/tokens/new?scopes=repo,gist,write:packages,read:packages,delete:packages,admin:org,admin:public_key,admin:repo_hook,admin:org_hook,notification,user,delete_repo,write:discussion,admin:enterprise,workflow,admin:gpg_key&description=Gitter'
     })
   }
 
