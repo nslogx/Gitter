@@ -16,7 +16,8 @@ export default {
       method: method,
       header: {
         'content-type': contentType,
-        'Authorization': Taro.getStorageSync('Authorization')
+        'Authorization': Taro.getStorageSync('Authorization'),
+        'Accept': 'application/vnd.github.v3+json'
       },
       success(res) {
         console.log('res', res)
