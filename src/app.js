@@ -63,7 +63,7 @@ class App extends Component {
         text: 'Activity',
         iconPath: './assets/images/tab_news.png',
         selectedIconPath: './assets/images/tab_news_s.png'
-      }, 
+      },
       // {
       //   pagePath: 'pages/git/git',
       //   text: 'Git',
@@ -79,7 +79,8 @@ class App extends Component {
       color: '#8a8a8a',
       selectedColor: '#2d8cf0',
       backgroundColor: '#ffffff',
-      borderStyle: 'white'
+      borderStyle: 'white',
+      darkmode: false
     },
     navigateToMiniProgramAppIdList: [
       'wx8abaf00ee8c3202e'
