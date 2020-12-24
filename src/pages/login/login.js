@@ -52,25 +52,25 @@ class Login extends Component {
     })
   }
 
-  handleTokenChange (value) {
+  handleTokenChange(value) {
     this.setState({
       token: value
     })
   }
 
-  handleUsernameChange (value) {
+  handleUsernameChange(value) {
     this.setState({
       username: value
     })
   }
 
-  handlePasswordChange (value) {
+  handlePasswordChange(value) {
     this.setState({
       password: value
     })
   }
 
-  getUserInfo () {
+  getUserInfo() {
     const { current, token, username, password } = this.state
     let authorization = ''
     if (current === 0) {
@@ -100,8 +100,8 @@ class Login extends Component {
 
     if (authorization.length !== 0) {
       Taro.setStorageSync('Authorization', authorization)
-      Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-      userAction.getUserInfo().then((res)=>{
+      Taro.showLoading({ title: GLOBAL_CONFIG.LOADING_TEXT })
+      userAction.getUserInfo().then((res) => {
         Taro.hideLoading()
         if (res.statusCode !== HTTP_STATUS.SUCCESS) {
           Taro.showToast({
@@ -130,53 +130,53 @@ class Login extends Component {
       <View className='content'>
         <View className='logo_bg'>
           <Image mode='aspectFit'
-                 className='logo'
-                 src={require('../../assets/images/octocat.png')}/>
+            className='logo'
+            src={require('../../assets/images/octocat.png')} />
         </View>
         <View className='login_content'>
-          <View className='switch_view'>
+          {/* <View className='switch_view'>
             <View className={current === 0 ? 'selected_title' : 'normal_title'}
-                  onClick={this.handleClicked.bind(this, 0)}>
+              onClick={this.handleClicked.bind(this, 0)}>
               Token
             </View>
             <View className={current === 1 ? 'selected_title' : 'normal_title'}
-                  onClick={this.handleClicked.bind(this, 1)}>
+              onClick={this.handleClicked.bind(this, 1)}>
               Account
             </View>
-          </View>
+          </View> */}
           {current === 0 ?
-              <View className='input_view'>
-                <AtInput
-                  className='input_bar'
-                  name='token'
-                  title='Token:'
-                  type='text'
-                  placeholder='please input token'
-                  value={this.state.token}
-                  onChange={this.handleTokenChange.bind(this)} />
-              </View>
-              : (<View className='input_view'>
-                <AtInput
-                  className='input_bar'
-                  name='username'
-                  title='Username:'
-                  type='text'
-                  placeholder='please input username'
-                  value={this.state.username}
-                  onChange={this.handleUsernameChange.bind(this)} />
-                <AtInput
-                  className='input_bar'
-                  name='password'
-                  title='Password:'
-                  type='password'
-                  placeholder='please input password'
-                  value={this.state.password}
-                  onChange={this.handlePasswordChange.bind(this)} />
-              </View>
+            <View className='input_view'>
+              <AtInput
+                className='input_bar'
+                name='token'
+                title='Token:'
+                type='text'
+                placeholder='please input token'
+                value={this.state.token}
+                onChange={this.handleTokenChange.bind(this)} />
+            </View>
+            : (<View className='input_view'>
+              <AtInput
+                className='input_bar'
+                name='username'
+                title='Username:'
+                type='text'
+                placeholder='please input username'
+                value={this.state.username}
+                onChange={this.handleUsernameChange.bind(this)} />
+              <AtInput
+                className='input_bar'
+                name='password'
+                title='Password:'
+                type='password'
+                placeholder='please input password'
+                value={this.state.password}
+                onChange={this.handlePasswordChange.bind(this)} />
+            </View>
             )
           }
           <View className='login_button'
-                onClick={this.getUserInfo.bind(this)}>
+            onClick={this.getUserInfo.bind(this)}>
             Login
           </View>
         </View>
@@ -185,10 +185,10 @@ class Login extends Component {
             1、由于小程序的限制，无法使用OAuth跳转认证，推荐使用Token认证方式；
           </Text>
           <Text className='info_text'>
-            2、Token及用户名密码仅用于GitHub Api权限校验，不会被上传服务器；
+            2、Token仅用于GitHub Api权限校验，不会被上传至服务器；
           </Text>
           <Text className='info_text'>
-            3、Token的生成方式请点击复制以下地址至浏览器打开，按照步骤即可生成Token
+            3、Token的生成方式请点击复制以下地址至浏览器打开，按照步骤即可生成Token，建议勾选全部权限。
           </Text>
           <View onClick={this.handleclickedTokenAddress.bind(this)} className='token_address'>
             https://github.com/settings/tokens/new

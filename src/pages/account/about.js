@@ -1,6 +1,5 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Navigator, Image, Text, Ad } from '@tarojs/components'
-
 import './about.less'
 
 class About extends Component {
@@ -46,7 +45,6 @@ class About extends Component {
   componentDidHide() { }
 
   logout() {
-
     Taro.showModal({
       content: 'Are you sure?',
       showCancel: true,
@@ -64,7 +62,6 @@ class About extends Component {
         }
       }
     })
-
   }
 
   loadError(event) {
@@ -84,7 +81,7 @@ class About extends Component {
   render() {
     const { loadAd, config } = this.state
     console.log('config', config)
-    let api = 'https://api.github.com/repos/huangjianke/Gitter'
+    let api = 'https://api.github.com/repos/kokohuang/Gitter'
     let url = '/pages/repo/repo?url=' + encodeURI(api)
     return (
       <View className='content'>
@@ -96,7 +93,7 @@ class About extends Component {
         </Text>
         <Navigator url={url}>
           <Text className='link'>
-            https://github.com/huangjianke/Gitter
+            https://github.com/kokohuang/Gitter
           </Text>
         </Navigator>
         <View className='logout' onClick={this.logout.bind(this)}>

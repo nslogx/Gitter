@@ -33,7 +33,7 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
+    Taro.showLoading({ title: GLOBAL_CONFIG.LOADING_TEXT })
     this.getUserInfo()
   }
 
@@ -55,7 +55,7 @@ class Index extends Component {
 
   getUserInfo() {
     if (hasLogin()) {
-      userAction.getUserInfo().then(()=>{
+      userAction.getUserInfo().then(() => {
         Taro.hideLoading()
         Taro.stopPullDownRefresh()
         this.checkStarring()
@@ -69,8 +69,8 @@ class Index extends Component {
   checkStarring() {
     if (hasLogin()) {
       let that = this
-      let url = '/user/starred/huangjianke/Gitter'
-      api.get(url).then((res)=>{
+      let url = '/user/starred/kokohuang/Gitter'
+      api.get(url).then((res) => {
         that.setState({
           hasStar: res.statusCode === 204
         })
@@ -86,41 +86,41 @@ class Index extends Component {
           url: '/pages/repo/repoList?url=' + url
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.FOLLOWERS: {
         Taro.navigateTo({
           url: '/pages/account/follow?type=followers'
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.FOLLOWING: {
         Taro.navigateTo({
           url: '/pages/account/follow?type=following'
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.STARRED_REPOS: {
         Taro.navigateTo({
           url: '/pages/repo/starredRepo'
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.ISSUES: {
         Taro.navigateTo({
           url: '/pages/repo/issues?url=/user/issues'
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.ABOUT: {
         Taro.navigateTo({
           url: '/pages/account/about'
         })
       }
-      break
+        break
       case NAVIGATE_TYPE.STAR: {
         this.handleStar()
       }
-      break
+        break
       case NAVIGATE_TYPE.FEEDBACK: {
         Taro.navigateToMiniProgram({
           appId: 'wx8abaf00ee8c3202e',
@@ -130,7 +130,7 @@ class Index extends Component {
           }
         })
       }
-      break
+        break
       default: {
       }
     }
@@ -143,16 +143,16 @@ class Index extends Component {
   }
 
   handleStar() {
-    Taro.showLoading({title: GLOBAL_CONFIG.LOADING_TEXT})
-    let url = '/user/starred/huangjianke/Gitter'
-    api.put(url).then((res)=>{
+    Taro.showLoading({ title: GLOBAL_CONFIG.LOADING_TEXT })
+    let url = '/user/starred/kokohuang/Gitter'
+    api.put(url).then((res) => {
       Taro.hideLoading()
       if (res.statusCode === 204) {
         Taro.showToast({
           title: 'Thank you!',
           icon: 'success'
         })
-        setTimeout(()=>{
+        setTimeout(() => {
           this.getUserInfo()
         }, 1000)
       }
@@ -165,7 +165,7 @@ class Index extends Component {
 
     let repo_counts = userInfo ? Number(userInfo.public_repos) : 0
     if (userInfo && userInfo.owned_private_repos > 0) {
-      repo_counts +=  Number(userInfo.owned_private_repos)
+      repo_counts += Number(userInfo.owned_private_repos)
     }
 
     return (
@@ -173,9 +173,9 @@ class Index extends Component {
         {
           isLogin ? (
             <View className='content'>
-              <Image className='account_bg' src={require('../../assets/images/account_bg.png')}/>
+              <Image className='account_bg' src={require('../../assets/images/account_bg.png')} />
               <View className='user_info'>
-                <AtAvatar className='avatar' circle image={userInfo.avatar_url}/>
+                <AtAvatar className='avatar' circle image={userInfo.avatar_url} />
                 {
                   userInfo.name.length > 0 &&
                   <Text className='username'>{userInfo.name}</Text>
@@ -189,12 +189,12 @@ class Index extends Component {
                     <View className='title'>{userInfo ? repo_counts : ''}</View>
                     <View className='desc'>Repos</View>
                   </View>
-                  <View className='line'/>
+                  <View className='line' />
                   <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWERS)}>
                     <View className='title'>{userInfo.followers}</View>
                     <View className='desc'>Followers</View>
                   </View>
-                  <View className='line'/>
+                  <View className='line' />
                   <View className='item' onClick={this.handleNavigate.bind(this, NAVIGATE_TYPE.FOLLOWING)}>
                     <View className='title'>{userInfo.following}</View>
                     <View className='desc'>Following</View>
@@ -252,16 +252,16 @@ class Index extends Component {
               <View className='bottom_view' />
             </View>
           ) : (
-            <View className='content'>
-              <Image mode='aspectFit'
-                     className='logo'
-                     src={require('../../assets/images/octocat.png')} />
-              <View className='login_button'
-                    onClick={this.login.bind(this)}>
-                Login
+              <View className='content'>
+                <Image mode='aspectFit'
+                  className='logo'
+                  src={require('../../assets/images/octocat.png')} />
+                <View className='login_button'
+                  onClick={this.login.bind(this)}>
+                  Login
               </View>
-            </View>
-          )
+              </View>
+            )
         }
       </View>
     )
